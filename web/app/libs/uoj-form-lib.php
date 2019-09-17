@@ -542,9 +542,9 @@ EOD;
 				echo <<<EOD
 		$(this).find("input[type='file']").each(function() {
 			for (var i = 0; i < this.files.length; i++) {
-				if (this.files[i].size > 10 * 1024 * 1024) {
+				if (this.files[i].size > 100 * 1024 * 1024) {
 					$('#div-' + $(this).attr('name')).addClass('has-error');
-					$('#help-' + $(this).attr('name')).text('文件大小不能超过10M');
+					$('#help-' + $(this).attr('name')).text('文件大小不能超过 100M');
 					ok = false;
 				} else {
 					$('#div-' + $(this).attr('name')).removeClass('has-error');
@@ -759,7 +759,7 @@ EOD;
 			
 			$up_zip_file = new ZipArchive();
 			if ($up_zip_file->open($_FILES[$name]['tmp_name']) !== true) {
-				becomeMsgPage('不是合法的zip压缩文件');
+				becomeMsgPage('不是合法的 zip 压缩文件');
 			}
 			
 			$tot_size = 0;
@@ -770,8 +770,8 @@ EOD;
 					$zip_content[$req['name']] = '';
 				} else {
 					$tot_size += $stat['size'];
-					if ($stat['size'] > 20 * 1024 * 1024) {
-						becomeMsgPage("文件 {$req['file_name']} 实际大小过大。");
+					if ($stat['size'] > 100 * 1024 * 1024) {
+						becomeMsgPage("文件 {$req['file_name']} 大小超过 100MB。");
 					}
 					$ret = $up_zip_file->getFromName($req['file_name']);
 					if ($ret === false) {

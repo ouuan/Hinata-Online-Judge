@@ -26,7 +26,7 @@
 			DB::query("delete from hacks where id = {$hack['id']}");
 		};
 		$delete_form->submit_button_config['class_str'] = 'btn btn-danger';
-		$delete_form->submit_button_config['text'] = '删除此Hack';
+		$delete_form->submit_button_config['text'] = '删除此 Hack';
 		$delete_form->submit_button_config['align'] = 'right';
 		$delete_form->submit_button_config['smart_confirm'] = '';
 		$delete_form->succ_href = "/hacks";

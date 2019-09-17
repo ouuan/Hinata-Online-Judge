@@ -66,7 +66,7 @@
 				}
 				unlink($up_filename);
 			}else{
-				$errmsg = "请上传zip格式！";
+				$errmsg = "请上传 zip 格式！";
 				becomeMsgPage('<div>' . $errmsg . '</div><a href="/problem/'.$problem['id'].'/manage/data">返回</a>');
 			}
   		}
@@ -121,7 +121,7 @@
 	$download_url = HTML::url("/download.php?type=problem&id={$problem['id']}");
 	$info_form->appendHTML(<<<EOD
 <div class="form-group row">
-	<!--<label class="col-sm-3 control-label">zip上传数据</label>
+	<!--<label class="col-sm-3 control-label">zip 上传数据</label>
 	<div class="col-sm-9">
 		<div class="form-control-static">
 			<row>
@@ -187,7 +187,7 @@ EOD
 			function ($submission_requirement, &$vdata) {
 				$submission_requirement = json_decode($submission_requirement, true);
 				if ($submission_requirement === null) {
-					return '不是合法的JSON';
+					return '不是合法的 JSON';
 				}
 				$vdata['submission_requirement'] = json_encode($submission_requirement);
 			},
@@ -196,7 +196,7 @@ EOD
 			function ($extra_config, &$vdata) {
 				$extra_config = json_decode($extra_config, true);
 				if ($extra_config === null) {
-					return '不是合法的JSON';
+					return '不是合法的 JSON';
 				}
 				$vdata['extra_config'] = json_encode($extra_config);
 			},
@@ -460,7 +460,7 @@ EOD
 		DB::query("update problems set hackable = $hackable where id = ${problem['id']}");
 	};
 	$hackable_form->submit_button_config['class_str'] = 'btn btn-warning btn-block';
-	$hackable_form->submit_button_config['text'] = $problem['hackable'] ? '禁止使用hack' : '允许使用hack';
+	$hackable_form->submit_button_config['text'] = $problem['hackable'] ? '禁止使用 hack' : '允许使用 hack';
 	$hackable_form->submit_button_config['smart_confirm'] = '';
 
 	$data_form = new UOJForm('data');
@@ -509,7 +509,7 @@ EOD
 	$view_type_form->addVSelect('view_content_type',
 		array('NONE' => '禁止',
 				'SELF' => '仅自己',
-				'ALL_AFTER_AC' => 'AC后',
+				'ALL_AFTER_AC' => 'AC 后',
 				'ALL' => '所有人'
 		),
 		'查看提交文件:',
@@ -518,7 +518,7 @@ EOD
 	$view_type_form->addVSelect('view_all_details_type',
 		array('NONE' => '禁止',
 				'SELF' => '仅自己',
-				'ALL_AFTER_AC' => 'AC后',
+				'ALL_AFTER_AC' => 'AC 后',
 				'ALL' => '所有人'
 		),
 		'查看全部详细信息:',
@@ -527,7 +527,7 @@ EOD
 	$view_type_form->addVSelect('view_details_type',
 		array('NONE' => '禁止',
 				'SELF' => '仅自己',
-				'ALL_AFTER_AC' => 'AC后',
+				'ALL_AFTER_AC' => 'AC 后',
 				'ALL' => '所有人'
 		),
 		'查看测试点详细信息:',
@@ -656,9 +656,9 @@ EOD
 	<div class="col-md-2 top-buffer-sm">
 		<div class="top-buffer-md">
 			<?php if ($problem['hackable']): ?>
-				<span class="glyphicon glyphicon-ok"></span> hack功能已启用
+				<span class="glyphicon glyphicon-ok"></span> hack 功能已启用
 			<?php else: ?>
-				<span class="glyphicon glyphicon-remove"></span> hack功能已禁止
+				<span class="glyphicon glyphicon-remove"></span> hack 功能已禁止
 			<?php endif ?>
 			<?php $hackable_form->printHTML() ?>
 		</div>
@@ -704,7 +704,7 @@ EOD
       				<div class="modal-body">
         				<form action="" method="post" enctype="multipart/form-data" role="form">
 							<div class="form-group">
-									<label for="exampleInputFile">上传zip文件</label>
+									<label for="exampleInputFile">上传 zip 文件</label>
 									<input type="file" name="problem_data_file" id="problem_data_file">
 									<p class="help-block">说明：请将所有数据放置于压缩包根目录内。若压缩包内仅存在文件夹而不存在文件，则会将这些一级子文件夹下的内容移动到根目录下，然后这些一级子文件夹删除；若这些子文件夹内存在同名文件，则会发生随机替换，仅保留一个副本。</p>
 							</div>

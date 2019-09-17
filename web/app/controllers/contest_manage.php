@@ -148,7 +148,7 @@
 			DB::update("update contests set extra_config = '$esc_extra_config' where id = {$contest['id']}");
 		};
 		$rated_form->submit_button_config['class_str'] = 'btn btn-warning btn-block';
-		$rated_form->submit_button_config['text'] = isset($contest['extra_config']['unrated']) ? '设置比赛为rated' : '设置比赛为unrated';
+		$rated_form->submit_button_config['text'] = isset($contest['extra_config']['unrated']) ? '设置比赛为 rated' : '设置比赛为 unrated';
 		$rated_form->submit_button_config['smart_confirm'] = '';
 	
 		$rated_form->runAtServer();
@@ -231,7 +231,7 @@
 ?>
 			</tbody>
 		</table>
-		<p class="text-center">命令格式：命令一行一个，+mike表示把mike加入管理者，-mike表示把mike从管理者中移除</p>
+		<p class="text-center">命令格式：命令一行一个，+mike 表示把 mike 加入管理者，-mike 表示把 mike 从管理者中移除</p>
 		<?php $managers_form->printHTML(); ?>
 	</div>
 	
@@ -254,14 +254,14 @@
 ?>
 			</tbody>
 		</table>
-		<p class="text-center">命令格式：命令一行一个，+233表示把题号为233的试题加入比赛，-233表示把题号为233的试题从比赛中移除</p>
+		<p class="text-center">命令格式：命令一行一个，+233 表示把题号为 233 的试题加入比赛，-233 表示把题号为 233 的试题从比赛中移除</p>
 		<?php $problems_form->printHTML(); ?>
 	</div>
 	<?php if (isSuperUser($myUser)): ?>
 	<div class="tab-pane" id="tab-others">
 		<div class="row">
 			<div class="col-sm-12">
-				<h3>Rating控制</h3>
+				<h3>Rating 控制</h3>
 				<div class="row">
 					<div class="col-sm-3">
 						<?php $rated_form->printHTML(); ?>

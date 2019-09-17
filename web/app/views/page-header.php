@@ -48,6 +48,7 @@
 
 		<!-- Custom styles for this template -->
 		<?= HTML::css_link('/css/uoj-theme.css?v=2.3333') ?>
+		<?= HTML::css_link('/css/font-awesome.min.css?v=4.7.0') ?>
 		
 		<!-- jQuery (necessary for Bootstrap\'s JavaScript plugins) -->
 		<?= HTML::js_src('/js/jquery.min.js') ?>

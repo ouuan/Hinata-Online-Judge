@@ -47,7 +47,7 @@ class UOJBlogEditor {
 				$tags = str_replace('，', ',', $tags);
 				$tags_raw = explode(',', $tags);
 				if (count($tags_raw) > 10) {
-					return '标签个数不能超过10';
+					return '标签个数不能超过 10';
 				}
 				$tags = array();
 				foreach ($tags_raw as $tag) {

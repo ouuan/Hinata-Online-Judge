@@ -135,7 +135,7 @@
 	<?php echoSubmissionContent($submission, getProblemSubmissionRequirement($problem)) ?>
 	<?php if ($hackable): ?>
 		<p class="text-center">
-			这程序好像有点Bug，我给组数据试试？ <button id="button-display-hack" type="button" class="btn btn-danger btn-xs">Hack!</button>
+			这程序好像有点 Bug，我给组数据试试？ <button id="button-display-hack" type="button" class="btn btn-danger btn-xs">Hack!</button>
 		</p>
 		<div id="div-form-hack" style="display:none" class="bot-buffer-md">
 			<?php $hack_form->printHTML() ?>

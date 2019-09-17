@@ -18,7 +18,7 @@ return [
 	'source code' => '源文件',
 	'text file' => '文本文件',
 	'zip file upload introduction' => function($str) {
-		return "上传一个zip压缩文件，包含 {$str}：";
+		return "上传一个 zip 压缩文件，包含 {$str}：";
 	},
 	'or upload files one by one' => '或者逐个上传：',
 	'accepted submissions' => '满分提交',
@@ -37,11 +37,12 @@ return [
 	'file size' => '文件大小',
 	'submit time' => '提交时间',
 	'judge time' => '测评时间',
-	'problem id' => '题目ID',
+	'problem id' => '题目 ID',
 	'submission' => '提交记录',
 	'hack' => 'Hack',
-	'submission id' => '提交记录ID',
+	'submission id' => '提交记录 ID',
 	'my submissions' => '我的提交记录',
-	'hacks by me' => '我的Hack记录',
-	'hacks to me' => '我的被Hack记录'
+	'hacks by me' => '我的 Hack 记录',
+	'hacks to me' => '我的被 Hack 记录',
+	'tutorial' => '题解'
 ];

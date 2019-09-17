@@ -37,7 +37,7 @@
 			$qq = $_POST['qq'];
 			if (!validateQQ($qq))
 			{
-				return "失败：无效QQ。";
+				return "失败：无效 QQ。";
 			}
 			$esc_qq = DB::escape($qq);
 			DB::update("update user_info set qq = '$esc_qq' where username = '{$myUser['username']}'");

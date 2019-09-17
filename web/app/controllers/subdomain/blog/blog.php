@@ -19,7 +19,7 @@
 				return '评论不能为空';
 			}
 			if (strlen($comment) > 1000) {
-				return '不能超过1000个字节';
+				return '不能超过 1000 个字节';
 			}
 			return '';
 		},
@@ -82,7 +82,7 @@
 				return '评论不能为空';
 			}
 			if (strlen($comment) > 140) {
-				return '不能超过140个字节';
+				return '不能超过 140 个字节';
 			}
 			return '';
 		},
@@ -186,7 +186,7 @@
 <?= $comments_pag->pagination() ?>
 
 <h3 class="mt-4">发表评论</h3>
-<p>可以用@mike来提到mike这个用户，mike会被高亮显示。如果你真的想打“@”这个字符，请用“@@”。</p>
+<p>可以用 @mike 来提到 mike 这个用户，mike 会被高亮显示。如果你真的想打 “@” 这个字符，请用 “@@”。</p>
 <?php $comment_form->printHTML() ?>
 
 <div id="div-form-reply" style="display:none">

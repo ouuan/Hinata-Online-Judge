@@ -243,6 +243,7 @@ $('#contest-countdown').countdown(<?= $contest['end_time']->getTimestamp() - UOJ
 	<li class="nav-item"><a class="nav-link" href="#tab-submit-answer" role="tab" data-toggle="tab"><span class="glyphicon glyphicon-upload"></span> <?= UOJLocale::get('problems::submit') ?></a></li>
 	<?php if ($custom_test_requirement): ?>
 	<li class="nav-item"><a class="nav-link" href="#tab-custom-test" role="tab" data-toggle="tab"><span class="glyphicon glyphicon-console"></span> <?= UOJLocale::get('problems::custom test') ?></a></li>
+	<li class="nav-item"><a class="nav-link" href="/tutorial/<?= $problem['id'] ?>" role="tab"><span class="glyphicon glyphicon-pencil"></span> <?= UOJLocale::get('problems::tutorial') ?></a></li>
 	<?php endif ?>
 	<?php if (hasProblemPermission($myUser, $problem)): ?>
 	<li class="nav-item"><a class="nav-link" href="/problem/<?= $problem['id'] ?>/manage/statement" role="tab"><?= UOJLocale::get('problems::manage') ?></a></li>

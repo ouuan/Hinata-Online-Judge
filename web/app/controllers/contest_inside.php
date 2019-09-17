@@ -139,15 +139,15 @@
 						$tail = '<strong style="color:red">' . ($change > 0 ? '+' : '') . $change . '</strong>';
 						$content = <<<EOD
 <p>${user_link} 您好：</p>
-<p class="indent2">您在 <a href="/contest/{$contest['id']}">{$contest['name']}</a> 这场比赛后的Rating变化为${tail}，当前Rating为 <strong style="color:red">{$ratings[$i]}</strong>。</p>
+<p class="indent2">您在 <a href="/contest/{$contest['id']}">{$contest['name']}</a> 这场比赛后的 Rating 变化为 ${tail}，当前 Rating 为 <strong style="color:red">{$ratings[$i]}</strong>。</p>
 EOD;
 					} else {
 						$content = <<<EOD
 <p>${user_link} 您好：</p>
-<p class="indent2">您在 <a href="/contest/{$contest['id']}">{$contest['name']}</a> 这场比赛后Rating没有变化。当前Rating为 <strong style="color:red">{$ratings[$i]}</strong>。</p>
+<p class="indent2">您在 <a href="/contest/{$contest['id']}">{$contest['name']}</a> 这场比赛后 Rating 没有变化。当前 Rating 为 <strong style="color:red">{$ratings[$i]}</strong>。</p>
 EOD;
 					}
-					sendSystemMsg($user['username'], 'Rating变化通知', $content);
+					sendSystemMsg($user['username'], 'Rating 变化通知', $content);
 					DB::query("update user_info set rating = {$ratings[$i]} where username = '{$standings[$i][2][0]}'");
 					DB::query("update contests_registrants set rank = {$standings[$i][3]} where contest_id = {$contest['id']} and username = '{$standings[$i][2][0]}'");
 				}
@@ -228,11 +228,11 @@ EOD;
 				    global $contest;
 				    
 					if (!validateUInt($id)) {
-						return '无效ID';
+						return '无效 ID';
 					}
 					$q = DB::selectFirst("select * from contests_asks where id = $id");
 					if ($q['contest_id'] != $contest['id']) {
-					    return '无效ID';
+					    return '无效 ID';
 					}
 					return '';
 				},
@@ -508,10 +508,10 @@ EOD;
 	<div class="col-sm-3">
 	<?php endif ?>
 	<?php if (!isset($contest['extra_config']['contest_type']) || $contest['extra_config']['contest_type']=='OI'):?>
-	<p>此次比赛为OI赛制。</p>
+	<p>此次比赛为 OI 赛制。</p>
 	<p><strong>注意：比赛时只显示测样例的结果。</strong></p>
 	<?php elseif ($contest['extra_config']['contest_type']=='IOI'):?>
-	<p>此次比赛为IOI赛制。</p>
+	<p>此次比赛为 IOI 赛制。</p>
 	<p><strong>注意：比赛时显示测试所有数据的结果，但无法看到详细信息。</strong></p>
 	<?php endif?>
 	

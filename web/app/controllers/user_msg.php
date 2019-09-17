@@ -195,7 +195,7 @@ function addBubble(content, send_time, read_time, msgId, conversation, page, typ
 
 function submitMessagePost(conversationName) {
 		if ($('#input-message').val().length == 0  ||  $('#input-message').val().length >= 65536) {
-				$('#help-message').text('私信长度必须在1~65535之间。');
+				$('#help-message').text('私信长度必须在 1~65535 之间。');
 				$('#form-group-message').addClass('has-error');
 				return;
 		}

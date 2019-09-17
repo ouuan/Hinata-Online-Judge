@@ -175,6 +175,47 @@ function echoLongTable($col_names, $table_name, $cond, $tail, $header_row, $prin
 	echo $pag->pagination();
 }
 
+function echoLongTableCnt($col_names, $table_name, $cond, $tail, $header_row, $print_row, $config, &$cnt) {
+	$pag_config = $config;
+	$pag_config['col_names'] = $col_names;
+	$pag_config['table_name'] = $table_name;
+	$pag_config['cond'] = $cond;
+	$pag_config['tail'] = $tail;
+	$pag = new Paginator($pag_config);
+
+	$div_classes = isset($config['div_classes']) ? $config['div_classes'] : array('table-responsive');
+	$table_classes = isset($config['table_classes']) ? $config['table_classes'] : array('table', 'table-bordered', 'table-hover', 'table-striped', 'table-text-center');
+		
+	echo '<div class="', join($div_classes, ' '), '">';
+	echo '<table class="', join($table_classes, ' '), '">';
+	echo '<thead>';
+	echo $header_row;
+	echo '</thead>';
+	echo '<tbody>';
+
+	foreach ($pag->get() as $idx => $row) {
+		if (isset($config['get_row_index'])) {
+			$print_row($row, $idx, $cnt);
+		} else {
+			$print_row($row, $cnt);
+		}
+	}
+	if ($pag->isEmpty()) {
+		echo '<tr><td colspan="233">'.UOJLocale::get('none').'</td></tr>';
+	}
+
+	echo '</tbody>';
+	echo '</table>';
+	echo '</div>';
+	
+	if (isset($config['print_after_table'])) {
+		$fun = $config['print_after_table'];
+		$fun();
+	}
+		
+	echo $pag->pagination();
+}
+
 function getSubmissionStatusDetails($submission) {
 	$html = '<td colspan="233" style="vertical-align: middle">';
 	
@@ -478,7 +519,7 @@ class JudgementDetailsPrinter {
 				echo '<div class="text-right text-muted">', '小提示：点击横条可展开更详细的信息', '</div>';
 			}
 			elseif ($this->styler->ioi_contest_is_running) {
-				echo '<div class="text-right text-muted">', 'IOI赛制比赛中不支持显示详细信息', '</div>';
+				echo '<div class="text-right text-muted">', 'IOI 赛制比赛中不支持显示详细信息', '</div>';
 			}
 			$this->_print_c($node);
 			echo '</div>';

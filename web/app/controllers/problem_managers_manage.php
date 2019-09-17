@@ -54,6 +54,6 @@
 ?>
 	</tbody>
 </table>
-<p class="text-center">命令格式：命令一行一个，+mike表示把mike加入管理者，-mike表示把mike从管理者中移除</p>
+<p class="text-center">命令格式：命令一行一个，+mike 表示把 mike 加入管理者，-mike 表示把 mike 从管理者中移除</p>
 <?php $managers_form->printHTML(); ?>
 <?php echoUOJPageFooter() ?>

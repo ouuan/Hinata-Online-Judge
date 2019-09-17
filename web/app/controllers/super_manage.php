@@ -44,17 +44,17 @@
 	$user_form->runAtServer();
 	
 	$blog_link_contests = new UOJForm('blog_link_contests');
-	$blog_link_contests->addInput('blog_id', 'text', '博客ID', '',
+	$blog_link_contests->addInput('blog_id', 'text', '博客 ID', '',
 		function ($x) {
-			if (!validateUInt($x)) return 'ID不合法';
+			if (!validateUInt($x)) return 'ID 不合法';
 			if (!queryBlog($x)) return '博客不存在';
 			return '';
 		},
 		null
 	);
-	$blog_link_contests->addInput('contest_id', 'text', '比赛ID', '',
+	$blog_link_contests->addInput('contest_id', 'text', '比赛 ID', '',
 		function ($x) {
-			if (!validateUInt($x)) return 'ID不合法';
+			if (!validateUInt($x)) return 'ID 不合法';
 			if (!queryContest($x)) return '比赛不存在';
 			return '';
 		},
@@ -103,9 +103,9 @@
 	$blog_link_contests->runAtServer();
 	
 	$blog_link_index = new UOJForm('blog_link_index');
-	$blog_link_index->addInput('blog_id2', 'text', '博客ID', '',
+	$blog_link_index->addInput('blog_id2', 'text', '博客 ID', '',
 		function ($x) {
-			if (!validateUInt($x)) return 'ID不合法';
+			if (!validateUInt($x)) return 'ID 不合法';
 			if (!queryBlog($x)) return '博客不存在';
 			return '';
 		},
@@ -141,10 +141,10 @@
 	$blog_link_index->runAtServer();
 	
 	$blog_deleter = new UOJForm('blog_deleter');
-	$blog_deleter->addInput('blog_del_id', 'text', '博客ID', '',
+	$blog_deleter->addInput('blog_del_id', 'text', '博客 ID', '',
 		function ($x) {
 			if (!validateUInt($x)) {
-				return 'ID不合法';
+				return 'ID 不合法';
 			}
 			if (!queryBlog($x)) {
 				return '博客不存在';
@@ -159,10 +159,10 @@
 	$blog_deleter->runAtServer();
 
 	$contest_submissions_deleter = new UOJForm('contest_submissions');
-	$contest_submissions_deleter->addInput('contest_id', 'text', '比赛ID', '',
+	$contest_submissions_deleter->addInput('contest_id', 'text', '比赛 ID', '',
 		function ($x) {
 			if (!validateUInt($x)) {
-				return 'ID不合法';
+				return 'ID 不合法';
 			}
 			if (!queryContest($x)) {
 				return '博客不存在';
@@ -389,7 +389,7 @@ EOD;
 		?>
 		<?= $submissions_pag->pagination() ?>
 		<?php elseif ($cur_tab === 'click-zan'): ?>
-		没写好QAQ
+		没写好 QAQ
 		<?php elseif ($cur_tab === 'search'): ?>
 		<h2 class="text-center">一周搜索情况</h2>
 		<div id="search-distribution-chart-week" style="height: 250px;"></div>
