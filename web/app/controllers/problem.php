@@ -246,7 +246,7 @@ $('#contest-countdown').countdown(<?= $contest['end_time']->getTimestamp() - UOJ
 	<li class="nav-item"><a class="nav-link" href="/tutorial/<?= $problem['id'] ?>" role="tab"><span class="glyphicon glyphicon-pencil"></span> <?= UOJLocale::get('problems::tutorial') ?></a></li>
 	<?php endif ?>
 	<?php if (hasProblemPermission($myUser, $problem)): ?>
-	<li class="nav-item"><a class="nav-link" href="/problem/<?= $problem['id'] ?>/manage/statement" role="tab"><?= UOJLocale::get('problems::manage') ?></a></li>
+	<li class="nav-item"><a class="nav-link" href="/problem/<?= $problem['id'] ?>/manage/statement" role="tab"><span class="glyphicon glyphicon-wrench"></span> <?= UOJLocale::get('problems::manage') ?></a></li>
 	<?php endif ?>
 	<?php if ($contest): ?>
 	<li class="nav-item"><a class="nav-link" href="/contest/<?= $contest['id'] ?>" role="tab"><?= UOJLocale::get('contests::back to the contest') ?></a></li>
