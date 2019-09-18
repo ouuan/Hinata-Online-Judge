@@ -142,6 +142,27 @@
 	$REQUIRE_LIB['shjs'] = '';
 ?>
 <?php echoUOJPageHeader(HTML::stripTags($blog['title']) . ' - 博客') ?>
+<?php
+	$hasTag = false;
+	$hasProblemID = false;
+	foreach (queryBlogTags($blog['id']) as $tag) {
+		if ($tag == 'tutorial' || $tag == 'discuss') {
+			$hasTag = true;
+		}
+	}
+	foreach (queryBlogTags($blog['id']) as $tag) {
+		if (preg_match('/[1-9][0-9]*/', $tag)) {
+			if (queryProblemBrief($tag)) {
+				echo '<div class="float-right">';
+        			echo '<div class="btn-group">';
+               			echo '<a href="/problem/' . $tag . '" class="btn btn-primary btn-sm">' . UOJLocale::GET('back to') . ' #' . $tag . '</a>';
+        			echo '</div>';
+				echo '&nbsp;';
+				echo '</div>';
+			}
+		}
+	}
+?>
 <?php echoBlog($blog, array('show_title_only' => isset($_GET['page']) && $_GET['page'] != 1)) ?>
 <h2>评论 <span class="glyphicon glyphicon-comment"></span></h2>
 <div class="list-group">

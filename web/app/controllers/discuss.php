@@ -6,11 +6,11 @@
         }
 
         function echoBlogCell($blog, &$cnt) {
-		$hasTutorial = false;
+		$hasDiscuss = false;
 		$hasProblemID = false;
 		foreach (queryBlogTags($blog['id']) as $tag) {
-			if ($tag == 'tutorial'):
-				$hasTutorial = true;
+			if ($tag == 'discuss'):
+				$hasDiscuss = true;
 			elseif ($tag == $_GET['id']):
 				$hasProblemID = true;
 			endif;
@@ -34,7 +34,7 @@ EOD;
         $config = array();
         $config['table_classes'] = array('table', 'table-hover');
 ?>
-<?php echoUOJPageHeader(HTML::stripTags($problem['title']) . ' - ' . UOJLocale::get('problems::tutorial')) ?>
+<?php echoUOJPageHeader(HTML::stripTags($problem['title']) . ' - ' . UOJLocale::get('problems::discuss')) ?>
 <?php if (Auth::check()): ?>
 <div class="float-right">
         <div class="btn-group">
@@ -43,10 +43,10 @@ EOD;
         </div>
 </div>
 <?php endif ?>
-<h3><?= '<a href="/problem/' . $_GET['id'] . '">#' . $_GET['id'] . '. ' . HTML::stripTags($problem['title']) . '</a> ' . UOJLocale::get('problems::tutorial') ?></h3>
+<h3><?= '<a href="/problem/' . $_GET['id'] . '">#' . $_GET['id'] . '. ' . HTML::stripTags($problem['title']) . '</a> ' . UOJLocale::get('problems::discuss') ?></h3>
 <?php $cnt = 0 ?>
 <?php echoLongTableCnt(array('id', 'poster', 'title', 'post_time', 'zan'), 'blogs', 'is_hidden = 0', 'order by post_time desc', $header, 'echoBlogCell', $config, $cnt); ?>
 <?php if ($cnt == 0): ?>
-	<p>还没有人写题解呢..要不你来写一篇？<br>在博客中加上 <code>tutorial</code> 以及 <code>题号</code> 两个标签就可以啦！</p>
+	<p>还没有人发讨论呢..要不你来发一篇？<br>在博客中加上 <code>discuss</code> 以及 <code>题号</code> 两个标签就可以啦！</p>
 <?php endif ?>
 <?php echoUOJPageFooter() ?>

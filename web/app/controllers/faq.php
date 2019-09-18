@@ -174,9 +174,19 @@
 		</div>
 		<div class="card my-1">
 			<div class="card-header collapsed" id="headerEight" data-toggle="collapse" data-target="#collapseEight" style="cursor:pointer;">
-				<h5 class="mb-0">交互式类型的题怎么本地测试</h5>
+				<h5 class="mb-0">如何使用题解/讨论？</h5>
 			</div>
 			<div id="collapseEight" class="collapse">
+				<div class="card-body">
+					<p>题解和讨论是 Hinata Online Judge 新增的 feature。在博客中加上标签 <samp>tutorial</samp>/<samp>discuss</samp> 以及对应的题号就可以啦！</p>
+				</div>
+			</div>
+		</div>
+		<div class="card my-1">
+			<div class="card-header collapsed" id="headerNine" data-toggle="collapse" data-target="#collapseNine" style="cursor:pointer;">
+				<h5 class="mb-0">交互式类型的题怎么本地测试</h5>
+			</div>
+			<div id="collapseNine" class="collapse">
 				<div class="card-body">
 					<p>唔……好问题。交互式的题一般给了一个头文件要你 include 进来，以及一个实现接口的源文件 grader。好像大家对多个源文件一起编译还不太熟悉。</p>
 					<p>对于 C++：<code>g++ -o code grader.cpp code.cpp</code></p>
@@ -189,10 +199,10 @@
 			</div>
 		</div>
 		<div class="card my-1">
-			<div class="card-header collapsed" id="headerNine" data-toggle="collapse" data-target="#collapseNine" style="cursor:pointer;">
+			<div class="card-header collapsed" id="headerTen" data-toggle="collapse" data-target="#collapseTen" style="cursor:pointer;">
 				<h5 class="mb-0">联系方式</h5>
 			</div>
-			<div id="collapseNine" class="collapse">
+			<div id="collapseTen" class="collapse">
 				<div class="card-body">
 					<p>如果你想出题、想办比赛、发现了 BUG 或者对网站有什么建议，可以通过下面的方式联系我们：</p>
 					<ul>

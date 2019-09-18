@@ -44,5 +44,6 @@ return [
 	'my submissions' => 'My Submissions',
 	'hacks by me' => 'Hacks by me',
 	'hacks to me' => 'Hacks to me',
-	'tutorial' => 'Tutorial'
+	'tutorial' => 'Tutorial',
+	'discuss' => 'Discuss'
 ];

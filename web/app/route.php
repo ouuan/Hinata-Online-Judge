@@ -65,7 +65,8 @@ Route::group([
 		
 		Route::any('/click-zan', '/click_zan.php');
 
-		Route::any('/tutorial/{id}', '/tutorial.php');
+		Route::any('/problem/{id}/tutorial', '/tutorial.php');
+		Route::any('/problem/{id}/discuss', '/discuss.php');
 	}
 );
 
