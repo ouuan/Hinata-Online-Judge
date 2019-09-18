@@ -4,6 +4,9 @@
         if (!validateUInt($_GET['id']) || !($problem = queryProblemBrief($_GET['id']))) {
                 become404Page();
         }
+	if (!isProblemVisibleToUser($problem, $myUser)) {
+		become404Page();
+	}
 
         function echoBlogCell($blog, &$cnt) {
 		$hasTutorial = false;
