@@ -394,28 +394,6 @@ pre {
 	text-align:left;
 }
 
-pre:hover .copy_code {
-	background: rgba(170, 170, 170, .9);
-}
-
-.copy_code {
-	line-height: 2.0;
-	vertical-align: middle;
-	color: #fff;
-	padding: 0 .5em;
-	right: .5em;
-	top: .5em;
-	border-radius: 3px;
-	background: rgba(210, 210, 210, .9);
-	z-index: 2;
-	transition: .5s;
-}
-
 .copy_code:hover {
-	background: rgba(170, 170, 170, .9);
 	cursor: pointer;
-}
-
-.copy_code:active {
-	background: rgba(130, 130, 130, .9);
 }

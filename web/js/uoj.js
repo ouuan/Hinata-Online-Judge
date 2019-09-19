@@ -1155,7 +1155,7 @@ function showStandings() {
 
 $(function() {
 	//添加复制按钮
-	$("pre>code").before("<div class='copy_code float-right'>复制</div>");
+	$("pre>code").before("<div class='copy_code btn btn-sm btn-outline-secondary float-right'>复制</div>");
 
 	//为复制按钮添加click事件
 	$(".copy_code").on("click", function() {
@@ -1183,10 +1183,10 @@ $(function() {
 		
 		//删除添加的节点
 		$("textarea").remove("#targetId");
-		$(this).html("成功").css("background", "rgba(100,100,100,.8)");
+		$(this).html("成功");
 		var thisCopied = $(this);
 		setTimeout(function() {
-			thisCopied.html("复制").css("background", "").css("color", "");
+			thisCopied.html("复制");
 		}, 1200)
 	})
 })
