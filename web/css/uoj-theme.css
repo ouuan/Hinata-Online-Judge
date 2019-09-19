@@ -397,3 +397,7 @@ pre {
 .copy_code:hover {
 	cursor: pointer;
 }
+
+.success {
+	background-color: #dff0d8;
+}

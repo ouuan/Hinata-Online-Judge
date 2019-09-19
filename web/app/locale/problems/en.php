@@ -45,5 +45,7 @@ return [
 	'hacks by me' => 'Hacks by me',
 	'hacks to me' => 'Hacks to me',
 	'tutorial' => 'Tutorial',
-	'discuss' => 'Discuss'
+	'discuss' => 'Discuss',
+	'time limit' => 'Time Limit',
+	'memory limit' => 'Memory Limit'
 ];
