@@ -48,8 +48,10 @@
 
 		<!-- Custom styles for this template -->
 		<?= HTML::css_link('/css/uoj-theme.css?v=2.3333') ?>
+
+		<!-- FontAwesome icons -->
 		<?= HTML::css_link('/css/font-awesome.min.css?v=4.7.0') ?>
-		
+
 		<!-- jQuery (necessary for Bootstrap\'s JavaScript plugins) -->
 		<?= HTML::js_src('/js/jquery.min.js') ?>
 		
@@ -138,7 +140,7 @@
 		<?= HTML::css_link('/css/bootstrap-switch.min.css') ?>
 		<?= HTML::js_src('/js/bootstrap-switch.min.js') ?>
 		<?php endif ?>
-		
+
 		<?php if (isset($REQUIRE_LIB['mathjax'])): ?>
 		<!-- MathJax -->
 		<script type="text/x-mathjax-config">

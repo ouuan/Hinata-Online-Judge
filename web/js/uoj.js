@@ -1149,3 +1149,44 @@ function showStandings() {
 		}
 	);
 }
+
+// copy codes
+// based on https://xinyo.org/archives/66226
+
+$(function() {
+	//添加复制按钮
+	$("pre>code").before("<div class='copy_code float-right'>复制</div>");
+
+	//为复制按钮添加click事件
+	$(".copy_code").on("click", function() {
+		//初始化
+		$("textarea").remove("#targetId");
+		
+		//获取对应的代码
+		var codePre = $(this).next("code");
+		var codeText = codePre[0].textContent;
+		
+		//添加 <textarea> DOM节点，将获取的代码写入
+		var target = document.createElement("textarea");
+		target.style.opacity = 0;
+		target.style.left = "-9999px";
+		target.id = "targetId";
+		$(this).append(target);
+		target.textContent = codeText + '\n';
+
+		//选中textarea内的代码
+		target.focus();
+		target.setSelectionRange(0, target.value.length);
+
+		// 复制选中的内容
+		document.execCommand("copy");
+		
+		//删除添加的节点
+		$("textarea").remove("#targetId");
+		$(this).html("成功").css("background", "rgba(100,100,100,.8)");
+		var thisCopied = $(this);
+		setTimeout(function() {
+			thisCopied.html("复制").css("background", "").css("color", "");
+		}, 1200)
+	})
+})
