@@ -47,5 +47,6 @@ return [
 	'tutorial' => '题解',
 	'discuss' => '讨论',
 	'time limit' => '时间限制',
-	'memory limit' => '空间限制'
+	'memory limit' => '空间限制',
+	'ac rating' => 'AC 者平均 Rating'
 ];

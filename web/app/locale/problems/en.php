@@ -47,5 +47,6 @@ return [
 	'tutorial' => 'Tutorial',
 	'discuss' => 'Discuss',
 	'time limit' => 'Time Limit',
-	'memory limit' => 'Memory Limit'
+	'memory limit' => 'Memory Limit',
+	'ac rating' => 'Average Rating of whom got AC'
 ];

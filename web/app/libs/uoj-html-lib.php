@@ -1047,3 +1047,22 @@ function echoACRank($config = array()) {
 	$config['get_row_index'] = '';
 	echoLongTable($col_names, 'user_info', '1', $tail, $header_row, $print_row, $config);
 }
+
+function AVGACRating($id) {
+	$ACSubmitters = DB::selectAll("select submitter from submissions where problem_id = {$id} and score=100");
+        $vis = array();
+        $sum = 0;
+        $cnt = 0;
+        foreach ($ACSubmitters as $submitter) {
+                if (!isset($vis[$submitter['submitter']]) && ($user = queryUser($submitter['submitter']))) {
+                        $vis[$submitter['submitter']] = '';
+                        ++$cnt;
+                        $sum += $user['rating'];
+                }
+        }
+        if ($cnt > 0) {
+                return round($sum / $cnt);
+        } else {
+                return -1;
+        }
+}

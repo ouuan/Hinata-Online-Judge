@@ -51,6 +51,12 @@
 					</div>
 				</td>
 EOD;
+				$rating = AVGACRating($problem['id']);
+				if ($rating != -1) {
+					echo '<td><span class="uoj-honor" data-rating="' . $rating . '">' . $rating . '</span></td>';
+				} else {
+					echo '<td>N/A</td>';
+				}
 			}
 			echo '<td class="text-left">', getClickZanBlock('P', $problem['id'], $problem['zan']), '</td>';
 			echo '</tr>';
@@ -88,6 +94,7 @@ EOD;
 		$header .= '<th class="text-center" style="width:5em;">'.UOJLocale::get('problems::ac').'</th>';
 		$header .= '<th class="text-center" style="width:5em;">'.UOJLocale::get('problems::submit').'</th>';
 		$header .= '<th class="text-center" style="width:150px;">'.UOJLocale::get('problems::ac ratio').'</th>';
+		$header .= '<th class="text-center" style="width:5em;">'.UOJLocale::get('rating').'</th>';
 	}
 	$header .= '<th class="text-center" style="width:180px;">'.UOJLocale::get('appraisal').'</th>';
 	$header .= '</tr>';

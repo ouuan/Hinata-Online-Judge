@@ -66,6 +66,12 @@
 <?php else: ?>
 <h2 class="text-center"><?= UOJLocale::get('problems::accepted submissions') ?></h2>
 <div class="text-right bot-buffer-sm">
+	<?php if (($avg = AVGACRating($_GET['id'])) != -1): ?>
+	<div style="float:left">
+		<?= UOJLocale::get('problems::ac rating') ?>:
+		<span class="uoj-honor" data-rating="<?= $avg ?>"> <?= $avg ?> </span>
+	</div>
+	<?php endif ?>
 	<div class="btn-group btn-group-sm">
 		<a href="<?=$SERVER['REQUEST_URI']?>" class="<?=$submissions_sort_by_choice == 'time' ? 'btn btn-info btn-xs active' : 'btn btn-info btn-xs'?>" id="submissions-sort-by-run-time"><?= UOJLocale::get('problems::fastest') ?></a>
 		<a href="<?=$SERVER['REQUEST_URI']?>" class="<?=$submissions_sort_by_choice == 'tot_size' ? 'btn btn-info btn-xs active' : 'btn btn-info btn-xs'?>" id="submissions-sort-by-code-length"><?= UOJLocale::get('problems::shortest') ?></a>
@@ -109,6 +115,7 @@ new Morris.Bar({
 	resize: true
 });
 </script>
+
 
 <h2 class="text-center"><?= UOJLocale::get('problems::prefix sum of score distribution') ?></h2>
 <div id="score-distribution-chart-pre" style="height: 250px;"></div>
