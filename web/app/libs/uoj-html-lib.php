@@ -1012,8 +1012,8 @@ function echoACRank($config = array()) {
 	$header_row .= '<tr>';
 	$header_row .= '<th style="width: 5em;">#</th>';
 	$header_row .= '<th style="width: 14em;">'.UOJLocale::get('username').'</th>';
-	$header_row .= '<th style="width: 50em;">'.UOJLocale::get('motto').'</th>';
-	$header_row .= '<th style="width: 5em;">'.UOJLocale::get('ac_num').'</th>';
+	$header_row .= '<th style="width: 48em;">'.UOJLocale::get('motto').'</th>';
+	$header_row .= '<th style="width: 7em;">'.UOJLocale::get('ac_num').'</th>';
 	$header_row .= '</tr>';
 	
 	$users = array();
