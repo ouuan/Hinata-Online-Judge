@@ -401,3 +401,9 @@ pre {
 .success {
 	background-color: #dff0d8;
 }
+
+blockquote {
+    color: #666;
+    border-left: 4px solid #ddd;
+    margin-left: 2em;
+}
