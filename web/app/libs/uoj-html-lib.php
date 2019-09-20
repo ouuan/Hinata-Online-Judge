@@ -997,7 +997,7 @@ function echoRanklist($config = array()) {
 		$users[] = $user;
 	};
 	$col_names = array('username', 'rating', 'motto');
-	$tail = 'order by rating desc, username asc';
+	$tail = 'order by rating desc, register_time asc';
 	
 	if (isset($config['top10'])) {
 		$tail .= ' limit 10';
@@ -1038,7 +1038,7 @@ function echoACRank($config = array()) {
 		$users[] = $user;
 	};
 	$col_names = array('username', 'ac_num', 'motto');
-	$tail = 'order by ac_num desc, username asc';
+	$tail = 'order by ac_num desc, register_time asc';
 	
 	if (isset($config['top10'])) {
 		$tail .= ' limit 10';
