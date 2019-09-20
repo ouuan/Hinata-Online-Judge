@@ -22,21 +22,6 @@
 			$col_sex="color:black";
 		}
 		$esc_motto = HTML::escape($user['motto']);
-		$zan_cnt = 0;
-		$zans = DB::selectAll("select * from click_zans where username='{$username}'");
-		foreach ($zans as $zan) {
-			$zan_cnt += $zan['val'];
-		}
-		if ($zan_cnt > 0) {
-			$esc_zan = '+' . $zan_cnt;
-			$col_zan = 'green';
-		} else if ($zan_cnt < 0) {
-			$esc_zan = $zan_cnt;
-			$col_zan = 'red';
-		} else {
-			$esc_zan = $zan_cnt;
-			$col_zan = 'gray';
-		}
 	?>
 	<div class="card border-info">
 		<h5 class="card-header bg-info"><?= UOJLocale::get('user profile') ?></h5>
@@ -63,10 +48,6 @@
 						<div class="list-group-item">
 							<h4 class="list-group-item-heading"><?= UOJLocale::get('motto') ?></h4>
 							<p class="list-group-item-text"><?= $esc_motto ?></p>
-						</div>
-						<div class="list-group-item">
-							<h4 class="list-group-item-heading"><?= UOJLocale::get('zan num') ?></h4>
-							<p class="list-group-item-text" style="color:<?= $col_zan ?>"><strong><?= $esc_zan ?></strong></p>
 						</div>
 						<?php if (isSuperUser($myUser)): ?>
 						<div class="list-group-item">

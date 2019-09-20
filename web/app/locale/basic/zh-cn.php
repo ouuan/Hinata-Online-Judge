@@ -69,6 +69,5 @@ return [
 	'female' => '女',
 	'server time' => '服务器时间',
 	'opensource project' => '开源项目',
-	'back to' => '回到',
-	'zan num' => '题目评价总和'
+	'back to' => '回到'
 ];
