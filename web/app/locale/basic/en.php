@@ -23,7 +23,7 @@ return [
 	'username' => 'Username',
 	'password' => 'Password',
 	'new password' => 'New password',
-	'email' => 'Email (Only correct e-mail address can use Gravatar)',
+	'email' => 'Email (you can use Gravatar only when you use a correct e-mail address)',
 	'QQ' => 'QQ',
 	'sex' => 'Sex',
 	'motto' => 'Motto',
