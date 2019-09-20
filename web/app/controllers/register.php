@@ -63,7 +63,7 @@
 <h2 class="page-header"><?= UOJLocale::get('register') ?></h2>
 <form id="form-register" class="form-horizontal">
 	<div id="div-email" class="form-group">
-		<label for="input-email" class="col-sm-2 control-label"><?= UOJLocale::get('email') ?></label>
+		<label for="input-email" class="col-sm-4 control-label"><?= UOJLocale::get('email') ?></label>
 		<div class="col-sm-3">
 			<input type="email" class="form-control" id="input-email" name="email" placeholder="<?= UOJLocale::get('enter your email') ?>" maxlength="50" />
 			<span class="help-block" id="help-email"></span>

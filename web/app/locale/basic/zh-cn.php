@@ -23,7 +23,7 @@ return [
 	'username' => '用户名',
 	'password' => '密码',
 	'new password' => '新密码',
-	'email' => 'Email',
+	'email' => 'Email (只有正确的邮箱地址可以使用头像)',
 	'QQ' => 'QQ',
 	'sex' => '性别',
 	'motto' => '格言',
