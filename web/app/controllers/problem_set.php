@@ -41,6 +41,8 @@
 			}
 			echo '</td>';
 			if (isset($_COOKIE['show_submit_mode'])) {
+				$problem['submit_num'] = queryDistinctSubmissions($problem['id']);
+				$problem['ac_num'] = queryDistinctAC($problem['id']);
 				$perc = $problem['submit_num'] > 0 ? round(100 * $problem['ac_num'] / $problem['submit_num']) : 0;
 				echo <<<EOD
 				<td><a href="/submissions?problem_id={$problem['id']}&min_score=100&max_score=100">&times;{$problem['ac_num']}</a></td>
