@@ -1006,3 +1006,44 @@ function echoRanklist($config = array()) {
 	$config['get_row_index'] = '';
 	echoLongTable($col_names, 'user_info', '1', $tail, $header_row, $print_row, $config);
 }
+
+function echoACRank($config = array()) {
+	$header_row = '';
+	$header_row .= '<tr>';
+	$header_row .= '<th style="width: 5em;">#</th>';
+	$header_row .= '<th style="width: 14em;">'.UOJLocale::get('username').'</th>';
+	$header_row .= '<th style="width: 50em;">'.UOJLocale::get('motto').'</th>';
+	$header_row .= '<th style="width: 5em;">'.UOJLocale::get('ac_num').'</th>';
+	$header_row .= '</tr>';
+	
+	$users = array();
+	$print_row = function($user, $now_cnt) use(&$users) {
+		if (!$users) {
+			$rank = DB::selectCount("select count(*) from user_info where ac_num > {$user['ac_num']}") + 1;
+		} else if ($user['ac_num'] == $users[count($users) - 1]['ac_num']) {
+			$rank = $users[count($users) - 1]['rank'];
+		} else {
+			$rank = $now_cnt;
+		}
+		
+		$user['rank'] = $rank;
+		
+		echo '<tr>';
+		echo '<td>' . $user['rank'] . '</td>';
+		echo '<td>' . getUserLink($user['username']) . '</td>';
+		echo '<td>' . HTML::escape($user['motto']) . '</td>';
+		echo '<td>' . $user['ac_num'] . '</td>';
+		echo '</tr>';
+		
+		$users[] = $user;
+	};
+	$col_names = array('username', 'ac_num', 'motto');
+	$tail = 'order by ac_num desc, username asc';
+	
+	if (isset($config['top10'])) {
+		$tail .= ' limit 10';
+	}
+	
+	$config['get_row_index'] = '';
+	echoLongTable($col_names, 'user_info', '1', $tail, $header_row, $print_row, $config);
+}

@@ -86,4 +86,13 @@
 		</div>
 	</div>
 </div>
+<div class="row">
+	<div class="col-sm-12 mt-4">
+		<h3><?= UOJLocale::get('most ac') ?></h3>
+		<?php echoACRank(array('echo_full' => '', 'top10' => '')) ?>
+		<div class="text-center">
+			<a href="/acrank"><?= UOJLocale::get('view all') ?></a>
+		</div>
+	</div>
+</div>
 <?php echoUOJPageFooter() ?>

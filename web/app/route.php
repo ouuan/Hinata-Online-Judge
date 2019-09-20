@@ -48,7 +48,8 @@ Route::group([
 		Route::any('/announcements', '/announcements.php');
 		
 		Route::any('/faq', '/faq.php');
-		Route::any('/ranklist', '/ranklist.php?type=rating');
+		Route::any('/ranklist', '/ranklist.php');
+		Route::any('/acrank', '/acrank.php');
 		
 		Route::any('/login', '/login.php');
 		Route::any('/logout', '/logout.php');

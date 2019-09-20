@@ -18,6 +18,8 @@ return [
 	'help' => 'Help',
 	'search' => 'Search',
 	'top rated' => 'Top rated',
+	'most ac' => 'Most Accepted',
+	'ac_num' => 'AC number',
 	'username' => 'Username',
 	'password' => 'Password',
 	'new password' => 'New password',
