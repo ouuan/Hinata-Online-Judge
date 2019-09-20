@@ -9,7 +9,7 @@
 		if ($_POST['type'] != 'B' && $_POST['type'] != 'BC' && $_POST['type'] != 'P' && $_POST['type'] != 'C')
 			return false;
 		if ($_POST['type'] == 'P' && $user != null && !hasAC($user, queryProblemBrief($_POST['id'])))
-			die('<div class="text-danger">you haven\'t AC</div>');
+			die('<div class="text-danger">you haven\'t got AC</div>');
 		return true;
 	}
 	if (!validateZan($myUser)) {
