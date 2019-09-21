@@ -158,7 +158,7 @@
     			}
 			});
 		</script>
-		<script src="//cdn.bootcss.com/mathjax/2.6.0/MathJax.js?config=TeX-AMS_HTML"></script>
+		<script src="//cdn.bootcss.com/mathjax/2.7.6/MathJax.js?config=TeX-AMS_HTML"></script>
 		<?php endif ?>
 		
 		<?php if (isset($REQUIRE_LIB['jquery.form'])): ?>

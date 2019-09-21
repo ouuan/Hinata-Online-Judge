@@ -5,7 +5,7 @@
                 become404Page();
         }
 	if (!isProblemVisibleToUser($problem, $myUser)) {
-		become404Page();
+		become403Page();
 	}
 
         function echoBlogCell($blog, &$cnt) {
