@@ -46,11 +46,7 @@ a sub {
 	text-indent: 2em;
 }
 
-article p {
-	text-indent: 2em;
-}
 .markdown-editor-out p {
-	text-indent: 2em;
 	word-break: break-all;
 }
 
@@ -247,7 +243,6 @@ pre {
 	width: 100%;
 }
 .comtbox1 {
-	white-space: pre-wrap;
 	word-break: break-all;
 	min-height: 80px;
 	margin-top: 10px;
@@ -403,7 +398,7 @@ pre {
 }
 
 blockquote {
-    color: #666;
-    border-left: 4px solid #ddd;
-    margin-left: 2em;
+	text-indent: 2em;
+	color: #666;
+	border-left: 4px solid #ddd;
 }
