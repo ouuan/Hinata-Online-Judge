@@ -1204,5 +1204,4 @@ $(function() {
 		text = text.replace(/&gt;/g, '>').replace(/&lt;/g, '<').replace(/&amp;/g, '&');
 		$(this)[0].innerHTML = marked(text);
 	});
-
 });
