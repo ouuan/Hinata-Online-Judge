@@ -115,6 +115,9 @@
 		
 		<?php if (isset($REQUIRE_LIB['blog-editor']) || isset($REQUIRE_LIB['marked'])): ?>
 		<?= HTML::js_src('/js/marked.js?v=0.7.0') ?>
+		<?= HTML::js_src('/js/highlight.min.js?v=9.15.10') ?>
+		<?= HTML::css_link('/css/tomorrow.min.css?v=9.15.10') ?>
+		<?= HTML::js_src('/js/mark-comments.js?v=2019.9.21') ?>
 		<?php endif ?>
 		
 		<?php if (isset($REQUIRE_LIB['slide-editor'])): ?>
