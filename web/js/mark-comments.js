@@ -1,11 +1,6 @@
 // mark comments
 
 function markComments() {
-        marked.setOptions({
-                highlight: function (code) {
-                        return hljs.highlightAuto(code).value;
-                }
-        });
         $('.comtbox1').each(function() {
                 var text = $(this)[0].innerHTML;
                 text = text.replace(/&gt;/g, '>').replace(/&lt;/g, '<').replace(/&amp;/g, '&');
@@ -24,4 +19,6 @@ function addMathJaxListeners() {
 $(function() {
         markComments();
         addMathJaxListeners();
+	addCopyButtons();
+	highlightAllCodes();
 });

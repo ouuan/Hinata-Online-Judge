@@ -1,6 +1,6 @@
 <?php
 	requirePHPLib('form');
-	requireLib('marked');
+	requireLib('comments');
 	
 	if (!isset($_GET['id']) || !validateUInt($_GET['id']) || !($blog = queryBlog($_GET['id'])) || !UOJContext::isHis($blog)) {
 		become404Page();

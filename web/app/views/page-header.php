@@ -113,10 +113,14 @@
 		<?= HTML::js_src('/js/codemirror/mode/pascal/pascal.js') ?>
 		<?php endif ?>
 		
-		<?php if (isset($REQUIRE_LIB['blog-editor']) || isset($REQUIRE_LIB['marked'])): ?>
+		<?php if (isset($REQUIRE_LIB['blog-editor']) || isset($REQUIRE_LIB['comments'])): ?>
 		<?= HTML::js_src('/js/marked.js?v=0.7.0') ?>
+		<?php endif ?>
+
 		<?= HTML::js_src('/js/highlight.min.js?v=9.15.10') ?>
 		<?= HTML::css_link('/css/tomorrow.min.css?v=9.15.10') ?>
+
+		<?php if (isset($REQUIRE_LIB['comments'])): ?>
 		<?= HTML::js_src('/js/mark-comments.js?v=2019.9.21') ?>
 		<?php endif ?>
 		

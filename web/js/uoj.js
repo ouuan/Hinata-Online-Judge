@@ -1154,8 +1154,16 @@ function showStandings() {
 // based on https://xinyo.org/archives/66226
 
 $(function() {
+	addCopyButtons();
+});
+
+function addCopyButtons() {
 	//添加复制按钮
-	$("pre>code").before("<div class='copy_code btn btn-sm btn-outline-secondary float-right'>复制</div>");
+	$("pre>code").each(function() {
+		if ($(this).prevAll('.copy_code').length == 0) {
+			$(this).before("<div class='copy_code btn btn-sm btn-outline-secondary float-right'>复制</div>")
+		}
+	});
 
 	//为复制按钮添加click事件
 	$(".copy_code").on("click", function() {
@@ -1189,4 +1197,14 @@ $(function() {
 			thisCopied.html("复制");
 		}, 1200)
 	})
-})
+}
+
+function highlightAllCodes() {
+	$('pre').each(function() {
+		hljs.highlightBlock($(this)[0]);
+	});
+}
+
+$(function() {
+	highlightAllCodes();
+});
