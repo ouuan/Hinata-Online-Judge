@@ -1,5 +1,5 @@
 <?php
-	function validateZan($user) {
+	function validateZan() {
 		if (!validateUInt($_POST['id']))
 			return false;
 		if (!validateInt($_POST['delta']))
@@ -8,11 +8,9 @@
 			return false;
 		if ($_POST['type'] != 'B' && $_POST['type'] != 'BC' && $_POST['type'] != 'P' && $_POST['type'] != 'C')
 			return false;
-		if ($_POST['type'] == 'P' && $user != null && !hasAC($user, queryProblemBrief($_POST['id'])))
-			die('<div class="text-danger">you haven\'t got AC</div>');
 		return true;
 	}
-	if (!validateZan($myUser)) {
+	if (!validateZan()) {
 		die('<div class="text-danger">failed</div>');
 	}
 	if ($myUser == null) {
