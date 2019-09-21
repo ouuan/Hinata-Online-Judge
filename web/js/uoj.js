@@ -1153,10 +1153,6 @@ function showStandings() {
 // copy codes
 // based on https://xinyo.org/archives/66226
 
-$(function() {
-	addCopyButtons();
-});
-
 function addCopyButtons() {
 	//添加复制按钮
 	$("pre>code").each(function() {
@@ -1203,6 +1199,7 @@ function highlightAllCodes() {
 	$('pre').each(function() {
 		hljs.highlightBlock($(this)[0]);
 	});
+	addCopyButtons();
 }
 
 $(function() {
