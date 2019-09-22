@@ -38,41 +38,41 @@
 				</table>
 			</div>
 			<script type="text/javascript">
-			  function hitokotoLike(x, y) {
-				$.ajax({
-				    url: "https://hitokoto.cn/Like",
-				    type: "GET",
-				    data: "ID=" + x,
-				    dataType: "jsonp",
-				    success: function(data) {
-					alert(data.message);
-					$(y).css('color', 'red');
-				    },
-				    error: function() {
-					console.log('Hitokoto Like Request Error.');
-					$(y).css('color', 'red');
-				    }
+				function hitokotoLike(x, y) {
+					$.ajax({
+					    url: "https://hitokoto.cn/Like",
+					    type: "GET",
+					    data: "ID=" + x,
+					    dataType: "jsonp",
+					    success: function(data) {
+							alert(data.message);
+							$(y).css('color', 'red');
+					    },
+					    error: function() {
+							console.log('Hitokoto Like Request Error.');
+							$(y).css('color', 'red');
+					    }
+					});
+				}
+				$.get('https://v1.hitokoto.cn/?c=a', function(data) {
+					$('#hitokoto-content').css('display', '').text(data.hitokoto);
+					$('#hitokoto-from').css('display', '').text('——' + data.from);
+					$('#hitokoto-from').attr('title', '上传者: ' + data.creator);
+					$('#hitokoto-link').attr('href', 'https://hitokoto.cn/?id=' + data.id);
+					document.getElementById('hitokoto-like').onclick = function() { hitokotoLike(data.id, '#hitokoto-like'); }
 				});
-			  }
-			  $.get('https://v1.hitokoto.cn/?c=a', function(data) {
-				$('#hitokoto-content').css('display', '').text(data.hitokoto);
-				$('#hitokoto-from').css('display', '').text('——' + data.from);
-				$('#hitokoto-from').attr('title', '上传者: ' + data.creator);
-				$('#hitokoto-link').attr('href', 'https://hitokoto.cn/?id=' + data.id);
-				document.getElementById('hitokoto-like').onclick = function() { hitokotoLike(data.id, '#hitokoto-like'); }
-			  });
 			</script>
 			<div class="col-xs-6 col-sm-4 col-md-3">
-				<div>
-					<div style="display: table-cell;vertical-align: top; color:#B2B7F2;font-size:30px;font-family:'Times New Roman',serif;font-weight:bold;text-align:left;">“</div>
-					<div style="display: table-cell;text-align: left; vertical-align: middle; text-indent: 2em; padding: 0.8em 0.2em 1em 0.2em; font-size:1.1em"><b><span style="color:burlywood;"><span id="hitokoto-content"></span></span></b></div>
-					<div style="display: table-cell; vertical-align: bottom; color:#B2B7F2;font-size:30px;font-family:'Times New Roman',serif;font-weight:bold;text-align:left;">”</div>
-				</div>
-				<div style="text-align: right; font-size: 0.9em; color: black;" id="hitokoto-from"></div>
-				<div style="text-align: center; margin-top: 15px; font-size: 1em; color: black;">
-					<a id="hitokoto-link" href="https://hitokoto.cn/" style="background-color: transparent;color: #555;text-decoration: none;outline: none;border-bottom: 1px solid #999;border-bottom-color: rgb(153, 153, 153);">Hitokoto</a>&nbsp;&nbsp;&nbsp;
-					<button id="hitokoto-like" title="通过给句子点赞可以增加其出现概率，由于技术原因并不能显示赞数与点赞是否成功的信息（红心表示成功发送点赞请求，但如果同 IP 重复点赞就会失败），如需查看可以点击左边的“Hitokoto”链接。"><i class="menu-item-icon fa fa-fw fa-heart"></i></button>
-				</div>
+				<div class="hitokoto-block">
+		        	<div class="hitokoto-inner hitokoto-comma hitokoto-left-comma">“</div>
+		        	<div class="hitokoto-inner hitokoto-content"><b><span><span id="hitokoto-content"></span></span></b></div>
+		        	<div class="hitokoto-inner hitokoto-comma hitokoto-right-comma">”</div>
+		      	</div>
+		      	<div id="hitokoto-from"></div>
+		      	<div class="hitokoto-bottom">
+		        	<a id="hitokoto-link" href="https://hitokoto.cn/">Hitokoto</a>&nbsp;&nbsp;&nbsp;
+		        	<button id="hitokoto-like" title="通过给句子点赞可以增加其出现概率，由于技术原因并不能显示赞数与点赞是否成功的信息（红心表示成功发送点赞请求，但如果同 IP 重复点赞就会失败），如需查看可以点击左边的“Hitokoto”链接。"><i class="menu-item-icon fa fa-fw fa-heart"></i></button>
+		      	</div>
 			</div>
 		</div>
 	</div>

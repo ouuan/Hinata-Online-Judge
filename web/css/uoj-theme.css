@@ -401,3 +401,49 @@ blockquote {
 	color: #666;
 	border-left: 4px solid #ddd;
 }
+
+.hitokoto-block {
+    width: 200px;
+    display: table;
+    padding: 0 10px;
+}
+
+.hitokoto-inner {
+    text-align: left;
+    display: table-cell;
+}
+
+.hitokoto-comma {
+    color: #B2B7F2;
+    font-size: 24px;
+    font-weight: bold;
+    font-family: 'Times New Roman', serif;
+}
+
+.hitokoto-left-comma {
+    vertical-align: top;
+}
+
+.hitokoto-right-comma {
+    vertical-align: bottom;
+}
+
+.hitokoto-content {
+    width: 176px;
+    color: burlywood;
+    text-indent: 2em;
+    vertical-align: middle;
+    padding: 0.8em 0.2em 1em 0.2em;
+}
+
+#hitokoto-from {
+    text-align: right;
+    font-size: 0.8em;
+    color: black;
+}
+
+.hitokoto-bottom {
+    margin-top: 15px;
+    font-size: 0.8em;
+    color: black;
+}
