@@ -1197,7 +1197,18 @@ function addCopyButtons() {
 
 function highlightAllCodes() {
 	$('pre').each(function() {
-		hljs.highlightBlock($(this)[0]);
+		var notBlogEditor = true;
+		var u = $(this)[0];
+		while (u != document.body) {
+			if (u.className == 'blog-content-md-editor') {
+				notBlogEditor = false;
+				break;
+			}
+			u = u.parentNode;
+		}
+		if (notBlogEditor) {
+			hljs.highlightBlock($(this)[0]);
+		}
 	});
 	addCopyButtons();
 }
