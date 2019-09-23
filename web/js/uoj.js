@@ -1195,7 +1195,8 @@ function addCopyButtons() {
 	})
 }
 
-function highlightAllCodes() {
+function highlightAndCopyButtons() {
+	$('pre').addClass('hljs');
 	$('pre code').each(function() {
 		var notBlogEditor = true;
 		var u = $(this)[0];
@@ -1214,6 +1215,5 @@ function highlightAllCodes() {
 }
 
 $(function() {
-	$('pre').addClass('hljs');
-	highlightAllCodes();
+	highlightAndCopyButtons();
 });

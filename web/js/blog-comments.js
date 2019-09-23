@@ -43,5 +43,5 @@ $(function() {
 	addPaginationListeners();
 	addEmojioneArea();
 	addCopyButtons();
-	highlightAllCodes();
+	highlightAndCopyButtons();
 });
