@@ -1,7 +1,6 @@
 function addEmojioneArea() {
 	$(".form-control").each(function() {
 		$(this).emojioneArea();
-		emojione.imagePathPNG = '/images/emoji/';
 	});
 }
 
