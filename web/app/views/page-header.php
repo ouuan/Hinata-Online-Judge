@@ -121,6 +121,7 @@
 		<?= HTML::css_link('/css/tomorrow.min.css?v=9.15.10') ?>
 
 		<?php if (isset($REQUIRE_LIB['comments'])): ?>
+		<?= HTML::js_src('/js/jquery.textcomplete.js?v=1.3.4') ?>
 		<?= HTML::css_link('/css/emojione.min.css?v=2.2.7') ?>
 		<?= HTML::js_src('/js/emojione.min.js?v=2.2.7') ?>
 		<?= HTML::css_link('/css/emojionearea.min.css?v=3.4.1') ?>
