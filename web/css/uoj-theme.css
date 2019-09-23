@@ -461,6 +461,6 @@ blockquote {
 	text-decoration: none;
 }
 
-.qq-stickers {
+img[src*=\/images\/qq\/] {
 	width: 24px;
 }

@@ -23,15 +23,16 @@ function addPaginationListeners() {
 function qqStickers() {
 	$('.comtbox1').each(function() {
 		var text = $(this)[0].innerHTML;
-		text = text.replace(/\/kel/g, '<img src="/images/qq/kelian.gif" class="qq-stickers" alt="[可怜]">');
-		text = text.replace(/\/kk/g, '<img src="/images/qq/kuaikule.gif" class="qq-stickers" alt="[快哭了]">');
-		text = text.replace(/\/dk/g, '<img src="/images/qq/daku.gif" class="qq-stickers" alt="[大哭]">');
-		text = text.replace(/\/jk/g, '<img src="/images/qq/jingkong.gif" class="qq-stickers" alt="[惊恐]">');
-		text = text.replace(/\/xyx/g, '<img src="/images/qq/xieyanxiao.gif" class="qq-stickers" alt="[斜眼笑]">');
-		text = text.replace(/\/cy/g, '<img src="/images/qq/ciya.gif" class="qq-stickers" alt="[呲牙]">');
-		text = text.replace(/\/px/g, '<img src="/images/qq/penxue.gif" class="qq-stickers" alt="[喷血]">');
-		text = text.replace(/\/xk/g, '<img src="/images/qq/xiaoku.gif" class="qq-stickers" alt="[笑哭]">');
-		text = text.replace(/\/se/g, '<img src="/images/qq/se.gif" class="qq-stickers" alt="[色]">');
+		text = text.replace(/\/kel/g, '<img src="/images/qq/kelian.gif" alt="[可怜]">');
+		text = text.replace(/\/kk/g, '<img src="/images/qq/kuaikule.gif" alt="[快哭了]">');
+		text = text.replace(/\/dk/g, '<img src="/images/qq/daku.gif" alt="[大哭]">');
+		text = text.replace(/\/jk/g, '<img src="/images/qq/jingkong.gif" alt="[惊恐]">');
+		text = text.replace(/\/xyx/g, '<img src="/images/qq/xieyanxiao.gif" alt="[斜眼笑]">');
+		text = text.replace(/\/cy/g, '<img src="/images/qq/ciya.gif" alt="[呲牙]">');
+		text = text.replace(/\/px/g, '<img src="/images/qq/penxue.gif" alt="[喷血]">');
+		text = text.replace(/\/xk/g, '<img src="/images/qq/xiaoku.gif" alt="[笑哭]">');
+		text = text.replace(/\/se/g, '<img src="/images/qq/se.gif" alt="[色]">');
+		text = text.replace(/\/yl/g, '<img src="/images/qq/youling.gif" alt="[幽灵]">');
 		$(this)[0].innerHTML = text;
 	});
 }
