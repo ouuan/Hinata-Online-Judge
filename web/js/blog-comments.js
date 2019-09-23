@@ -32,7 +32,9 @@ function qqStickers() {
 		text = text.replace(/\/px/g, '<img src="/images/qq/penxue.gif" alt="[喷血]">');
 		text = text.replace(/\/xk/g, '<img src="/images/qq/xiaoku.gif" alt="[笑哭]">');
 		text = text.replace(/\/se/g, '<img src="/images/qq/se.gif" alt="[色]">');
-		text = text.replace(/\/yl/g, '<img src="/images/qq/youling.gif" alt="[幽灵]">');
+		text = text.replace(/\/youl/g, '<img src="/images/qq/youling.gif" alt="[幽灵]">');
+		text = text.replace(/\/fad/g, '<img src="/images/qq/fadou.gif" alt="[发抖]">');
+		text = text.replace(/\/tsh/g, '<img src="/images/qq/tiaosheng.gif" alt="[跳绳]">');
 		$(this)[0].innerHTML = text;
 	});
 }
