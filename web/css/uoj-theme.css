@@ -443,7 +443,14 @@ blockquote {
 }
 
 .hitokoto-bottom {
+    color: black;
     margin-top: 15px;
     font-size: 0.8em;
-    color: black;
+    text-align: center;
+}
+
+#hitokoto-link {
+	color: #333;
+    padding-bottom: 2px;
+    border-bottom: 1px solid;
 }
