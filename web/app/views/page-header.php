@@ -166,7 +166,7 @@
 				},
 				menuSettings: {
 					zoom: "Hover"
-    			}
+				}
 			});
 		</script>
 		<script src="//cdn.bootcss.com/mathjax/2.7.6/MathJax.js?config=TeX-AMS_HTML"></script>
