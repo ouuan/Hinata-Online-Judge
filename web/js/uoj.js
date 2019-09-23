@@ -1155,7 +1155,7 @@ function showStandings() {
 
 function addCopyButtons() {
 	//添加复制按钮
-	$("pre>code").each(function() {
+	$("pre code").each(function() {
 		if ($(this).prevAll('.copy_code').length == 0) {
 			$(this).before("<div class='copy_code btn btn-sm btn-outline-secondary float-right'>复制</div>")
 		}
@@ -1206,7 +1206,7 @@ function highlightAllCodes() {
 			}
 			u = u.parentNode;
 		}
-		if (notBlogEditor) {
+		if (notBlogEditor && !$(this).parent().parent().hasClass('card-body')) {
 			hljs.highlightBlock($(this)[0]);
 		}
 	});
