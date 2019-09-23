@@ -460,3 +460,7 @@ blockquote {
 	padding-bottom: none;
 	text-decoration: none;
 }
+
+.qq-stickers {
+	width: 24px;
+}
