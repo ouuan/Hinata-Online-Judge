@@ -464,3 +464,7 @@ blockquote {
 img[src*=\/images\/qq\/] {
 	width: 24px;
 }
+
+th[align=center] {
+	text-align: center;
+}
