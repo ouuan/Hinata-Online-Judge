@@ -42,7 +42,7 @@
 		<script type="text/javascript">uojHome = '<?= HTML::url('/') ?>'</script>
 
 		<!-- Bootstrap core CSS -->
-		<?= HTML::css_link('/css/bootstrap.min.css?v=2019.5.31') ?>
+		<?= HTML::css_link('/css/bootstrap.min.css?v=2019.9.24') ?>
 		<!-- Bootstrap Glyphicons CSS-->
 		<?= HTML::css_link('/css/bootstrap-glyphicons.min.css?v=2019.5.31') ?>
 
