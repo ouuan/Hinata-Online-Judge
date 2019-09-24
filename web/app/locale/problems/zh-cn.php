@@ -48,5 +48,6 @@ return [
 	'discuss' => '讨论',
 	'time limit' => '时间限制',
 	'memory limit' => '空间限制',
-	'ac rating' => '除 std 外 AC 者平均 Rating'
+	'ac rating' => '除 std 外 AC 者平均 Rating',
+	'download' => '下发文件'
 ];

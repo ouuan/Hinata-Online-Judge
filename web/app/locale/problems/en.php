@@ -48,5 +48,6 @@ return [
 	'discuss' => 'Discuss',
 	'time limit' => 'Time Limit',
 	'memory limit' => 'Memory Limit',
-	'ac rating' => 'Average Rating of whom got AC excluding std'
+	'ac rating' => 'Average Rating of whom got AC excluding std',
+	'download' => 'Download Files'
 ];
