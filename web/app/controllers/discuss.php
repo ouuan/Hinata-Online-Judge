@@ -39,6 +39,7 @@ foreach ($problem_blogs as $problem_blog) {
         }
     }
 }
+array_multisort(array_column($config['data'], 'post_time'), SORT_DESC, $config['data']);
 ?>
 <?php echoUOJPageHeader(HTML::stripTags($problem['title']) . ' - ' . UOJLocale::get('problems::discuss')) ?>
 <?php if (Auth::check()): ?>
