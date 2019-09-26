@@ -18,11 +18,11 @@ function echoBlogCell($blog) {
 }
 
 $header = <<<EOD
-            <tr>
-                    <th width="60%">标题</th>
-                    <th width="20%">发表者</th>
-                    <th width="20%">发表日期</th>
-            </tr>
+    <tr>
+            <th width="60%">标题</th>
+            <th width="20%">发表者</th>
+            <th width="20%">发表日期</th>
+    </tr>
 EOD;
 $config = array();
 $config['table_classes'] = array('table', 'table-hover');
@@ -32,11 +32,11 @@ $problem_blogs = DB::selectAll("select blog_id from blogs_tags where tag = {$pro
 foreach ($problem_blogs as $problem_blog) {
     $discuss_cnt = DB::selectCount("select count(*) from blogs_tags where blog_id = {$problem_blog['blog_id']} and tag = 'discuss'");
     if ($discuss_cnt > 0) {
-	$is_hidden = DB::selectFirst("select is_hidden from blogs where id = {$problem_blog['blog_id']}");
-	if ($is_hidden['is_hidden'] == 0) {
+        $is_hidden = DB::selectFirst("select is_hidden from blogs where id = {$problem_blog['blog_id']}");
+        if ($is_hidden['is_hidden'] == 0) {
             $discuss_blog = DB::selectFirst("select id, poster, title, post_time, zan from blogs where id = {$problem_blog['blog_id']}");
-    	    $config['data'][] = $discuss_blog;
-	}
+            $config['data'][] = $discuss_blog;
+        }
     }
 }
 ?>
