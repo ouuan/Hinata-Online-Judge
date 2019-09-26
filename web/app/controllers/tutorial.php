@@ -23,16 +23,20 @@ $header = <<<EOD
                     <th width="20%">发表者</th>
                     <th width="20%">发表日期</th>
             </tr>
-    EOD;
+EOD;
 $config = array();
 $config['table_classes'] = array('table', 'table-hover');
 
 $config['data'] = array();
 $problem_blogs = DB::selectAll("select blog_id from blogs_tags where tag = {$problem['id']}");
 foreach ($problem_blogs as $problem_blog) {
-    $tutorial_cnt = DB::selectCount("select count(*) from blogs_tags where id = {$problem_blog['blog_id']} and tag = 'tutorial'");
+    $tutorial_cnt = DB::selectCount("select count(*) from blogs_tags where blog_id = {$problem_blog['blog_id']} and tag = 'tutorial'");
     if ($tutorial_cnt > 0) {
-    	$config['data'] .= DB::selectFirst("select * from blogs where id = {$problem_blog}");
+	$is_hidden = DB::selectFirst("select is_hidden from blogs where id = {$problem_blog['blog_id']}");
+	if ($is_hidden['is_hidden'] == 0) {
+            $tutorial_blog = DB::selectFirst("select id, poster, title, post_time, zan from blogs where id = {$problem_blog['blog_id']}");
+    	    $config['data'][] = $tutorial_blog;
+	}
     }
 }
 ?>
@@ -49,6 +53,6 @@ foreach ($problem_blogs as $problem_blog) {
 <?php if (count($config['data']) == 0): ?>
 <p>还没有人写题解呢..要不你来写一篇？<br>在博客中加上 <code>tutorial</code> 以及 <code>题号</code> 两个标签就可以啦！</p>
 <?php else: ?>
-<?php echoLongTable(array('id', 'poster', 'title', 'post_time', 'zan'), 'order by post_time desc', $header, 'echoBlogCell', $config); ?>
+<?php echoLongTableData($header, 'echoBlogCell', $config); ?>
 <?php endif ?>
 <?php echoUOJPageFooter() ?>

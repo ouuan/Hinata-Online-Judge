@@ -175,10 +175,8 @@ function echoLongTable($col_names, $table_name, $cond, $tail, $header_row, $prin
 	echo $pag->pagination();
 }
 
-function echoLongTable($col_names, $tail, $header_row, $print_row, $config) {
+function echoLongTableData($header_row, $print_row, $config) {
 	$pag_config = $config;
-	$pag_config['col_names'] = $col_names;
-	$pag_config['tail'] = $tail;
 	$pag = new Paginator($pag_config);
 
 	$div_classes = isset($config['div_classes']) ? $config['div_classes'] : array('table-responsive');
