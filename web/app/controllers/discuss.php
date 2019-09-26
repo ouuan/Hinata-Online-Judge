@@ -9,6 +9,14 @@ if (!isProblemVisibleToUser($problem, $myUser)) {
     become403Page();
 }
 
+if ($_GET['type'] == 'tutorial') {
+	$noBlog = '<p>还没有人写题解呢..要不你来写一篇？<br>在博客中加上 <code>tutorial</code> 以及 <code>题号</code> 两个标签就可以啦！</p>';
+} else if ($_GET['type'] == 'discuss') {
+	$noBlog = '<p>还没有人发讨论呢..要不你来发一篇？<br>在博客中加上 <code>discuss</code> 以及 <code>题号</code> 两个标签就可以啦！</p>';
+} else {
+	become404Page();
+}
+
 function echoBlogCell($blog) {
     echo '<tr>';
     echo '<td>' . getBlogLink($blog['id']) . '</td>';
@@ -30,7 +38,7 @@ $config['table_classes'] = array('table', 'table-hover');
 $config['data'] = array();
 $problem_blogs = DB::selectAll("select blog_id from blogs_tags where tag = {$problem['id']}");
 foreach ($problem_blogs as $problem_blog) {
-    $discuss_cnt = DB::selectCount("select count(*) from blogs_tags where blog_id = {$problem_blog['blog_id']} and tag = 'discuss'");
+    $discuss_cnt = DB::selectCount("select count(*) from blogs_tags where blog_id = {$problem_blog['blog_id']} and tag = '{$_GET['type']}'");
     if ($discuss_cnt > 0) {
         $is_hidden = DB::selectFirst("select is_hidden from blogs where id = {$problem_blog['blog_id']}");
         if ($is_hidden['is_hidden'] == 0) {
@@ -41,7 +49,7 @@ foreach ($problem_blogs as $problem_blog) {
 }
 array_multisort(array_column($config['data'], 'post_time'), SORT_DESC, $config['data']);
 ?>
-<?php echoUOJPageHeader(HTML::stripTags($problem['title']) . ' - ' . UOJLocale::get('problems::discuss')) ?>
+<?php echoUOJPageHeader(HTML::stripTags($problem['title']) . ' - ' . UOJLocale::get('problems::' . $_GET['type'])) ?>
 <?php if (Auth::check()): ?>
 <div class="float-right">
     <div class="btn-group">
@@ -50,9 +58,9 @@ array_multisort(array_column($config['data'], 'post_time'), SORT_DESC, $config['
     </div>
 </div>
 <?php endif ?>
-<h3><?= '<a href="/problem/' . $_GET['id'] . '">#' . $_GET['id'] . '. ' . HTML::stripTags($problem['title']) . '</a> ' . UOJLocale::get('problems::discuss') ?></h3>
+<h3><?= '<a href="/problem/' . $_GET['id'] . '">#' . $_GET['id'] . '. ' . HTML::stripTags($problem['title']) . '</a> ' . UOJLocale::get('problems::' . $_GET['type']) ?></h3>
 <?php if (count($config['data']) == 0): ?>
-<p>还没有人发讨论呢..要不你来发一篇？<br>在博客中加上 <code>discuss</code> 以及 <code>题号</code> 两个标签就可以啦！</p>
+<?php echo $noBlog; ?>
 <?php else: ?>
 <?php echoLongTableData($header, 'echoBlogCell', $config); ?>
 <?php endif ?>
