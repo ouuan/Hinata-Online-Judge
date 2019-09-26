@@ -175,11 +175,9 @@ function echoLongTable($col_names, $table_name, $cond, $tail, $header_row, $prin
 	echo $pag->pagination();
 }
 
-function echoLongTableCnt($col_names, $table_name, $cond, $tail, $header_row, $print_row, $config, &$cnt) {
+function echoLongTable($col_names, $tail, $header_row, $print_row, $config) {
 	$pag_config = $config;
 	$pag_config['col_names'] = $col_names;
-	$pag_config['table_name'] = $table_name;
-	$pag_config['cond'] = $cond;
 	$pag_config['tail'] = $tail;
 	$pag = new Paginator($pag_config);
 
@@ -195,9 +193,9 @@ function echoLongTableCnt($col_names, $table_name, $cond, $tail, $header_row, $p
 
 	foreach ($pag->get() as $idx => $row) {
 		if (isset($config['get_row_index'])) {
-			$print_row($row, $idx, $cnt);
+			$print_row($row, $idx);
 		} else {
-			$print_row($row, $cnt);
+			$print_row($row);
 		}
 	}
 	if ($pag->isEmpty()) {
