@@ -54,5 +54,6 @@ return [
 	'extra test failed' => 'Extra Test Failed',
 	'newest' => '最新',
 	'least memory' => '最小内存',
-	'show unaccepted only' => '只显示未 AC 的题目'
+	'show unaccepted only' => '只显示未 AC 的题目',
+	'download all data' => '下载所有数据'
 ];

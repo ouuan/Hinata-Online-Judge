@@ -54,5 +54,6 @@ return [
 	'extra test failed' => 'Extra Test Failed',
 	'newest' => 'Newest',
 	'least memory' => 'Least Memory',
-	'show unaccepted only' => 'Show Unaccepted Problems Only'
+	'show unaccepted only' => 'Show Unaccepted Problems Only',
+	'download all data' => 'Download All Data'
 ];

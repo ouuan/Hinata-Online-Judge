@@ -6,25 +6,31 @@
 				become404Page();
 			}
 			
+			$all = isset($_GET['all']) && $_GET['all'] == 'true' ? true : false;
 			$visible = isProblemVisibleToUser($problem, $myUser);
-			if (!$visible && $myUser != null) {
+			if (!$visible && $myUser != null && !$all) {
 				$result = DB::query("select contest_id from contests_problems where problem_id = {$_GET['id']}");
 				while (list($contest_id) = DB::fetch($result, MYSQLI_NUM)) {
 					$contest = queryContest($contest_id);
 					genMoreContestInfo($contest);
-					if ($contest['cur_progress'] != CONTEST_NOT_STARTED && hasRegistered($myUser, $contest) && queryContestProblemRank($contest, $problem)) {
+					if ($contest['cur_progress'] == CONTEST_IN_PROGRESS && hasRegistered($myUser, $contest) && queryContestProblemRank($contest, $problem)) {
 						$visible = true;
 					}
 				}
 			}
 			if (!$visible) {
-				become404Page();
+				become403Page();
 			}
 
 			$id = $_GET['id'];
 			
-			$file_name = "/var/uoj_data/$id/download.zip";
-			$download_name = "problem_$id.zip";
+			if ($all) {
+				$file_name = "/var/uoj_data/$id.zip";
+				$download_name = "problem_all_$id.zip";
+			} else {	
+				$file_name = "/var/uoj_data/$id/download.zip";
+				$download_name = "problem_down_$id.zip";
+			}
 			break;
 		case 'testlib.h':
 			$file_name = "/opt/uoj/judger/uoj_judger/include/testlib.h";

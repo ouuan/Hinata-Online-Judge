@@ -169,6 +169,11 @@
 			<?php endif ?>
 		</div>
 	</div>
+	<?php if ($contest['cur_progress'] != CONTEST_IN_PROGRESS): ?>
+		<div class="text-right">
+			<a class="btn btn-primary" href="/download.php?type=problem&all=true&id=<?= $problem['id'] ?>"><?= UOJLocale::get('problems::download all data') ?></a>
+		</div>
+	<?php endif ?>
 <?php endif ?>
 
 <?php if (isset($rejudge_form)): ?>
