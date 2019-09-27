@@ -433,6 +433,7 @@ EOD;
 				echo <<<EOD
 	$('#form-{$this->form_name}').keydown(function(e) {
 		if (e.keyCode == 13 && e.ctrlKey) {
+			$('#button-submit-{$this->form_name}').focus();
 			$('#button-submit-{$this->form_name}').click();
 		}
 	});
