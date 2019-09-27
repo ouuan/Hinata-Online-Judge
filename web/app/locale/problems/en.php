@@ -51,5 +51,7 @@ return [
 	'ac rating' => 'Average Rating of whom got AC excluding std',
 	'download' => 'Download Files',
 	'best submission' => 'Best Submission',
-	'extra test failed' => 'Extra Test Failed'
+	'extra test failed' => 'Extra Test Failed',
+	'newest' => 'Newest',
+	'least memory' => 'Least Memory'
 ];

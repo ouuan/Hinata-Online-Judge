@@ -51,5 +51,7 @@ return [
 	'ac rating' => '除 std 外 AC 者平均 Rating',
 	'download' => '下发文件',
 	'best submission' => '最高分提交',
-	'extra test failed' => 'Extra Test Failed'
+	'extra test failed' => 'Extra Test Failed',
+	'newest' => '最新',
+	'least memory' => '最小内存'
 ];

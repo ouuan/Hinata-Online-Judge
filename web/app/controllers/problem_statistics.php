@@ -52,7 +52,7 @@
 		$suf_data[$i - 1]['count'] += $suf_data[$i]['count'];
 	}
 	
-	$submissions_sort_by_choice = !isset($_COOKIE['submissions-sort-by-code-length']) ? 'time' : 'tot_size';
+	$submissions_sort_by_choice = isset($_COOKIE['submissions-sort-by']) ? $_COOKIE['submissions-sort-by'] : 'time';
 ?>
 <?php
 	$REQUIRE_LIB['morris'] = "";
@@ -75,24 +75,34 @@
 	<div class="btn-group btn-group-sm">
 		<a href="<?=$SERVER['REQUEST_URI']?>" class="<?=$submissions_sort_by_choice == 'time' ? 'btn btn-info btn-xs active' : 'btn btn-info btn-xs'?>" id="submissions-sort-by-run-time"><?= UOJLocale::get('problems::fastest') ?></a>
 		<a href="<?=$SERVER['REQUEST_URI']?>" class="<?=$submissions_sort_by_choice == 'tot_size' ? 'btn btn-info btn-xs active' : 'btn btn-info btn-xs'?>" id="submissions-sort-by-code-length"><?= UOJLocale::get('problems::shortest') ?></a>
+		<a href="<?=$SERVER['REQUEST_URI']?>" class="<?=$submissions_sort_by_choice == 'submission_time' ? 'btn btn-info btn-xs active' : 'btn btn-info btn-xs'?>" id="submissions-sort-by-submission-time"><?= UOJLocale::get('problems::newest') ?></a>
+		<a href="<?=$SERVER['REQUEST_URI']?>" class="<?=$submissions_sort_by_choice == 'memory' ? 'btn btn-info btn-xs active' : 'btn btn-info btn-xs'?>" id="submissions-sort-by-memory"><?= UOJLocale::get('problems::least memory') ?></a>
 	</div>
 </div>
 
 <script type="text/javascript">
 	$('#submissions-sort-by-run-time').click(function() {
-		$.cookie('submissions-sort-by-run-time', '');
-		$.removeCookie('submissions-sort-by-code-length');
+		$.cookie('submissions-sort-by', 'time');
 	});
 	$('#submissions-sort-by-code-length').click(function() {
-		$.cookie('submissions-sort-by-code-length', '');
-		$.removeCookie('submissions-sort-by-run-time');
+		$.cookie('submissions-sort-by', 'tot_size');
+	});
+	$('#submissions-sort-by-submission-time').click(function() {
+		$.cookie('submissions-sort-by', 'submission_time');
+	});
+	$('#submissions-sort-by-memory').click(function() {
+		$.cookie('submissions-sort-by', 'memory');
 	});
 </script>
 
 <?php if ($submissions_sort_by_choice == 'time'): ?>
 	<?php echoSubmissionsList("best_ac_submissions.submission_id = submissions.id and best_ac_submissions.problem_id = {$problem['id']}", 'order by best_ac_submissions.used_time, best_ac_submissions.used_memory, best_ac_submissions.tot_size', array('judge_time_hidden' => '', 'table_name' => 'best_ac_submissions, submissions'), $myUser); ?>
-<?php else: ?>
+<?php elseif ($submissions_sort_by_choice == 'tot_size'): ?>
 	<?php echoSubmissionsList("best_ac_submissions.shortest_id = submissions.id and best_ac_submissions.problem_id = {$problem['id']}", 'order by best_ac_submissions.shortest_tot_size, best_ac_submissions.shortest_used_time, best_ac_submissions.shortest_used_memory', array('judge_time_hidden' => '', 'table_name' => 'best_ac_submissions, submissions'), $myUser); ?>
+<?php elseif ($submissions_sort_by_choice == 'submission_time'): ?>
+	<?php echoSubmissionsList("best_ac_submissions.newest_id = submissions.id and best_ac_submissions.problem_id = {$problem['id']}", 'order by best_ac_submissions.newest_id desc', array('judge_time_hidden' => '', 'table_name' => 'best_ac_submissions, submissions'), $myUser); ?>
+<?php else: ?>
+	<?php echoSubmissionsList("best_ac_submissions.least_id = submissions.id and best_ac_submissions.problem_id = {$problem['id']}", 'order by best_ac_submissions.least_used_memory, best_ac_submissions.least_used_time, best_ac_submissions.least_tot_size', array('judge_time_hidden' => '', 'table_name' => 'best_ac_submissions, submissions'), $myUser); ?>
 <?php endif ?>
 
 <br>

@@ -173,9 +173,11 @@
 	function updateBestACSubmissions($username, $problem_id) {
 		$best = DB::selectFirst("select id, used_time, used_memory, tot_size from submissions where submitter = '$username' and problem_id = $problem_id and score = 100 order by used_time, used_memory, tot_size asc limit 1");
 		$shortest = DB::selectFirst("select id, used_time, used_memory, tot_size from submissions where submitter = '$username' and problem_id = $problem_id and score = 100 order by tot_size, used_time, used_memory asc limit 1");
+		$newest = DB::selectFirst("select id, used_time, used_memory, tot_size from submissions where submitter = '$username' and problem_id = $problem_id and score = 100 order by id desc limit 1");
+		$least = DB::selectFirst("select id, used_time, used_memory, tot_size from submissions where submitter = '$username' and problem_id = $problem_id and score = 100 order by used_memory, used_time, tot_size asc limit 1");
 		DB::delete("delete from best_ac_submissions where submitter = '$username' and problem_id = $problem_id");
 		if ($best) {
-			DB::insert("insert into best_ac_submissions (problem_id, submitter, submission_id, used_time, used_memory, tot_size, shortest_id, shortest_used_time, shortest_used_memory, shortest_tot_size) values ($problem_id, '$username', ${best['id']}, ${best['used_time']}, ${best['used_memory']}, ${best['tot_size']}, ${shortest['id']}, ${shortest['used_time']}, ${shortest['used_memory']}, ${shortest['tot_size']})");
+			DB::insert("insert into best_ac_submissions (problem_id, submitter, submission_id, used_time, used_memory, tot_size, shortest_id, shortest_used_time, shortest_used_memory, shortest_tot_size, newest_id, newest_used_time, newest_used_memory, newest_tot_size, least_id, least_used_time, least_used_memory, least_tot_size) values ($problem_id, '$username', ${best['id']}, ${best['used_time']}, ${best['used_memory']}, ${best['tot_size']}, ${shortest['id']}, ${shortest['used_time']}, ${shortest['used_memory']}, ${shortest['tot_size']}, ${newest['id']}, ${newest['used_time']}, ${newest['used_memory']}, ${newest['tot_size']}, ${least['id']}, ${least['used_time']}, ${least['used_memory']}, ${least['tot_size']})");
 		}
 
 		$cnt = DB::selectCount("select count(*) from best_ac_submissions where submitter='$username'");
