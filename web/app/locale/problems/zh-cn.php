@@ -50,5 +50,6 @@ return [
 	'memory limit' => '空间限制',
 	'ac rating' => '除 std 外 AC 者平均 Rating',
 	'download' => '下发文件',
-	'best submission' => '最高分提交'
+	'best submission' => '最高分提交',
+	'extra test failed' => 'Extra Test Failed'
 ];
