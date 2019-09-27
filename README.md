@@ -6,6 +6,20 @@ Hinata Online Judge 是 ouuan 基于社区版 UOJ 搭建的校内 OJ。
 
 [feature list](https://github.com/ouuan/Hinata-Online-Judge/issues/1)
 
+使用方法：首先你需要已经安装了 [社区版 UOJ](https://github.com/UniversalOJ/UOJ-System)。在 docker 内的 `/opt/uoj` 文件夹下就是一个 git 仓库，如果要使用所有 feature 直接 pull 本仓库即可。即：
+
+1. （docker 外）`sudo docker exec -it uoj /bin/bash`
+
+2. `cd /opt/uoj`
+
+3. `git remote add hinata https://github.com/ouuan/Hinata-Online-Judge.git`
+
+4. `git pull hinata master`
+
+如果有冲突可能要手动解决。
+
+特别地，请阅读 [关于题目统计按提交时间和内存使用排序的说明](https://github.com/ouuan/Hinata-Online-Judge/issues/3)。
+
 # Universal Online Judge
 
 > #### 一款通用的在线评测系统。
