@@ -24,18 +24,25 @@
 		if (isProblemVisibleToUser($problem, $myUser)) {
 			echo '<tr class="text-center">';
 			$max_score = -1;
-			$scores = DB::selectAll("select score from submissions where problem_id = {$problem['id']} and submitter = '{$myUser['username']}'");
-			foreach ($scores as $score) {
-				if ($score['score'] > $max_score) {
-					$max_score = $score['score'];
+			$max_submission = -1;
+			$submissions = DB::selectAll("select score, id from submissions where problem_id = {$problem['id']} and submitter = '{$myUser['username']}'");
+			foreach ($submissions as $submission) {
+				if ($submission['score'] > $max_score) {
+					$max_score = $submission['score'];
+					$max_submission = $submission['id'];
 				}
 			}
 			if ($max_score >= 0) {
-				echo '<td class="submitted" score=' . $max_score . '>';
+				echo '<td class="submitted" title=' . $max_score . '>';
+				echo '<a href="/submissions?problem_id=' . $problem['id'] . '&submitter=' . $myUser['username'] . '" title="' . UOJLocale::get('problems::my submissions') . '">';
 			} else {
 				echo '<td>';
 			}
-			echo '#', $problem['id'], '</td>';
+			echo '#', $problem['id'];
+			if ($max_score >= 0) {
+				echo '</a>';
+			}
+			echo '</td>';
 			echo '<td class="text-left">';
 			if ($problem['is_hidden']) {
 				echo ' <span class="text-danger">[隐藏]</span> ';

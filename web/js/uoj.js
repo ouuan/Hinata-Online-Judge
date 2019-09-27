@@ -1234,7 +1234,7 @@ $(function() {
 
 function showProblemColor() {
 	$('.submitted').each(function() {
-		var col = getAlphaColOfScore($(this).attr('score'), 0.5)
+		var col = getAlphaColOfScore($(this).attr('title'), 0.5)
 		$(this).css('background-color', col);
 	});
 }
