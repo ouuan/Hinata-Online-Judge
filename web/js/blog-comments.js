@@ -8,6 +8,9 @@ function markComments() {
 	$('.comtbox1').each(function() {
 		var text = $(this)[0].innerHTML;
 		text = text.replace(/&gt;/g, '>').replace(/&lt;/g, '<').replace(/&amp;/g, '&');
+		text = text.replace(/<script/g, '&lt;script').replace(/<\/script>/g, '&lt;/script&gt;');
+		text = text.replace(/<frame/g, '&lt;frame').replace(/<\/frame>/g, '&lt;/frame&gt;');
+		text = text.replace(/<iframe/g,'&lt;iframe').replace(/<\/iframe>/g, '&lt;/iframe&gt;');
 		$(this)[0].innerHTML = marked(text);
 	});
 }

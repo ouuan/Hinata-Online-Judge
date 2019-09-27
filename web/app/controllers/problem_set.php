@@ -23,8 +23,15 @@
 		global $myUser;
 		if (isProblemVisibleToUser($problem, $myUser)) {
 			echo '<tr class="text-center">';
-			if ($problem['submission_id']) {
-				echo '<td class="success">';
+			$max_score = -1;
+			$scores = DB::selectAll("select score from submissions where problem_id = {$problem['id']} and submitter = '{$myUser['username']}'");
+			foreach ($scores as $score) {
+				if ($score['score'] > $max_score) {
+					$max_score = $score['score'];
+				}
+			}
+			if ($max_score >= 0) {
+				echo '<td class="submitted" score=' . $max_score . '>';
 			} else {
 				echo '<td>';
 			}
