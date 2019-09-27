@@ -89,6 +89,9 @@
 			}
 			location.href = url;
 		});
+		$('#input-failed').click(function() {
+			$('#form-search').submit();
+		});
 	</script>
 	<div class="top-buffer-sm"></div>
 </div>
