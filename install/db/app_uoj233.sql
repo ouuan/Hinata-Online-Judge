@@ -40,6 +40,14 @@ CREATE TABLE `best_ac_submissions` (
   `shortest_used_time` int(11) NOT NULL,
   `shortest_used_memory` int(11) NOT NULL,
   `shortest_tot_size` int(11) NOT NULL,
+  `newest_id` int(11) NOT NULL,
+  `newest_used_time` int(11) NOT NULL,
+  `newest_used_memory` int(11) NOT NULL,
+  `newest_tot_size` int(11) NOT NULL,
+  `least_id` int(11) NOT NULL,
+  `least_used_time` int(11) NOT NULL,
+  `least_used_memory` int(11) NOT NULL,
+  `least_tot_size` int(11) NOT NULL,
   PRIMARY KEY (`problem_id`,`submitter`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
