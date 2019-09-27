@@ -110,9 +110,11 @@
 <?php echoSubmissionsList("problem_id={$problem['id']} and submitter='{$myUser['username']}'", 'order by id desc', array('judge_time_hidden' => ''), $myUser); ?>
 <br>
 
+<?php if ($problem['hackable']): ?>
 <h2 class="text-center"><?= UOJLocale::get('problems::extra test failed') ?></h2>
 <?php echoSubmissionsList("problem_id={$problem['id']} and result like '%Extra Test Failed%'", 'order by judge_time desc', array(), $myUser); ?>
 <br>
+<?php endif ?>
 
 <h2 class="text-center"><?= UOJLocale::get('problems::score distribution') ?></h2>
 <div id="score-distribution-chart" style="height: 250px;"></div>
