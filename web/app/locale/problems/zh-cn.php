@@ -53,5 +53,6 @@ return [
 	'best submission' => '最高分提交',
 	'extra test failed' => 'Extra Test Failed',
 	'newest' => '最新',
-	'least memory' => '最小内存'
+	'least memory' => '最小内存',
+	'show unaccepted only' => '只显示未 AC 的题目'
 ];

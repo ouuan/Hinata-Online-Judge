@@ -96,6 +96,9 @@ EOD;
 	if (isset($_GET["search"])) { 
         $cond[]="title like '%".DB::escape($_GET["search"])."%' or id like '%".DB::escape($_GET["search"])."%'";
 	}
+	if (isset($_COOKIE['show_unaccepted_mode'])) {
+		$cond[] = "best_ac_submissions.submission_id is null";
+	}
 	
 	if ($cond) {
 		$cond = join($cond, ' and ');
@@ -162,8 +165,9 @@ EOD;
 		<?= HTML::tablist($tabs_info, $cur_tab, 'nav-pills') ?>
 	</div>
 	<div class="col-sm-4 order-sm-9 checkbox text-right">
-		<label class="checkbox-inline" for="input-show_tags_mode"><input type="checkbox" id="input-show_tags_mode" <?= isset($_COOKIE['show_tags_mode']) ? 'checked="checked" ': ''?>/> <?= UOJLocale::get('problems::show tags') ?></label>
-		<label class="checkbox-inline" for="input-show_submit_mode"><input type="checkbox" id="input-show_submit_mode" <?= isset($_COOKIE['show_submit_mode']) ? 'checked="checked" ': ''?>/> <?= UOJLocale::get('problems::show statistics') ?></label>
+		<label class="checkbox-inline" for="input-show_tags_mode"><input type="checkbox" id="input-show_tags_mode" <?= isset($_COOKIE['show_tags_mode']) ? 'checked="checked" ': ''?>/> <?= UOJLocale::get('problems::show tags') ?></label>&nbsp;
+		<label class="checkbox-inline" for="input-show_submit_mode"><input type="checkbox" id="input-show_submit_mode" <?= isset($_COOKIE['show_submit_mode']) ? 'checked="checked" ': ''?>/> <?= UOJLocale::get('problems::show statistics') ?></label>&nbsp;
+		<label class="checkbox-inline" for="input-show_unaccepted"><input type="checkbox" id="input-show_unaccepted" <?= isset($_COOKIE['show_unaccepted_mode']) ? 'checked="checked" ': ''?>/> <?= UOJLocale::get('problems::show unaccepted only') ?></label>&nbsp;
 	</div>
 	<div class="col-sm-4 order-sm-5">
 	<?php echo $pag->pagination(); ?>
@@ -184,6 +188,14 @@ $('#input-show_submit_mode').click(function() {
 		$.cookie('show_submit_mode', '', {path: '/problems'});
 	} else {
 		$.removeCookie('show_submit_mode', {path: '/problems'});
+	}
+	location.reload();
+});
+$('#input-show_unaccepted').click(function() {
+	if (this.checked) {
+		$.cookie('show_unaccepted_mode', '', {path: '/problems'});
+	} else {
+		$.removeCookie('show_unaccepted_mode', {path: '/problems'});
 	}
 	location.reload();
 });
