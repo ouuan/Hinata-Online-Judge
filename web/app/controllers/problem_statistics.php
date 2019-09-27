@@ -95,6 +95,11 @@
 	<?php echoSubmissionsList("best_ac_submissions.shortest_id = submissions.id and best_ac_submissions.problem_id = {$problem['id']}", 'order by best_ac_submissions.shortest_tot_size, best_ac_submissions.shortest_used_time, best_ac_submissions.shortest_used_memory', array('judge_time_hidden' => '', 'table_name' => 'best_ac_submissions, submissions'), $myUser); ?>
 <?php endif ?>
 
+<br>
+<h2 class="text-center"><?= UOJLocale::get('problems::my submissions') ?></h2>
+<?php echoSubmissionsList("problem_id={$problem['id']} and submitter='{$myUser['username']}'", 'order by id desc', array('judge_time_hidden' => ''), $myUser); ?>
+<br>
+
 <h2 class="text-center"><?= UOJLocale::get('problems::score distribution') ?></h2>
 <div id="score-distribution-chart" style="height: 250px;"></div>
 <script type="text/javascript">

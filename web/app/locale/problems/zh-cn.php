@@ -49,5 +49,6 @@ return [
 	'time limit' => '时间限制',
 	'memory limit' => '空间限制',
 	'ac rating' => '除 std 外 AC 者平均 Rating',
-	'download' => '下发文件'
+	'download' => '下发文件',
+	'best submission' => '最高分提交'
 ];

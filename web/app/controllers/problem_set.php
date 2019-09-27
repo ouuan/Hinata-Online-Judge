@@ -34,7 +34,7 @@
 			}
 			if ($max_score >= 0) {
 				echo '<td class="submitted" title=' . $max_score . '>';
-				echo '<a href="/submissions?problem_id=' . $problem['id'] . '&submitter=' . $myUser['username'] . '" title="' . UOJLocale::get('problems::my submissions') . '">';
+				echo '<a href="/submission/' . $max_submission. '" title="' . UOJLocale::get('problems::best submission') . '">';
 			} else {
 				echo '<td>';
 			}

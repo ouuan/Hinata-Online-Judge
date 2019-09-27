@@ -49,5 +49,6 @@ return [
 	'time limit' => 'Time Limit',
 	'memory limit' => 'Memory Limit',
 	'ac rating' => 'Average Rating of whom got AC excluding std',
-	'download' => 'Download Files'
+	'download' => 'Download Files',
+	'best submission' => 'Best Submission'
 ];
