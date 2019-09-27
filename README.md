@@ -18,7 +18,7 @@ Hinata Online Judge 是 ouuan 基于社区版 UOJ 搭建的校内 OJ。
 
 如果有冲突可能要手动解决。
 
-特别地，请阅读 [关于题目统计按提交时间和内存使用排序的说明](https://github.com/ouuan/Hinata-Online-Judge/issues/3)。
+由于 [题目统计页面支持按提交时间和内存使用排序](https://github.com/ouuan/Hinata-Online-Judge/commit/a44d1923a033dfe320388cc657cf0ac9a16af4ab)，安装后，请在系统管理页面的 MySQL 管理一栏点击 “更新数据库” 按钮。
 
 # Universal Online Judge
 
