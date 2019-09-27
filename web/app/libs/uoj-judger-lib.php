@@ -157,7 +157,10 @@
 	function getUOJProblemExtraOutputFileName($problem_conf, $num) {
 		return 'ex_' . getUOJConfVal($problem_conf, 'output_pre', 'output') . $num . '.' . getUOJConfVal($problem_conf, 'output_suf', 'txt');
 	}
-	
+
+	function rejudgeAll() {
+		DB::query("update submissions set judge_time = NULL , result = '' , score = NULL , status = 'Waiting Rejudge'");
+	}
 	function rejudgeProblem($problem) {
 		DB::query("update submissions set judge_time = NULL , result = '' , score = NULL , status = 'Waiting Rejudge' where problem_id = ${problem['id']}");
 	}

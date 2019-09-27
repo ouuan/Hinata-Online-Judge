@@ -188,6 +188,15 @@
 	};
 	$contest_submissions_deleter->runAtServer();
 
+	$all_submissions_rejudger = new UOJForm('all_submissions_rejudger');
+	$all_submissions_rejudger->handle = function() {
+		rejudgeAll();
+	};
+	$all_submissions_rejudger->submit_button_config['class_str'] = 'btn btn-danger';
+	$all_submissions_rejudger->submit_button_config['text'] = '重测所有提交';
+	$all_submissions_rejudger->submit_button_config['smart_confirm'] = '';
+	$all_submissions_rejudger->runAtServer();
+	
 	$custom_test_deleter = new UOJForm('custom_test_deleter');
 	$custom_test_deleter->addInput('last', 'text', '删除末尾记录', '5',
 		function ($x, &$vdata) {
@@ -280,6 +289,42 @@ EOD;
 			</tr>
 EOD;
 	};
+
+	$best_submissions_updater = new UOJForm('best_submissions_updater');
+	$best_submissions_updater->handle = function() {
+		$best_submissions = DB::selectAll("select submitter, problem_id from best_ac_submissions");
+		DB::query("drop table best_ac_submissions");
+		DB::query(<<<EOD
+			CREATE TABLE `best_ac_submissions` (
+			  `problem_id` int(11) NOT NULL,
+			  `submitter` varchar(20) COLLATE utf8mb4_unicode_ci NOT NULL,
+			  `submission_id` int(11) NOT NULL,
+			  `used_time` int(11) NOT NULL,
+			  `used_memory` int(11) NOT NULL,
+			  `tot_size` int(11) NOT NULL,
+			  `shortest_id` int(11) NOT NULL,
+			  `shortest_used_time` int(11) NOT NULL,
+			  `shortest_used_memory` int(11) NOT NULL,
+			  `shortest_tot_size` int(11) NOT NULL,
+			  `newest_id` int(11) NOT NULL,
+			  `newest_used_time` int(11) NOT NULL,
+			  `newest_used_memory` int(11) NOT NULL,
+			  `newest_tot_size` int(11) NOT NULL,
+			  `least_id` int(11) NOT NULL,
+			  `least_used_time` int(11) NOT NULL,
+			  `least_used_memory` int(11) NOT NULL,
+			  `least_tot_size` int(11) NOT NULL,
+			  PRIMARY KEY (`problem_id`,`submitter`)
+			) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+EOD
+);
+		foreach ($best_submissions as $submission) {
+			updateBestACSubmissions($submission['submitter'], $submission['problem_id']);
+		}
+	};
+	$best_submissions_updater->submit_button_config['class_str'] = 'btn btn-primary';
+	$best_submissions_updater->submit_button_config['text'] = '更新数据库';
+	$best_submissions_updater->runAtServer();
 	
 	$cur_tab = isset($_GET['tab']) ? $_GET['tab'] : 'users';
 	
@@ -311,6 +356,10 @@ EOD;
 		'judger' => array(
 			'name' => '评测机管理',
 			'url' => '/super-manage/judger'
+		),
+		'mysql' => array(
+			'name' => 'MySQL 管理',
+			'url' => '/super-manage/mysql'
 		)
 	);
 	
@@ -349,6 +398,10 @@ EOD;
 				<?php $blog_deleter->printHTML(); ?>
 			</div>
 		<?php elseif ($cur_tab === 'submissions'): ?>
+			<div>
+				<h4>重测所有提交</h4>
+				<?php $all_submissions_rejudger->printHTML(); ?>
+			</div>
 			<div>
 				<h4>删除赛前提交记录</h4>
 				<?php $contest_submissions_deleter->printHTML(); ?>
@@ -442,6 +495,9 @@ EOD;
 			</div>
 			<h3>评测机列表</h3>
 			<?php echoLongTable($judgerlist_cols, 'judger_info', "1=1", '', $judgerlist_header_row, $judgerlist_print_row, $judgerlist_config) ?>
+		<?php elseif ($cur_tab === 'mysql'): ?>
+			<h2>best submissions 更新</h2>
+			<?php $best_submissions_updater->printHTML(); ?>
 		<?php endif ?>
 	</div>
 </div>
