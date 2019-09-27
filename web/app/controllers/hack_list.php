@@ -51,23 +51,23 @@
 	<?php endif ?>
 	<form id="form-search" class="form-inline" role="form">
 		<div id="form-group-submission_id" class="form-group">
-			<label for="input-submission_id" class="control-label"><?= UOJLocale::get('problems::submission id') ?>:</label>
-			<input type="text" class="form-control input-sm" name="submission_id" id="input-submission_id" value="<?= $q_submission_id ?>" maxlength="6" style="width:5em" />
+			<label for="input-submission_id" class="control-label"><?= UOJLocale::get('problems::submission id') ?>:</label>&nbsp;
+			<input type="text" class="form-control input-sm" name="submission_id" id="input-submission_id" value="<?= $q_submission_id ?>" maxlength="6" style="width:5em" />&nbsp;
 		</div>
 		<div id="form-group-problem_id" class="form-group">
-			<label for="input-problem_id" class="control-label"><?= UOJLocale::get('problems::problem id') ?>:</label>
-			<input type="text" class="form-control input-sm" name="problem_id" id="input-problem_id" value="<?= $q_problem_id ?>" maxlength="4" style="width:4em" />
+			<label for="input-problem_id" class="control-label"><?= UOJLocale::get('problems::problem id') ?>:</label>&nbsp;
+			<input type="text" class="form-control input-sm" name="problem_id" id="input-problem_id" value="<?= $q_problem_id ?>" maxlength="4" style="width:4em" />&nbsp;
 		</div>
 		<div id="form-group-hacker" class="form-group">
-			<label for="input-hacker" class="control-label"><?= UOJLocale::get('problems::hacker') ?>:</label>
-			<input type="text" class="form-control input-sm" name="hacker" id="input-hacker" value="<?= $q_hacker ?>" maxlength="100" style="width:10em" />
+			<label for="input-hacker" class="control-label"><?= UOJLocale::get('problems::hacker') ?>:</label>&nbsp;
+			<input type="text" class="form-control input-sm" name="hacker" id="input-hacker" value="<?= $q_hacker ?>" maxlength="100" style="width:10em" />&nbsp;
 		</div>
 		<div id="form-group-owner" class="form-group">
-			<label for="input-owner" class="control-label"><?= UOJLocale::get('problems::owner') ?>:</label>
-			<input type="text" class="form-control input-sm" name="owner" id="input-owner" value="<?= $q_owner ?>" maxlength="100" style="width:10em" />
+			<label for="input-owner" class="control-label"><?= UOJLocale::get('problems::owner') ?>:</label>&nbsp;
+			<input type="text" class="form-control input-sm" name="owner" id="input-owner" value="<?= $q_owner ?>" maxlength="100" style="width:10em" />&nbsp;
 		</div>
 		<div id="form-group-status" class="form-group">
-			<label for="input-status" class="control-label"><?= UOJLocale::get('problems::result') ?>:</label>
+			<label for="input-status" class="control-label"><?= UOJLocale::get('problems::result') ?>:</label>&nbsp;
 			<select class="form-control input-sm" id="input-status" name="status">
 				<option value=""<?= $selected_all?>>All</option>
 				<option value="1"<?= $selected_succ ?>>Success!</option>
