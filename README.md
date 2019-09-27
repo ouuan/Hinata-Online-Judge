@@ -1,5 +1,11 @@
 <p align="center"><img src="https://github.com/UniversalOJ/UOJ-System/blob/master/web/images/logo.png?raw=true"></p>
 
+# Hinata Online Judge
+
+Hinata Online Judge 是 ouuan 基于社区版 UOJ 搭建的校内 OJ。
+
+[feature list](https://github.com/ouuan/Hinata-Online-Judge/issues/1)
+
 # Universal Online Judge
 
 > #### 一款通用的在线评测系统。
