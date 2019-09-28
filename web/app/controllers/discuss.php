@@ -11,8 +11,10 @@ if (!isProblemVisibleToUser($problem, $myUser)) {
 
 if ($_GET['type'] == 'tutorial') {
 	$noBlog = '<p>还没有人写题解呢..要不你来写一篇？<br>在博客中加上 <code>tutorial</code> 以及 <code>题号</code> 两个标签就可以啦！</p>';
+	$sort_by = 'zan';
 } else if ($_GET['type'] == 'discuss') {
 	$noBlog = '<p>还没有人发讨论呢..要不你来发一篇？<br>在博客中加上 <code>discuss</code> 以及 <code>题号</code> 两个标签就可以啦！</p>';
+	$sort_by = 'post_time';
 } else {
 	become404Page();
 }
@@ -47,7 +49,7 @@ foreach ($problem_blogs as $problem_blog) {
         }
     }
 }
-array_multisort(array_column($config['data'], 'zan'), SORT_DESC, array_column($config['data'], 'post_time'), SORT_DESC, $config['data']);
+array_multisort(array_column($config['data'], $sort_by), SORT_DESC, array_column($config['data'], 'post_time'), SORT_DESC, $config['data']);
 ?>
 <?php echoUOJPageHeader(HTML::stripTags($problem['title']) . ' - ' . UOJLocale::get('problems::' . $_GET['type'])) ?>
 <?php if (Auth::check()): ?>
