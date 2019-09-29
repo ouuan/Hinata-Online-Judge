@@ -1,0 +1,8 @@
+*
+!*.*
+!*/
+judger/.conf.json
+judger/log/judge.log
+judger/uoj_judger/work/
+judger/uoj_judger/result/
+judger/uoj_judger/include/uoj_work_path.h
