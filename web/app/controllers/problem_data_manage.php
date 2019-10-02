@@ -147,7 +147,7 @@ EOD
 	<label class="col-sm-3 control-label">problem_all_{$problem['id']}.zip</label>
 	<div class="col-sm-9">
 		<div class="form-control-static">
-			<a href="$download_url">$download_all_url</a>
+			<a href="$download_all_url">$download_all_url</a>
 		</div>
 	</div>
 </div>
