@@ -86,6 +86,8 @@ EOD;
 	$cur_tab = isset($_GET['tab']) ? $_GET['tab'] : 'all';
 	if ($cur_tab == 'template') {
 		$search_tag = "模板题";
+	} else if ($cur_tab == 'original') {
+		$search_tag = "原创题";
 	}
 	if (isset($_GET['tag'])) {
 		$search_tag = $_GET['tag'];
@@ -126,6 +128,10 @@ EOD;
 		'template' => array(
 			'name' => UOJLocale::get('problems::template problems'),
 			'url' => "/problems/template"
+		),
+		'original' => array(
+			'name' => UOJLocale::get('problems::original problems'),
+			'url' => "/problems/original"
 		)
 	);
 	
