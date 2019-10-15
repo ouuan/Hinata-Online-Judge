@@ -6,7 +6,7 @@
 	}
 	genMoreContestInfo($contest);
 	
-	if (!isSuperUser($myUser)) {
+	if (!hasContestPermission(Auth::user(), $contest)) {
 		become403Page();
 	}
 	

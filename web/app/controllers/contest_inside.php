@@ -516,7 +516,7 @@ EOD;
 	<?php endif?>
 	
 		<a href="/contest/<?=$contest['id']?>/registrants" class="btn btn-info btn-block"><?= UOJLocale::get('contests::contest registrants') ?></a>
-		<?php if (isSuperUser($myUser)): ?>
+		<?php if (hasContestPermission(Auth::user(), $contest)): ?>
 		<a href="/contest/<?=$contest['id']?>/manage" class="btn btn-primary btn-block">管理</a>
 		<?php if (isset($start_test_form)): ?>
 		<div class="top-buffer-sm">
