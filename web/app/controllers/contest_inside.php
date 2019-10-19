@@ -5,6 +5,12 @@
 		become404Page();
 	}
 	genMoreContestInfo($contest);
+	
+	if (isset($_GET['tab'])) {
+		$cur_tab = $_GET['tab'];
+	} else {
+		$cur_tab = 'dashboard';
+	}
 
 	if (!hasContestPermission(Auth::user(), $contest)) {
 		if ($contest['cur_progress'] == CONTEST_NOT_STARTED) {
@@ -13,14 +19,10 @@
 		} elseif ($contest['cur_progress'] == CONTEST_IN_PROGRESS) {
 			if ($myUser == null || !hasRegistered(Auth::user(), $contest)) {
 				becomeMsgPage("<h1>比赛正在进行中</h1><p>很遗憾，您尚未报名。比赛结束后再来看吧～</p>");
+			} elseif ($cur_tab == 'standings') {
+				becomeMsgPage("<h1>比赛正在进行中</h1><p>赛时无法查看排行榜，比赛结束后再来看吧～</p>");
 			}
 		}
-	}
-	
-	if (isset($_GET['tab'])) {
-		$cur_tab = $_GET['tab'];
-	} else {
-		$cur_tab = 'dashboard';
 	}
 	
 	$tabs_info = array(
@@ -31,12 +33,18 @@
 		'submissions' => array(
 			'name' => UOJLocale::get('contests::contest submissions'),
 			'url' => "/contest/{$contest['id']}/submissions"
-		),
-		'standings' => array(
-			'name' => UOJLocale::get('contests::contest standings'),
-			'url' => "/contest/{$contest['id']}/standings"
 		)
 	);
+
+	if (hasContestPermission(Auth::user(), $contest) ||
+	    $contest['cur_progress'] == CONTEST_PENDING_FINAL_TEST ||
+	    $contest['cur_progress'] == CONTEST_TESTING ||
+	    $contest['cur_progress'] == CONTEST_FINISHED) {
+		$tabs_info['standings'] = array(
+			'name' => UOJLocale::get('contests::contest standings'),
+			'url' => "/contest/{$contest['id']}/standings"
+		);
+	}
 	
 	if (hasContestPermission(Auth::user(), $contest)) {
 		$tabs_info['backstage'] = array(
