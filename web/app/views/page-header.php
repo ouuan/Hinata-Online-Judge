@@ -125,7 +125,7 @@
 		<?= HTML::css_link('/css/emojione.min.css?v=2.2.7') ?>
 		<?= HTML::js_src('/js/emojione.min.js?v=2.2.7') ?>
 		<?= HTML::css_link('/css/emojionearea.min.css?v=3.4.1') ?>
-		<?= HTML::js_src('/js/emojionearea.min.js?v=3.4.1') ?>
+		<?= HTML::js_src('/js/emojionearea.min.js?v=2019.10.19') ?>
 		<?= HTML::js_src('/js/blog-comments.js?v=2019.9.23') ?>
 		<?php endif ?>
 		
