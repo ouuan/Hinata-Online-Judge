@@ -292,7 +292,7 @@ EOD;
 
 	$best_submissions_updater = new UOJForm('best_submissions_updater');
 	$best_submissions_updater->handle = function() {
-		$best_submissions = DB::selectAll("select submitter, problem_id from best_ac_submissions");
+		$submissions = DB::selectAll("select submitter, problem_id from submissions");
 		DB::query("drop table best_ac_submissions");
 		DB::query(<<<EOD
 			CREATE TABLE `best_ac_submissions` (
@@ -318,7 +318,7 @@ EOD;
 			) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 EOD
 );
-		foreach ($best_submissions as $submission) {
+		foreach ($submissions as $submission) {
 			updateBestACSubmissions($submission['submitter'], $submission['problem_id']);
 		}
 	};
