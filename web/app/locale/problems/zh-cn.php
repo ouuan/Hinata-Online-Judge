@@ -2,7 +2,8 @@
 return [
 	'problem' => '题目',
 	'all problems' => '总题库',
-	'template problems' => '模板题库',
+	'template problems' => '模板题',
+	'original problems' => '原创题',
 	'add new' => '添加新题',
 	'ac' => 'AC',
 	'submit' => '提交',
