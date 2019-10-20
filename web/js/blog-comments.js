@@ -4,8 +4,8 @@ function addEmojioneArea() {
 	});
 }
 
-function markComments() {
-	$('.comtbox1').each(function() {
+function markComments(id) {
+	$(id ? id + '.comtbox5' : '.comtbox1,.comtbox5').each(function() {
 		var text = $(this)[0].innerHTML;
 		text = text.replace(/&gt;/g, '>').replace(/&lt;/g, '<').replace(/&amp;/g, '&');
 		text = text.replace(/<script/g, '&lt;script').replace(/<\/script>/g, '&lt;/script&gt;');
@@ -15,16 +15,8 @@ function markComments() {
 	});
 }
 
-function addPaginationListeners() {
-	MathJax.Hub.Queue(["Typeset", MathJax.Hub]);
-	$('ul.pagination li a').on('click', function(e) {
-		// looks funny but it works
-		addPaginationListeners();
-	});
-}
-
-function qqStickers() {
-	$('.comtbox1').each(function() {
+function qqStickers(pa) {
+	$(id ? id + '.comtbox5' : '.comtbox1,.comtbox5').each(function() {
 		var text = $(this)[0].innerHTML;
 		text = text.replace(/\/kel/g, '<img src="/images/qq/kelian.gif" alt="[可怜]">');
 		text = text.replace(/\/kk/g, '<img src="/images/qq/kuaikule.gif" alt="[快哭了]">');
@@ -42,10 +34,21 @@ function qqStickers() {
 	});
 }
 
+function addPaginationListeners(id) {
+	qqStickers(id);
+	markComments(id);
+	MathJax.Hub.Queue(["Typeset", MathJax.Hub]);
+	$(id + ' ul.pagination li a').on('click', function(e) {
+		addPaginationListeners(id);
+	});
+}
+
 $(function() {
 	qqStickers();
 	markComments();
-	addPaginationListeners();
+	$('comtbox5 ul.pagination li a').on('click', function(e) {
+		addPaginationListeners('#' + $(this).parents('.comtbox5')[0].id);
+	});
 	addEmojioneArea();
 	addCopyButtons();
 	highlightAndCopyButtons();
