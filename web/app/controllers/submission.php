@@ -36,6 +36,7 @@
 		
 		$hack_form->addTextFileInput('input', '输入数据');
 		$hack_form->addCheckBox('use_formatter', '帮我整理文末回车、行末空格、换行符', true);
+		$hack_form->max_post_size = 104857600; // 100MiB
 		$hack_form->handle = function(&$vdata) {
 			global $myUser, $problem, $submission;
 			if ($myUser == null) {
