@@ -1239,12 +1239,14 @@ $(document).on('click','th',function(){
 function naturalSorter(as, bs) {
 	var a, b, a1, b1, i= 0, n, L,
 	rx=/(\.\d+)|(\d+(\.\d+)?)|([^\d.]+)|(\.\D+)|(\.$)/g;
-	if(as === bs) return 0;
+	if (as === bs) return 0;
 	a= as.toLowerCase().match(rx);
 	b= bs.toLowerCase().match(rx);
 	if (a == null && b == null) return 0;
 	if (a == null) return 1;
 	if (b == null) return -1;
+	var chinese = /.*[\u4e00-\u9fa5]+.*/;
+	if (chinese.test(a[0]) || chinese.test(b[0])) return a[0].localeCompare(b[0]);
 	L= a.length;
 	while(i<L){
 		if(!b[i]) return 1;
