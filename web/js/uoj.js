@@ -129,6 +129,20 @@ function getColOfScore(score) {
 		return ColorConverter.toStr(ColorConverter.toRGB(new HSV(30 + score * 60 / 100, 100, 90)));
 	}
 }
+function getAlphaColOfScore(score, alpha) {
+	var col;
+	if (score == 0) {
+		col = ColorConverter.toRGB(new HSV(0, 100, 80));
+	} else if (score == 100) {
+		col = ColorConverter.toRGB(new HSV(120, 100, 80));
+	} else {
+		col = ColorConverter.toRGB(new HSV(30 + score * 60 / 100, 100, 90));
+	}
+	col.r = 255 * (1 - alpha) + col.r * alpha;
+	col.g = 255 * (1 - alpha) + col.g * alpha;
+	col.b = 255 * (1 - alpha) + col.b * alpha;
+	return ColorConverter.toStr(col);
+}
 
 function getUserLink(username, rating, addSymbol) {
 	if (!username) {
@@ -1220,8 +1234,8 @@ $(function() {
 
 function showProblemColor() {
 	$('.submitted').each(function() {
-		var col = getColOfScore($(this).text());
-		$(this).css('color', col);
+		var col = getAlphaColOfScore($(this).attr('title'), 0.5)
+		$(this).css('background-color', col);
 	});
 }
 

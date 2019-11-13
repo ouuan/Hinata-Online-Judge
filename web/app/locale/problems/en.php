@@ -52,7 +52,6 @@ return [
 	'ac rating' => 'Average Rating of whom got AC excluding std',
 	'download' => 'Download Files',
 	'best submission' => 'Best Submission',
-	'highest score' => 'Highest',
 	'extra test failed' => 'Extra Test Failed',
 	'newest' => 'Newest',
 	'least memory' => 'Least Memory',
