@@ -57,15 +57,9 @@
 			if (isset($_COOKIE['show_submit_mode'])) {
 				$problem['submit_num'] = queryDistinctSubmissions($problem['id']);
 				$problem['ac_num'] = queryDistinctAC($problem['id']);
-				$perc = $problem['submit_num'] > 0 ? round(100 * $problem['ac_num'] / $problem['submit_num']) : 0;
 				echo <<<EOD
 				<td><a href="/submissions?problem_id={$problem['id']}&min_score=100&max_score=100">&times;{$problem['ac_num']}</a></td>
 				<td><a href="/submissions?problem_id={$problem['id']}">&times;{$problem['submit_num']}</a></td>
-				<td>
-					<div class="progress bot-buffer-no">
-						<div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="$perc" aria-valuemin="0" aria-valuemax="100" style="width: $perc%; min-width: 20px;">{$perc}%</div>
-					</div>
-				</td>
 EOD;
 				$rating = AVGACRating($problem['id']);
 				if ($rating != -1) {
@@ -114,7 +108,6 @@ EOD;
 	if (isset($_COOKIE['show_submit_mode'])) {
 		$header .= '<th class="text-center" style="width:5em;">'.UOJLocale::get('problems::ac').'</th>';
 		$header .= '<th class="text-center" style="width:5em;">'.UOJLocale::get('problems::submit').'</th>';
-		$header .= '<th class="text-center" style="width:150px;">'.UOJLocale::get('problems::ac ratio').'</th>';
 		$header .= '<th class="text-center" style="width:5em;">'.UOJLocale::get('rating').'</th>';
 	}
 	$header .= '<th class="text-center" style="width:180px;">'.UOJLocale::get('appraisal').'</th>';
