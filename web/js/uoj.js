@@ -1242,3 +1242,53 @@ function showProblemColor() {
 $(function() {
 	showProblemColor();
 });
+
+$(document).on('click','th',function(){
+	var table = $(this).parents('table').eq(0);
+	var rows = table.find('tr:gt(0)').toArray().sort(comparer($(this).index()));
+	this.asc = !this.asc;
+	if (!this.asc){rows = rows.reverse();}
+	table.children('tbody').empty().html(rows);
+});
+function naturalSorter(as, bs) {
+	var a, b, a1, b1, i= 0, n, L,
+	rx=/(\.\d+)|(\d+(\.\d+)?)|([^\d.]+)|(\.\D+)|(\.$)/g;
+	if(as === bs) return 0;
+	a= as.toLowerCase().match(rx);
+	b= bs.toLowerCase().match(rx);
+	if (a == null && b == null) return 0;
+	if (a == null) return 1;
+	if (b == null) return -1;
+	L= a.length;
+	while(i<L){
+		if(!b[i]) return 1;
+		a1= a[i],
+		b1= b[i++];
+		if(a1!== b1){
+			n= a1-b1;
+			if(!isNaN(n)) return n;
+			return a1>b1? 1:-1;
+		}
+	}
+	return b[i]? -1:0;
+}
+function comparer(index) {
+	return function(a, b) {
+		var valA = getCellValue(a, index), valB = getCellValue(b, index);
+		if (!isNaN(valA) && !isNaN(valB)) return valA - valB;
+		return naturalSorter(valA, valB);
+	};
+}
+function getCellValue(row, index){
+	var node = $(row).children('td').eq(index);
+	try {
+		if (node[0].childNodes[0].hasAttribute("data-cnt")) {
+			return node[0].childNodes[0].getAttribute("data-cnt");
+		} else {
+			return node.text();
+		}
+	} catch {
+		return node.text();
+	}
+}
+
