@@ -32,17 +32,7 @@
 					$max_submission = $submission['id'];
 				}
 			}
-			if ($max_score >= 0) {
-				echo '<td class="submitted" title=' . $max_score . '>';
-				echo '<a href="/submission/' . $max_submission. '" title="' . UOJLocale::get('problems::best submission') . '">';
-			} else {
-				echo '<td>';
-			}
-			echo '#', $problem['id'];
-			if ($max_score >= 0) {
-				echo '</a>';
-			}
-			echo '</td>';
+			echo '<td>#'.$problem['id'].'</td>';
 			echo '<td class="text-left">';
 			if ($problem['is_hidden']) {
 				echo ' <span class="text-danger">[隐藏]</span> ';
@@ -57,15 +47,9 @@
 			if (isset($_COOKIE['show_submit_mode'])) {
 				$problem['submit_num'] = queryDistinctSubmissions($problem['id']);
 				$problem['ac_num'] = queryDistinctAC($problem['id']);
-				$perc = $problem['submit_num'] > 0 ? round(100 * $problem['ac_num'] / $problem['submit_num']) : 0;
 				echo <<<EOD
 				<td><a href="/submissions?problem_id={$problem['id']}&min_score=100&max_score=100">&times;{$problem['ac_num']}</a></td>
 				<td><a href="/submissions?problem_id={$problem['id']}">&times;{$problem['submit_num']}</a></td>
-				<td>
-					<div class="progress bot-buffer-no">
-						<div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="$perc" aria-valuemin="0" aria-valuemax="100" style="width: $perc%; min-width: 20px;">{$perc}%</div>
-					</div>
-				</td>
 EOD;
 				$rating = AVGACRating($problem['id']);
 				if ($rating != -1) {
@@ -73,6 +57,11 @@ EOD;
 				} else {
 					echo '<td>N/A</td>';
 				}
+			}
+			if ($max_score != -1) {
+				echo '<td><a href=/submission/' . $max_submission . '><strong class="submitted">' . $max_score . '</strong></a></td>';
+			} else {
+				echo '<td>-</td>';
 			}
 			echo '<td class="text-left">', getClickZanBlock('P', $problem['id'], $problem['zan']), '</td>';
 			echo '</tr>';
@@ -114,9 +103,9 @@ EOD;
 	if (isset($_COOKIE['show_submit_mode'])) {
 		$header .= '<th class="text-center" style="width:5em;">'.UOJLocale::get('problems::ac').'</th>';
 		$header .= '<th class="text-center" style="width:5em;">'.UOJLocale::get('problems::submit').'</th>';
-		$header .= '<th class="text-center" style="width:150px;">'.UOJLocale::get('problems::ac ratio').'</th>';
 		$header .= '<th class="text-center" style="width:5em;">'.UOJLocale::get('rating').'</th>';
 	}
+	$header .= '<th class="text-center" style="width:6em;">'.UOJLocale::get('problems::highest score').'</th>';
 	$header .= '<th class="text-center" style="width:180px;">'.UOJLocale::get('appraisal').'</th>';
 	$header .= '</tr>';
 	
