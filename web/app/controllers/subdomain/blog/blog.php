@@ -144,22 +144,24 @@
 ?>
 <?php echoUOJPageHeader(HTML::stripTags($blog['title']) . ' - 博客') ?>
 <?php
-	$hasTag = false;
+	$hasTutorialOrDiscuss = false;
 	$hasProblemID = false;
 	foreach (queryBlogTags($blog['id']) as $tag) {
 		if ($tag == 'tutorial' || $tag == 'discuss') {
-			$hasTag = true;
+			$hasTutorialOrDiscuss = true;
 		}
 	}
-	foreach (queryBlogTags($blog['id']) as $tag) {
-		if (preg_match('/[1-9][0-9]*/', $tag)) {
-			if (queryProblemBrief($tag)) {
-				echo '<div class="float-right">';
-        			echo '<div class="btn-group">';
-               			echo '<a href="/problem/' . $tag . '" class="btn btn-primary btn-sm">' . UOJLocale::GET('back to') . ' #' . $tag . '</a>';
-        			echo '</div>';
-				echo '&nbsp;';
-				echo '</div>';
+	if ($hasTutorialOrDiscuss) {
+		foreach (queryBlogTags($blog['id']) as $tag) {
+			if (preg_match('/[1-9][0-9]*/', $tag)) {
+				if (queryProblemBrief($tag)) {
+					echo '<div class="float-right">';
+					echo '<div class="btn-group">';
+					echo '<a href="/problem/' . $tag . '" class="btn btn-primary btn-sm">' . UOJLocale::GET('back to') . ' #' . $tag . '</a>';
+					echo '</div>';
+					echo '&nbsp;';
+					echo '</div>';
+				}
 			}
 		}
 	}
