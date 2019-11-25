@@ -382,6 +382,8 @@ EOD
 			<?php $user_form->printHTML(); ?>
 			<h3>封禁名单</h3>
 			<?php echoLongTable($banlist_cols, 'user_info', "usergroup='B'", '', $banlist_header_row, $banlist_print_row, $banlist_config) ?>
+			<h3>管理员名单</h3>
+			<?php echoLongTable($banlist_cols, 'user_info', "usergroup='S'", '', $banlist_header_row, $banlist_print_row, $banlist_config) ?>
 		<?php elseif ($cur_tab === 'blogs'): ?>
 			<div>
 				<h4>添加到比赛链接</h4>
