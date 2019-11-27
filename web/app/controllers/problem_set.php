@@ -105,9 +105,9 @@ EOD;
 	$header .= '<th class="text-center" style="width:5em;">ID</th>';
 	$header .= '<th>'.UOJLocale::get('problems::problem').'</th>';
 	if (isset($_COOKIE['show_submit_mode'])) {
-		$header .= '<th class="text-center" style="width:5em;">'.UOJLocale::get('problems::ac').'</th>';
-		$header .= '<th class="text-center" style="width:5em;">'.UOJLocale::get('problems::submit').'</th>';
-		$header .= '<th class="text-center" style="width:5em;">'.UOJLocale::get('rating').'</th>';
+		$header .= '<th class="text-center" style="width:5em;" title="除 std 外 AC 人数">'.UOJLocale::get('problems::ac').'</th>';
+		$header .= '<th class="text-center" style="width:5em;" title="总提交次数">'.UOJLocale::get('problems::submit').'</th>';
+		$header .= '<th class="text-center" style="width:5em;" title="'.UOJLocale::get('problems::ac rating').'">'.UOJLocale::get('rating').'</th>';
 	}
 	$header .= '<th class="text-center" style="width:180px;">'.UOJLocale::get('appraisal').'</th>';
 	$header .= '</tr>';
