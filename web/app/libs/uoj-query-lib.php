@@ -178,46 +178,11 @@ function deleteBlog($id) {
 }
 
 function AVGACRating($id) {
-        $ACSubmitters = DB::selectAll("select submitter from submissions where problem_id = {$id} and score=100 and submitter != 'std'");
-        $vis = array();
-        $sum = 0;
-        $cnt = 0;
-        foreach ($ACSubmitters as $submitter) {
-                if (!isset($vis[$submitter['submitter']]) && ($user = queryUser($submitter['submitter']))) {
-                        $vis[$submitter['submitter']] = '';
-                        ++$cnt;
-                        $sum += $user['rating'];
-                }
-        }
-        if ($cnt > 0) {
-                return round($sum / $cnt);
-        } else {
-                return -1;
-        }
+	$rating = DB::selectFirst("select avg(t.rating) as avgrating from (select distinct a.submitter, b.rating from submissions a join user_info b on a.submitter = b.username and a.problem_id = {$id} and score = 100 and a.submitter != 'std') as t")['avgrating'];
+	if ($rating === null) return -1;
+	return round($rating, 0);
 }
 
 function queryDistinctAC($id) {
-	$ACSubmitters = DB::selectAll("select submitter from submissions where problem_id = {$id} and score=100 and submitter != 'std'");
-        $vis = array();
-        $cnt = 0;
-        foreach ($ACSubmitters as $submitter) {
-                if (!isset($vis[$submitter['submitter']]) && queryUser($submitter['submitter'])) {
-                        $vis[$submitter['submitter']] = '';
-                        ++$cnt;
-                }
-        }
-	return $cnt;
-}
-
-function queryDistinctSubmissions($id) {
-	$ACSubmitters = DB::selectAll("select submitter from submissions where problem_id = {$id} and submitter != 'std'");
-        $vis = array();
-        $cnt = 0;
-        foreach ($ACSubmitters as $submitter) {
-                if (!isset($vis[$submitter['submitter']]) && queryUser($submitter['submitter'])) {
-                        $vis[$submitter['submitter']] = '';
-                        ++$cnt;
-                }
-        }
-	return $cnt;
+	return DB::selectCount("select count(distinct submitter) from submissions where problem_id = {$id} and score=100 and submitter != 'std'");
 }
