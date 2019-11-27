@@ -992,7 +992,7 @@ function echoRanklist($config = array()) {
 		
 		$users[] = $user;
 	};
-	$col_names = array('username', 'rating', 'motto');
+	$col_names = array('b.username', 'b.rating', 'b.motto', 'b.register_time');
 	$tail = 'order by rating desc, register_time asc';
 	
 	if (isset($config['top10'])) {
@@ -1000,7 +1000,9 @@ function echoRanklist($config = array()) {
 	}
 	
 	$config['get_row_index'] = '';
-	echoLongTable($col_names, 'user_info', '1', $tail, $header_row, $print_row, $config);
+	$config['distinct'] = '';
+
+	echoLongTable($col_names, 'contests_registrants a join user_info b on a.username = b.username and a.has_participated = 1', '1', $tail, $header_row, $print_row, $config);
 }
 
 function echoACRank($config = array()) {
