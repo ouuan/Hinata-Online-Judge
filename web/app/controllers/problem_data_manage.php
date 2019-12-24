@@ -459,7 +459,6 @@ EOD
 	$hackable_form->handle = function() {
 		global $problem;
 		$problem['hackable'] = !$problem['hackable'];
-		//$problem['hackable'] = 0;
 		$ret = dataSyncProblemData($problem);
 		if ($ret) {
 			becomeMsgPage('<div>' . $ret . '</div><a href="/problem/'.$problem['id'].'/manage/data">返回</a>');
@@ -576,7 +575,7 @@ EOD
 			$content['config'] = array();
 			foreach ($requirement as $req) {
 				if ($req['type'] == "source code") {
-					$content['config'][] = array("{$req['name']}_language", "C++");
+					$content['config'][] = array("{$req['name']}_language", "C++11");
 				}
 			}
 		
@@ -591,7 +590,7 @@ EOD
 			$content['config'][] = array('validate_input_before_test', 'on');
 			$content['config'][] = array('problem_id', $problem['id']);
 			$esc_content = DB::escape(json_encode($content));
-			$esc_language = DB::escape('C++');
+			$esc_language = DB::escape('C++11');
 		 	
 		 	$result = array();
 		 	$result['status'] = "Waiting";
