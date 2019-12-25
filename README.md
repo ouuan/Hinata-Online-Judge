@@ -1,4 +1,4 @@
-<p align="center"><img src="https://github.com/UniversalOJ/UOJ-System/blob/master/web/images/logo.png?raw=true"></p>
+<p align="center"><img src="./web/images/logo.png?raw=true" alt="logo"></p>
 
 # Hinata Online Judge
 
