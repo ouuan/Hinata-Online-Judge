@@ -1002,7 +1002,7 @@ function echoRanklist($config = array()) {
 	$config['get_row_index'] = '';
 	$config['distinct'] = '';
 
-	echoLongTable($col_names, 'contests_registrants a join user_info b on a.username = b.username and a.has_participated = 1', '1', $tail, $header_row, $print_row, $config);
+	echoLongTable($col_names, 'contests_registrants a join user_info b on a.username = b.username and a.has_participated = 1 and b.usergroup != "B"', '1', $tail, $header_row, $print_row, $config);
 }
 
 function echoACRank($config = array()) {
@@ -1043,5 +1043,5 @@ function echoACRank($config = array()) {
 	}
 	
 	$config['get_row_index'] = '';
-	echoLongTable($col_names, 'user_info', '1', $tail, $header_row, $print_row, $config);
+	echoLongTable($col_names, 'user_info', 'usergroup != "B"', $tail, $header_row, $print_row, $config);
 }
