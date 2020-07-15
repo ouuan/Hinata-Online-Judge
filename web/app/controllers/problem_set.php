@@ -83,6 +83,7 @@ EOD;
 		$search_tag = "原创题";
 	} else if ($cur_tab == 'nohack') {
 		$cond[] = "hackable = 0";
+		$cond[] = "'".DB::escape('提交答案题')."' not in (select tag from problems_tags where problems_tags.problem_id = problems.id)";
 	}
 	if (isset($_GET['tag'])) {
 		$search_tag = $_GET['tag'];
