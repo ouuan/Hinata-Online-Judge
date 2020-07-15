@@ -81,6 +81,8 @@ EOD;
 		$search_tag = "模板题";
 	} else if ($cur_tab == 'original') {
 		$search_tag = "原创题";
+	} else if ($cur_tab == 'nohack') {
+		$cond[] = "hackable = 0";
 	}
 	if (isset($_GET['tag'])) {
 		$search_tag = $_GET['tag'];
@@ -124,7 +126,11 @@ EOD;
 		'original' => array(
 			'name' => UOJLocale::get('problems::original problems'),
 			'url' => "/problems/original"
-		)
+		),
+		'nohack' => array(
+			'name' => UOJLocale::get('problems::nohack problems'),
+			'url' => "/problems/nohack"
+		),
 	);
 	
 	/*

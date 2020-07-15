@@ -4,6 +4,7 @@ return [
 	'all problems' => 'All Problems',
 	'template problems' => 'Template Problems',
 	'original problems' => 'Original Problems',
+	'nohack problems' => 'No hack problems',
 	'add new' => 'Add new problem',
 	'title' => 'Title',
 	'ac' => 'AC',

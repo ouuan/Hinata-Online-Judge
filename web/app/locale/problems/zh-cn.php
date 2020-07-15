@@ -4,6 +4,7 @@ return [
 	'all problems' => '总题库',
 	'template problems' => '模板题',
 	'original problems' => '原创题',
+	'nohack problems' => '未开 hack 题',
 	'add new' => '添加新题',
 	'ac' => 'AC',
 	'submit' => '提交',
