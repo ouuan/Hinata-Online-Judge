@@ -15,6 +15,8 @@ Route::group([
 		Route::any('/problems/template', '/problem_set.php?tab=template');
 		Route::any('/problems/original', '/problem_set.php?tab=original');
 		Route::any('/problems/nohack', '/problem_set.php?tab=nohack');
+		Route::any('/problems/nostatement', '/problem_set.php?tab=nostatement');
+
 		Route::any('/problem/{id}', '/problem.php');
 		Route::any('/problem/{id}/statistics', '/problem_statistics.php');
 		Route::any('/problem/{id}/manage/statement', '/problem_statement_manage.php');

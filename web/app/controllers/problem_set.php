@@ -84,6 +84,8 @@ EOD;
 	} else if ($cur_tab == 'nohack') {
 		$cond[] = "hackable = 0";
 		$cond[] = "'".DB::escape('提交答案题')."' not in (select tag from problems_tags where problems_tags.problem_id = problems.id)";
+	} else if ($cur_tab == 'nostatement') {
+		$cond[] = "(SELECT LENGTH(statement_md) FROM problems_contents WHERE id = problems.id) < 100";
 	}
 	if (isset($_GET['tag'])) {
 		$search_tag = $_GET['tag'];
@@ -132,6 +134,10 @@ EOD;
 			'name' => UOJLocale::get('problems::nohack problems'),
 			'url' => "/problems/nohack"
 		),
+		'nostatement' => array(
+			'name' => UOJLocale::get('problems::nostatement problems'),
+			'url' => "/problems/nostatement"
+		),
 	);
 	
 	/*
@@ -166,7 +172,7 @@ EOD;
 ?>
 <?php echoUOJPageHeader(UOJLocale::get('problems')) ?>
 <div class="row">
-	<div class="col-sm-4">
+	<div class="col-sm-5">
 		<?= HTML::tablist($tabs_info, $cur_tab, 'nav-pills') ?>
 	</div>
 	<div class="col-sm-4 order-sm-9 checkbox text-right">
@@ -174,7 +180,7 @@ EOD;
 		<label class="checkbox-inline" for="input-show_submit_mode"><input type="checkbox" id="input-show_submit_mode" <?= isset($_COOKIE['show_submit_mode']) ? 'checked="checked" ': ''?>/> <?= UOJLocale::get('problems::show statistics') ?></label>&nbsp;
 		<label class="checkbox-inline" for="input-show_unaccepted"><input type="checkbox" id="input-show_unaccepted" <?= isset($_COOKIE['show_unaccepted_mode']) ? 'checked="checked" ': ''?>/> <?= UOJLocale::get('problems::show unaccepted only') ?></label>&nbsp;
 	</div>
-	<div class="col-sm-4 order-sm-5">
+	<div class="col-sm-3 order-sm-5">
 	<?php echo $pag->pagination(); ?>
 	</div>
 </div>
