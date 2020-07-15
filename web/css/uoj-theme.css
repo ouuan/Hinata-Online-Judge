@@ -392,6 +392,15 @@ pre {
 	cursor: pointer;
 }
 
+.copy_code {
+	position: absolute;
+	right: 0;
+}
+
+.copy_code_wrapper {
+	position: relative;
+}
+
 blockquote {
 	text-indent: 2em;
 	color: #666;

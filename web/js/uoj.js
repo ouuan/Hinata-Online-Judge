@@ -1169,9 +1169,12 @@ function showStandings() {
 
 function addCopyButtons() {
 	//添加复制按钮
-	$("pre code").each(function() {
-		if ($(this).prevAll('.copy_code').length == 0) {
-			$(this).before("<div class='copy_code btn btn-sm btn-outline-secondary float-right'>复制</div>")
+	$("pre code").parent().each(function() {
+		if (!$(this).parent().hasClass('copy_code_wrapper')) {
+			$(this).wrap('<div class="copy_code_wrapper"></div>');
+		}
+		if ($(this).prev('.copy_code').length == 0) {
+			$(this).before("<div class='copy_code btn btn-sm btn-outline-secondary'>复制</div>")
 		}
 	});
 
