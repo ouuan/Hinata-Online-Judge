@@ -1,4 +1,7 @@
 <?php
+	if (!in_array($_SERVER['REQUEST_URI'], ["/login", "/register", "/faq"]) && !Auth::check()) {
+		redirectToLogin();
+	}
 	$new_user_msg_num = DB::selectCount("select count(*) from user_msg where receiver = '".Auth::id()."' and read_time is null");
 	$new_system_msg_num = DB::selectCount("select count(*) from user_system_msg where receiver = '".Auth::id()."' and read_time is null");
 	$new_msg_tot = $new_user_msg_num + $new_system_msg_num;

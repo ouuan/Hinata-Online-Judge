@@ -49,14 +49,14 @@
 <form id="form-login" class="form-horizontal" method="post">
   <div id="div-username" class="form-group">
     <label for="input-username" class="col-sm-2 control-label"><?= UOJLocale::get('username') ?></label>
-    <div class="col-sm-3">
+    <div class="col-sm-4">
       <input type="text" class="form-control" id="input-username" name="username" placeholder="<?= UOJLocale::get('enter your username') ?>" maxlength="20" />
       <span class="help-block" id="help-username"></span>
     </div>
   </div>
   <div id="div-password" class="form-group">
     <label for="input-password" class="col-sm-2 control-label"><?= UOJLocale::get('password') ?></label>
-    <div class="col-sm-3">
+    <div class="col-sm-4">
       <input type="password" class="form-control" id="input-password" name="password" placeholder="<?= UOJLocale::get('enter your password') ?>" maxlength="20" />
       <span class="help-block" id="help-password"></span>
     </div>
@@ -95,7 +95,7 @@ function submitLoginPost() {
 			window.location.href = prevUrl;
 		} else if (msg == 'banned') {
 			$('#div-username').addClass('has-error');
-			$('#help-username').html('该用户已被封停，请联系管理员。');
+			$('#help-username').html('若您刚刚注册 OJ，请联系管理员通过审核；否则，您的账号已被管理员封停，请联系管理员了解详情。');
 		} else if (msg == 'expired') {
 			$('#div-username').addClass('has-error');
 			$('#help-username').html('页面会话已过期。');
