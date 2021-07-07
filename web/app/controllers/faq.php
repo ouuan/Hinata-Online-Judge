@@ -54,7 +54,6 @@
 					<p>Java11 的 JDK 版本是 openjdk 11.0.3，编译命令：<code>javac code.java</code>。</p>
 					<p>Pascal 的编译器是 fpc 3.0.4，编译命令：<code>fpc code.pas -O2</code>。</p>
 					<p>Python 会先编译为优化过的字节码 <samp>.pyo</samp> 文件。支持的 Python 版本分别为 Python 2.7 和 3.6。</p>
-                                        <p>至于评测机的性能，因为是在机房搭的 OJ，和你面前的那台电脑是一样的！</p>
 				</div>
 			</div>
 		</div>
@@ -204,13 +203,10 @@
 			</div>
 			<div id="collapseTen" class="collapse">
 				<div class="card-body">
-					<p>如果你想出题、想办比赛、发现了 BUG 或者对网站有什么建议，可以通过下面的方式联系我们：</p>
+					<p>如果你刚刚注册，或者想出题、想办比赛、发现了 BUG、对网站有什么建议，可以通过下面的方式联系我们：</p>
 					<ul>
-						<li>私信（当然是 QQ 或者其它地方私信，如果在 OJ 上私信还不如直接在机房里找呢~）联系 <?= UOJConfig::$data['profile']['administrator'] ?>。</li>
-                                                <li>直接在机房里找 ouuan。</li>
-						<?php if (UOJConfig::$data['profile']['QQ-group']!=''): ?>
-						<li>你也可以进 QQ 群水水，群号是<?= UOJConfig::$data['profile']['QQ-group'] ?>。</li>
-						<?php endif ?>
+						<li>email: ouuansteve@163.com 或者用其它方式联系 ouuan</li>
+						<li>直接在机房里找或者通过其它方式联系当前的 OJ 管理员或者 song8448</li>
 					</ul>
 				</div>
 			</div>
