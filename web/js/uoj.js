@@ -97,8 +97,7 @@ function getPenaltyTimeStr(x) {
 	return hh + ':' + mm + ':' + ss;
 }
 
-function htmlspecialchars(str)
-{
+function htmlspecialchars(str) {
 	var s = "";
 	if (str.length == 0) return "";
 	s = str.replace(/&/g, "&amp;");
@@ -305,14 +304,26 @@ $.fn.uoj_blog_tag = function() {
 	});
 }
 
+$(document).on('click', '.delete-uploaded-file-btn', function() {
+	if (confirm(`你真的要删除 [${$(this).data('name')}] 吗？`)) {
+		$.post('/delete-upload', {
+			type: $(this).data('type'),
+			domain: $(this).data('domain'),
+			name: $(this).data('name'),
+		}, (ret) => {
+			$(this).replaceWith(`${ret}`);
+		});
+	}
+})
+
 // click zan
 function click_zan(zan_id, zan_type, zan_delta, node) {
 	var loading_node = $('<div class="text-muted">loading...</div>');
 	$(node).replaceWith(loading_node);
 	$.post(zan_link + '/click-zan', {
-		id : zan_id,
-		delta : zan_delta,
-		type : zan_type
+		id: zan_id,
+		delta: zan_delta,
+		type: zan_type
 	}, function(ret) {
 		$(loading_node).replaceWith($(ret).click_zan_block());
 	}).fail(function() {
@@ -345,17 +356,17 @@ $.fn.click_zan_block = function() {
 		} else {
 			$(this).addClass('uoj-click-zan-block-negative');
 		}
-		
+
 		var node = this;
-		var up_node = $('<a href="#" class="uoj-click-zan-up"><span class="glyphicon glyphicon-thumbs-up"></span>'+uojLocale('click-zan::good')+'</a>').click(function(e) {
+		var up_node = $('<a href="#" class="uoj-click-zan-up"><span class="glyphicon glyphicon-thumbs-up"></span>' + uojLocale('click-zan::good') + '</a>').click(function(e) {
 			e.preventDefault();
 			click_zan(id, type, 1, node);
 		});
-		var down_node = $('<a href="#" class="uoj-click-zan-down"><span class="glyphicon glyphicon-thumbs-down"></span>'+uojLocale('click-zan::bad')+'</a>').click(function(e) {
+		var down_node = $('<a href="#" class="uoj-click-zan-down"><span class="glyphicon glyphicon-thumbs-down"></span>' + uojLocale('click-zan::bad') + '</a>').click(function(e) {
 			e.preventDefault();
 			click_zan(id, type, -1, node);
 		});
-		
+
 		$(this)
 			.append(up_node)
 			.append(down_node)
@@ -371,7 +382,7 @@ function getCountdownStr(t) {
 	var mm = toFilledStr(x % 60, '0', 2);
 	x = Math.floor(x / 60);
 	var hh = x.toString();
-	
+
 	var res = '<span style="font-size:30px">';
 	res += '<span style="color:' + getColOfScore(Math.min(t / 10800 * 100, 100)) + '">' + hh + '</span>';
 	res += ':';
@@ -412,8 +423,8 @@ function update_judgement_status_details(id) {
 $(document).ready(function() {
 	function update() {
 		$.get("/submission-status-details", {
-				get: update_judgement_status_list
-			},
+			get: update_judgement_status_list
+		},
 			function(data) {
 				for (var i = 0; i < update_judgement_status_list.length; i++) {
 					$("#status_details_" + update_judgement_status_list[i]).html(data[i].html);
@@ -422,10 +433,10 @@ $(document).ready(function() {
 					}
 				}
 			}, 'json').always(
-			function() {
-    			setTimeout(update, 500);
-	    	}
-	    );
+				function() {
+					setTimeout(update, 500);
+				}
+			);
 	}
 	if (update_judgement_status_list.length > 0) {
 		setTimeout(update, 500);
@@ -451,7 +462,7 @@ $.fn.uoj_highlight = function() {
 		});
 		$(this).find(".uoj-status").each(function() {
 			var success = parseInt($(this).data("success"));
-			if(isNaN(success)){
+			if (isNaN(success)) {
 				return;
 			}
 			if (success == 1) {
@@ -479,16 +490,16 @@ $(document).ready(function() {
 // contest notice
 function checkContestNotice(id, lastTime) {
 	$.post('/contest/' + id.toString(), {
-			check_notice : '',
-			last_time : lastTime
-		},
+		check_notice: '',
+		last_time: lastTime
+	},
 		function(data) {
 			setTimeout(function() {
 				checkContestNotice(id, data.time);
 			}, 60000);
 			if (data.msg != undefined) {
-				var len=data.msg.length;
-				for (var i=0;i<len;i++) alert(data.msg[i]);
+				var len = data.msg.length;
+				for (var i = 0; i < len; i++) alert(data.msg[i]);
 			}
 		},
 		'json'
@@ -503,11 +514,11 @@ function checkContestNotice(id, lastTime) {
 $.fn.long_table = function(data, cur_page, header_row, get_row_str, config) {
 	return this.each(function() {
 		var table_div = this;
-		
+
 		$(table_div).html('');
-		
+
 		var page_len = config.page_len != undefined ? config.page_len : 10;
-		
+
 		if (!config.echo_full) {
 			var n_rows = data.length;
 			var n_pages = Math.max(Math.ceil(n_rows / page_len), 1);
@@ -526,10 +537,10 @@ $.fn.long_table = function(data, cur_page, header_row, get_row_str, config) {
 			cur_page = 1;
 			var cur_start = (cur_page - 1) * page_len;
 		}
-		
+
 		var div_classes = config.div_classes != undefined ? config.div_classes : ['table-responsive'];
 		var table_classes = config.table_classes != undefined ? config.table_classes : ['table', 'table-bordered', 'table-hover', 'table-striped', 'table-text-center'];
-		
+
 		var now_cnt = 0;
 		var tbody = $('<tbody />')
 		for (var i = 0; i < page_len && cur_start + i < n_rows; i++) {
@@ -543,7 +554,7 @@ $.fn.long_table = function(data, cur_page, header_row, get_row_str, config) {
 		if (now_cnt == 0) {
 			tbody.append('<tr><td colspan="233">无</td></tr>');
 		}
-		
+
 		$(table_div).append(
 			$('<div class="' + div_classes.join(' ') + '" />').append(
 				$('<table class="' + table_classes.join(' ') + '" />').append(
@@ -553,16 +564,16 @@ $.fn.long_table = function(data, cur_page, header_row, get_row_str, config) {
 				)
 			)
 		);
-		
+
 		if (config.print_after_table != undefined) {
 			$(table_div).append(config.print_after_table());
 		}
-		
+
 		var get_page_li = function(p, h) {
 			if (p == -1) {
 				return $('<li class="page-item"></li>').addClass('disabled').append($('<a class="page-link"></a>').append(h));
 			}
-			
+
 			var li = $('<li class="page-item"></li>');
 			if (p == cur_page) {
 				li.addClass('active');
@@ -577,7 +588,7 @@ $.fn.long_table = function(data, cur_page, header_row, get_row_str, config) {
 			);
 			return li;
 		};
-		
+
 		if (n_pages > 1) {
 			var pagination = $('<ul class="pagination top-buffer-no bot-buffer-sm justify-content-center"></ul>');
 			if (cur_page > 1) {
@@ -657,7 +668,7 @@ function require_codemirror_mode(mode, callback) {
 
 // auto save
 function autosave_locally(interval, name, target) {
-	if (typeof(Storage) === "undefined") {
+	if (typeof (Storage) === "undefined") {
 		console.log('autosave_locally: Sorry! No Web Storage support..');
 		return;
 	}
@@ -716,7 +727,7 @@ $.fn.source_code_form_group = function(name, text, langs_options_html) {
 				.append($('<div class="input-group"/>')
 					.append(input_file_path)
 					.append($('<span class="input-group-append"/>')
-						.append($('<button type="button" class="btn btn-primary">'+'<span class="glyphicon glyphicon-folder-open"></span> '+uojLocale('editor::browse')+'</button>')
+						.append($('<button type="button" class="btn btn-primary">' + '<span class="glyphicon glyphicon-folder-open"></span> ' + uojLocale('editor::browse') + '</button>')
 							.css('width', '100px')
 							.click(function() {
 								input_file.click();
@@ -826,23 +837,23 @@ $.fn.source_code_form_group = function(name, text, langs_options_html) {
 
 		$(this)
 			.append($('<div class="row col-sm-12"/>')
-			.append($('<label class="col-sm-2 control-label"><div class="text-left">' + text + '</div></label>'))
-			.append($('<label class="col-sm-1 control-label" for="' + input_language_name + '">'+uojLocale('editor::language')+'</label>'))
-			.append($('<div class="col-sm-2"/>')
-				.append(input_language)
-			)
-			.append($('<div class="col-sm-2 offset-sm-3 radio"/>')
-				.append($('<label/>')
-					.append(input_upload_type_editor)
-					.append(' '+uojLocale('editor::upload by editor'))
+				.append($('<label class="col-sm-2 control-label"><div class="text-left">' + text + '</div></label>'))
+				.append($('<label class="col-sm-1 control-label" for="' + input_language_name + '">' + uojLocale('editor::language') + '</label>'))
+				.append($('<div class="col-sm-2"/>')
+					.append(input_language)
 				)
-			)
-			.append($('<div class="col-sm-2 radio"/>')
-				.append($('<label/>')
-					.append(input_upload_type_file)
-					.append(' '+uojLocale('editor::upload from local'))
+				.append($('<div class="col-sm-2 offset-sm-3 radio"/>')
+					.append($('<label/>')
+						.append(input_upload_type_editor)
+						.append(' ' + uojLocale('editor::upload by editor'))
+					)
 				)
-			))
+				.append($('<div class="col-sm-2 radio"/>')
+					.append($('<label/>')
+						.append(input_upload_type_file)
+						.append(' ' + uojLocale('editor::upload from local'))
+					)
+				))
 			.append(div_help_language)
 			.append(div_editor)
 			.append(div_file);
@@ -896,7 +907,7 @@ $.fn.text_file_form_group = function(name, text) {
 				.append($('<div class="input-group"/>')
 					.append(input_file_path)
 					.append($('<div class="input-group-append"/>')
-						.append($('<button type="button" class="btn btn-primary">'+'<span class="glyphicon glyphicon-folder-open"></span> '+uojLocale('editor::browse')+'</button>')
+						.append($('<button type="button" class="btn btn-primary">' + '<span class="glyphicon glyphicon-folder-open"></span> ' + uojLocale('editor::browse') + '</button>')
 							.css('width', '100px')
 							.click(function() {
 								input_file.click();
@@ -984,20 +995,20 @@ $.fn.text_file_form_group = function(name, text) {
 
 		$(this)
 			.append($('<div class="row"/>')
-			.append($('<label class="col-sm-2 control-label"><div class="text-left">' + text + '</div></label>'))
-			.append($('<div class="top-buffer-sm" />'))
-			.append($('<div class="col-sm-2 offset-sm-6 radio"/>')
-				.append($('<label/>')
-					.append(input_upload_type_editor)
-					.append(' '+uojLocale('editor::upload by editor'))
+				.append($('<label class="col-sm-2 control-label"><div class="text-left">' + text + '</div></label>'))
+				.append($('<div class="top-buffer-sm" />'))
+				.append($('<div class="col-sm-2 offset-sm-6 radio"/>')
+					.append($('<label/>')
+						.append(input_upload_type_editor)
+						.append(' ' + uojLocale('editor::upload by editor'))
+					)
 				)
-			)
-			.append($('<div class="col-sm-2 radio"/>')
-				.append($('<label/>')
-					.append(input_upload_type_file)
-					.append(' '+uojLocale('editor::upload from local'))
-				)
-			))
+				.append($('<div class="col-sm-2 radio"/>')
+					.append($('<label/>')
+						.append(input_upload_type_file)
+						.append(' ' + uojLocale('editor::upload from local'))
+					)
+				))
 			.append(div_editor)
 			.append(div_file);
 
@@ -1040,11 +1051,11 @@ function custom_test_onsubmit(response_text, div_result, url) {
 					}
 				}
 			}, 'json')
-		.always(function() {
-			if (can_next) {
-				setTimeout(update, 500);
-			}
-		});
+			.always(function() {
+				if (can_next) {
+					setTimeout(update, 500);
+				}
+			});
 	};
 	setTimeout(update, 500);
 }
@@ -1055,7 +1066,7 @@ function showCommentReplies(id, replies) {
 		if (text == undefined) {
 			text = '';
 		}
-		
+
 		var p = '#comment-body-' + id;
 		var q = '#div-form-reply';
 		var r = '#input-reply_comment';
@@ -1083,16 +1094,16 @@ function showCommentReplies(id, replies) {
 		e.preventDefault();
 		toggleFormReply(id);
 	});
-	
+
 	if (replies.length == 0) {
 		return;
 	}
-	
+
 	$("#replies-" + id).long_table(
 		replies,
 		1,
 		'<tr>' +
-			'<th>评论回复</th>' +
+		'<th>评论回复</th>' +
 		'</tr>',
 		function(reply) {
 			return $('<tr id="' + 'comment-' + reply.id + '" />').append(
@@ -1103,7 +1114,7 @@ function showCommentReplies(id, replies) {
 						'<li>' + '<small class="text-muted">' + reply.post_time + '</small>' + '</li>'
 					).append(
 						$('<li />').append(
-							$('<a href="#">回复</a>').click(function (e) {
+							$('<a href="#">回复</a>').click(function(e) {
 								e.preventDefault();
 								toggleFormReply(reply.id, '回复 @' + reply.poster + '：');
 							})
@@ -1112,10 +1123,10 @@ function showCommentReplies(id, replies) {
 				)
 			).uoj_highlight();
 		}, {
-			table_classes: ['table', 'table-condensed'],
-			page_len: 5,
-			prevent_focus_on_click: true
-		}
+		table_classes: ['table', 'table-condensed'],
+		page_len: 5,
+		prevent_focus_on_click: true
+	}
 	);
 }
 
@@ -1125,12 +1136,12 @@ function showStandings() {
 		standings,
 		1,
 		'<tr>' +
-			'<th style="width:5em">#</th>' +
-			'<th style="width:14em">'+uojLocale('username')+'</th>' +
-			'<th style="width:5em">'+uojLocale('contests::total score')+'</th>' +
-			$.map(problems, function(col, idx) {
-				return '<th style="width:8em;">' + '<a href="/contest/' + contest_id + '/problem/' + col + '">' + String.fromCharCode('A'.charCodeAt(0) + idx) + '</a>' + '</th>';
-			}).join('') +
+		'<th style="width:5em">#</th>' +
+		'<th style="width:14em">' + uojLocale('username') + '</th>' +
+		'<th style="width:5em">' + uojLocale('contests::total score') + '</th>' +
+		$.map(problems, function(col, idx) {
+			return '<th style="width:8em;">' + '<a href="/contest/' + contest_id + '/problem/' + col + '">' + String.fromCharCode('A'.charCodeAt(0) + idx) + '</a>' + '</th>';
+		}).join('') +
 		'</tr>',
 		function(row) {
 			var col_tr = '<tr>';
@@ -1155,12 +1166,12 @@ function showStandings() {
 			col_tr += '</tr>';
 			return col_tr;
 		}, {
-			table_classes: ['table', 'table-bordered', 'table-striped', 'table-text-center', 'table-vertical-middle', 'table-condensed'],
-			page_len: 100,
-			print_after_table: function() {
-				return '<div class="text-right text-muted">' + uojLocale("contests::n participants", standings.length) + '</div>';
-			}
+		table_classes: ['table', 'table-bordered', 'table-striped', 'table-text-center', 'table-vertical-middle', 'table-condensed'],
+		page_len: 100,
+		print_after_table: function() {
+			return '<div class="text-right text-muted">' + uojLocale("contests::n participants", standings.length) + '</div>';
 		}
+	}
 	);
 }
 
@@ -1183,11 +1194,11 @@ function addCopyButtons() {
 		try {
 			//初始化
 			$("textarea").remove("#targetId");
-			
+
 			//获取对应的代码
 			var codePre = $(this).next("pre").children("code");
 			var codeText = codePre[0].textContent;
-			
+
 			//添加 <textarea> DOM节点，将获取的代码写入
 			var target = document.createElement("textarea");
 			target.style.opacity = 0;
@@ -1202,7 +1213,7 @@ function addCopyButtons() {
 
 			// 复制选中的内容
 			document.execCommand("copy");
-			
+
 			//删除添加的节点
 			$("textarea").remove("#targetId");
 			$(this).html("成功");
@@ -1252,36 +1263,36 @@ $(function() {
 	showProblemColor();
 });
 
-$(document).on('click','th',function(){
+$(document).on('click', 'th', function() {
 	var table = $(this).parents('table').eq(0);
 	var rows = table.find('tr:gt(0)').toArray().sort(comparer($(this).index()));
 	this.asc = !this.asc;
-	if (!this.asc){rows = rows.reverse();}
+	if (!this.asc) { rows = rows.reverse(); }
 	table.children('tbody').empty().html(rows);
 });
 function naturalSorter(as, bs) {
-	var a, b, a1, b1, i= 0, n, L,
-	rx=/(\.\d+)|(\d+(\.\d+)?)|([^\d.]+)|(\.\D+)|(\.$)/g;
+	var a, b, a1, b1, i = 0, n, L,
+		rx = /(\.\d+)|(\d+(\.\d+)?)|([^\d.]+)|(\.\D+)|(\.$)/g;
 	if (as === bs) return 0;
-	a= as.toLowerCase().match(rx);
-	b= bs.toLowerCase().match(rx);
+	a = as.toLowerCase().match(rx);
+	b = bs.toLowerCase().match(rx);
 	if (a == null && b == null) return 0;
 	if (a == null) return 1;
 	if (b == null) return -1;
 	var chinese = /.*[\u4e00-\u9fa5]+.*/;
 	if (chinese.test(a[0]) || chinese.test(b[0])) return a[0].localeCompare(b[0]);
-	L= a.length;
-	while(i<L){
-		if(!b[i]) return 1;
-		a1= a[i],
-		b1= b[i++];
-		if(a1!== b1){
-			n= a1-b1;
-			if(!isNaN(n)) return n;
-			return a1>b1? 1:-1;
+	L = a.length;
+	while (i < L) {
+		if (!b[i]) return 1;
+		a1 = a[i],
+			b1 = b[i++];
+		if (a1 !== b1) {
+			n = a1 - b1;
+			if (!isNaN(n)) return n;
+			return a1 > b1 ? 1 : -1;
 		}
 	}
-	return b[i]? -1:0;
+	return b[i] ? -1 : 0;
 }
 function comparer(index) {
 	return function(a, b) {
@@ -1290,10 +1301,12 @@ function comparer(index) {
 		return naturalSorter(valA, valB);
 	};
 }
-function getCellValue(row, index){
+function getCellValue(row, index) {
 	var node = $(row).children('td').eq(index);
 	try {
-		if (node[0].childNodes[0].hasAttribute("data-cnt")) {
+		if (node[0].hasAttribute("data-sort")) {
+			return node[0].getAttribute("data-sort");
+		} else if (node[0].childNodes[0].hasAttribute("data-cnt")) {
 			return node[0].childNodes[0].getAttribute("data-cnt");
 		} else {
 			return node.text();

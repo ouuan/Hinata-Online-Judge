@@ -5,7 +5,7 @@ return array (
     'oj-name' => 'Hinata Online Judge',
     'oj-name-short' => 'WFLSOJ',
     'administrator' => 'ouuan',
-    'admin-email' => 'admin@local_uoj.ac',
+    'admin-email' => 'ouuansteve@163.com',
     'QQ-group' => '',
     'ICP-license' => '',
   ),

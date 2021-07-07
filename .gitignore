@@ -1,6 +1,7 @@
 *
 !*.*
 !*/
+web/storage
 judger/.conf.json
 judger/log/judge.log
 judger/uoj_judger/work/

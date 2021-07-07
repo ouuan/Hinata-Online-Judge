@@ -179,3 +179,24 @@ function sendSystemMsg($username, $title, $content) {
 	$title = DB::escape($title);
 	DB::insert("insert into user_system_msg (receiver, title, content, send_time) values ('$username', '$title', '$content', now())");
 }
+
+function significantFigure($value, $digits)
+{
+	if ($value == 0) {
+		$decimalPlaces = $digits - 1;
+	} elseif ($value < 0) {
+		$decimalPlaces = $digits - floor(log10($value * -1)) - 1;
+	} else {
+		$decimalPlaces = $digits - floor(log10($value)) - 1;
+	}
+
+	$answer = round($value, $decimalPlaces);
+	return $answer;
+}
+
+function humanFilesize($bytes)
+{
+	$size   = array('B', 'KB', 'MB', 'GB', 'TB', 'PB');
+	$factor = floor((strlen($bytes) - 1) / 3);
+	return significantFigure($bytes / pow(1024, $factor), 3) . @$size[$factor];
+}

@@ -1,5 +1,5 @@
 <?php
-	if (!in_array($_SERVER['REQUEST_URI'], ["/login", "/register", "/faq"]) && !Auth::check()) {
+	if (!in_array($_SERVER['REQUEST_URI'], ["/login", "/register", "/faq", "/"]) && !Auth::check()) {
 		redirectToLogin();
 	}
 	$new_user_msg_num = DB::selectCount("select count(*) from user_msg where receiver = '".Auth::id()."' and read_time is null");
@@ -85,7 +85,7 @@
 		<?= HTML::js_src('/js/color-converter.min.js') ?>
 		
 		<!-- uoj -->
-		<?= HTML::js_src('/js/uoj.js?v=2020.7.15') ?>
+		<?= HTML::js_src('/js/uoj.js?v=2021.7.8') ?>
 		
 		<!-- readmore -->
 		<?= HTML::js_src('/js/readmore/readmore.min.js') ?>
@@ -258,6 +258,7 @@
 							<li role="presentation"><a class="dropdown-item" href="<?= HTML::url('/user/profile/' . Auth::id()) ?>"><?= UOJLocale::get('my profile') ?></a></li>
 							<li role="presentation"><a class="dropdown-item" href="<?= HTML::url('/user/msg') ?>"><?= UOJLocale::get('private message') ?>&nbsp;&nbsp;<?= $new_user_msg_num_html ?></a></li>
 							<li role="presentation"><a class="dropdown-item" href="<?= HTML::url('/user/system-msg') ?>"><?= UOJLocale::get('system message') ?>&nbsp;&nbsp;<?= $new_system_msg_num_html ?></a></li>
+							<li role="presentation"><a class="dropdown-item" href="<?= HTML::url('/file-upload') ?>">文件上传</a></li>
 							<?php if (isSuperUser(Auth::user())): ?>
 								<li role="presentation"><a class="dropdown-item" href="<?= HTML::url('/super-manage') ?>"><?= UOJLocale::get('system manage') ?></a></li>
 							<?php endif ?>
