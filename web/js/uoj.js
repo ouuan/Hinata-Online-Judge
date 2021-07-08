@@ -1316,3 +1316,24 @@ function getCellValue(row, index) {
 	}
 }
 
+function copyTextToClipboard(text) {
+	var textArea = document.createElement("textarea");
+	textArea.value = text;
+
+	// Avoid scrolling to bottom
+	textArea.style.top = "0";
+	textArea.style.left = "0";
+	textArea.style.position = "fixed";
+
+	document.body.appendChild(textArea);
+	textArea.focus();
+	textArea.select();
+
+	try {
+		document.execCommand('copy');
+	} catch (err) {
+		window.prompt("按 Ctrl+C 和 Enter 以复制文本", text);
+	}
+
+	document.body.removeChild(textArea);
+}

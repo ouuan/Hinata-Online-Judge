@@ -66,15 +66,18 @@ class UploadedFile
 		return date("Y-m-d H:i:s", filemtime($this->filePath()));
 	}
 
-	public function operation()
+	public function markdownButton()
 	{
 		if (strStartWith(mime_content_type($this->filePath()), 'image/')) {
-			return <<<EOD
-<button title="复制图片的 Markdown 代码" class="btn btn-primary" onclick="navigator.clipboard.writeText('![{$this->name}]({$this->relPath()})')">Markdown</button>
-EOD;
+			$name = "图片";
+			$prefix = "!";
 		} else {
-			return '<a href="' . $this->url() . '" download class="btn btn-primary">下载</button>';
+			$name = "文件链接";
+			$prefix = "";
 		}
+		return <<<EOD
+<button title="复制{$name}的 Markdown 代码" class="btn btn-primary" onclick="copyTextToClipboard('{$prefix}[{$this->name}]({$this->relPath()})')">复制 Markdown</button>
+EOD;
 	}
 
 	public function deleteButton()

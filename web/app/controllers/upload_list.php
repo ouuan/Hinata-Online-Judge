@@ -40,7 +40,7 @@ function printRow(UploadedFile $file)
 	echo '<td>' . $file->mtime() . '</td>';
 	echo '<td><a href="' . $file->url() . '">' . $file->name . '</a></td>';
 	echo '<td data-sort="' . filesize($file->filePath()) . '">' . $file->size() . '</td>';
-	echo '<td>' . $file->operation() . '</td>';
+	echo '<td>' . $file->markdownButton() . '</td>';
 	echo '<td>' . $file->deleteButton() . '</td>';
 	echo '</tr>';
 }
@@ -50,7 +50,7 @@ $header = <<<EOD
 		<th>修改时间</th>
 		<th>文件名</th>
 		<th>大小</th>
-		<th>操作</th>
+		<th>Markdown 代码</th>
 		<th>删除</th>
     </tr>
 EOD;
