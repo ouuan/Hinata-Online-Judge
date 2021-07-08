@@ -1,7 +1,10 @@
 <?php
 	requireLib('shjs');
 	requireLib('mathjax');
-	echoUOJPageHeader(UOJLocale::get('help')) 
+	echoUOJPageHeader(UOJLocale::get('help'));
+	$meminfo_file = file_get_contents('/proc/meminfo');
+	preg_match_all('/(\w+):\s+(\d+)\s/', $meminfo_file, $matches);
+	$meminfo_array = array_combine($matches[1], $matches[2]);
 ?>
 <article>
 	<header>
@@ -47,7 +50,9 @@
 			</div>
 			<div id="collapseThree" class="collapse">
 				<div class="card-body">
-					<p>默认的测评环境是 Ubuntu Linux 18.04 LTS x64。</p>
+					<p>操作系统是 Ubuntu Linux 18.04 LTS x64。</p>
+					<p>CPU 是 <?= substr(file('/proc/cpuinfo')[4], 13) ?>。</p>
+					<p>内存大小为 <?= humanFilesize($meminfo_array['MemTotal'] * 1024) ?>。</p>
 					<p>C 的编译器是 gcc 7.4.0，编译命令：<code>gcc code.c -o code -lm -O2 -DONLINE_JUDGE</code>。</p>
 					<p>C++ 的编译器是 g++ 7.4.0，编译命令：<code>g++ code.cpp -o code -lm -O2 -DONLINE_JUDGE</code>。如果选择 C++11 会在编译命令后面添加<code>-std=c++11</code>。</p>
 					<p>Java8 的 JDK 版本是 openjdk 1.8.0_212，编译命令：<code>javac code.java</code>。</p>
