@@ -1010,7 +1010,7 @@ Renderer.prototype.paragraph = function(text) {
 Renderer.prototype.table = function(header, body) {
   if (body) body = '<tbody>' + body + '</tbody>';
 
-  return '<table>\n'
+  return '<table class="table table-bordered table-hover table-striped">\n'
     + '<thead>\n'
     + header
     + '</thead>\n'
