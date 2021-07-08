@@ -121,9 +121,11 @@ function isContestProblemVisibleToUser($problem, $contest, $user) {
 
 function isProblemOrContestProblemVisibleToUser($problem, $user) {
 	if (isProblemVisibleToUser($problem, $user)) return true;
-	$contest_ids = DB::selectAll("select distinct p.contest_id from contests_problems p join contests_registrants r where p.contest_id = r.contest_id and p.problem_id = '{$problem['id']}' and r.username = '{$user['username']}'");
-	foreach ($contest_ids as $id) {
-		if (queryContest($id)['cur_progress'] !== CONTEST_NOT_STARTED) {
+	$rows = DB::selectAll("select distinct p.contest_id from contests_problems p join contests_registrants r where p.contest_id = r.contest_id and p.problem_id = '{$problem['id']}' and r.username = '{$user['username']}'");
+	foreach ($rows as $row) {
+		$contest = queryContest($row['contest_id']);
+		genMoreContestInfo($contest);
+		if ($contest['cur_progress'] !== CONTEST_NOT_STARTED) {
 			return true;
 		}
 	}
