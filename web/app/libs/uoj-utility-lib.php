@@ -196,7 +196,7 @@ function significantFigure($value, $digits)
 
 function humanFilesize($bytes)
 {
-	$size   = array('B', 'KB', 'MB', 'GB', 'TB', 'PB');
+	$size   = array('B', 'KiB', 'MiB', 'GiB', 'TiB', 'PiB');
 	$factor = floor((strlen($bytes) - 1) / 3);
 	return significantFigure($bytes / pow(1024, $factor), 3) . @$size[$factor];
 }

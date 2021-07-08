@@ -248,7 +248,7 @@ function echoSubmission($submission, $config, $user) {
 		$used_memory_str = "/";
 	} else {
 		$used_time_str = $submission['used_time'] . 'ms';
-		$used_memory_str = $submission['used_memory'] . 'kb';
+		$used_memory_str = humanFilesize($submission['used_memory'] * 1024);
 	}
 	
 	$status = explode(', ', $submission['status'])[0];
@@ -289,16 +289,11 @@ function echoSubmission($submission, $config, $user) {
 	if (!isset($config['used_time_hidden']))
 		echo '<td>', $used_time_str, '</td>';
 	if (!isset($config['used_memory_hidden']))
-		echo '<td>', $used_memory_str, '</td>';
+		echo '<td data-sort="', $submission['used_memory'], '">', $used_memory_str, '</td>';
 
 	echo '<td>', '<a href="/submission/', $submission['id'], '">', $submission['language'], '</a>', '</td>';
 
-	if ($submission['tot_size'] < 1024) {
-		$size_str = $submission['tot_size'] . 'b';
-	} else {
-		$size_str = sprintf("%.1f", $submission['tot_size'] / 1024) . 'kb';
-	}
-	echo '<td>', $size_str, '</td>';
+	echo '<td data-sort="', $submission['tot_size'], '">', humanFilesize($submission['tot_size']), '</td>';
 
 	if (!isset($config['submit_time_hidden']))
 		echo '<td><small>', $submission['submit_time'], '</small></td>';
