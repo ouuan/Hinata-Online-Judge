@@ -6,7 +6,9 @@ Hinata Online Judge 是 ouuan 基于社区版 UOJ 搭建的校内 OJ。
 
 [feature list](https://github.com/ouuan/Hinata-Online-Judge/issues/1)
 
-使用方法：首先你需要已经安装了 [社区版 UOJ](https://github.com/UniversalOJ/UOJ-System)。在 docker 内的 `/opt/uoj` 文件夹下就是一个 git 仓库，如果要使用所有 feature 直接 pull 本仓库即可。即：
+~~使用方法：首先你需要已经安装了 [社区版 UOJ](https://github.com/UniversalOJ/UOJ-System)。在 docker 内的 `/opt/uoj` 文件夹下就是一个 git 仓库，如果要使用所有 feature 直接 pull 本仓库即可。即：~~
+
+本 fork 魔改程度很大，而且有的改动并没有太考虑其他人的使用。建议本 fork 仅作为魔改的参考，可以从这里复制代码 / 找到思路，但不建议直接使用本 fork。
 
 1. （docker 外）`sudo docker exec -it uoj /bin/bash`
 
