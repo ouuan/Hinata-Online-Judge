@@ -24,7 +24,7 @@ return [
 	'password' => '密码',
 	'new password' => '新密码',
 	'email' => 'Email',
-	'wrong email' => '只有使用正确的邮箱地址才能使用头像',
+	'wrong email' => '你会通过该邮箱获取初始密码',
 	'QQ' => 'QQ',
 	'sex' => '性别',
 	'motto' => '格言',

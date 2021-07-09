@@ -24,7 +24,7 @@ return [
 	'password' => 'Password',
 	'new password' => 'New password',
 	'email' => 'Email',
-	'wrong email' => 'you can use Gravatar only when you use a correct e-mail address',
+	'wrong email' => 'You will receive your initial password via email',
 	'QQ' => 'QQ',
 	'sex' => 'Sex',
 	'motto' => 'Motto',

@@ -7,30 +7,50 @@ function handleRegisterPost()
 	if (!isset($_POST['username'])) {
 		return "无效表单";
 	}
-	if (!isset($_POST['password'])) {
-		return "无效表单";
-	}
 	if (!isset($_POST['email'])) {
 		return "无效表单";
 	}
 
 	$username = $_POST['username'];
-	$password = $_POST['password'];
 	$email = $_POST['email'];
+
 	if (!validateUsername($username)) {
 		return "失败：无效用户名。";
 	}
 	if (queryUser($username)) {
 		return "失败：用户名已存在。";
 	}
-	if (!validatePassword($password)) {
-		return "失败：无效密码。";
-	}
 	if (!validateEmail($email)) {
 		return "失败：无效电子邮箱。";
 	}
 
-	$password = getPasswordToStore($password, $username);
+	$original_password = uojRandString(12);
+
+	$oj_name = UOJConfig::$data['profile']['oj-name'];
+	$oj_name_short = UOJConfig::$data['profile']['oj-name-short'];
+	$login_url = HTML::url("/login");
+	$modify_url = HTML::url("/user/modify-profile");
+	$admin_mail = UOJConfig::$data['profile']['admin-email'];
+	$mail_content = <<<EOD
+<p>{$username} 您好，</p>
+<p>欢迎来到 {$oj_name}！</p>
+<p>您的初始密码是: {$original_password}</p>
+<p>本 OJ 的注册需要经过管理员同意，请在机房联系管理员或者教练，或者通过邮件联系 <a href="mailto:{$admin_mail}">{$admin_mail}</a>。<p>
+<p>成功 <a href="{$login_url}">登录</a> 后请立即 <a href="${modify_url}">修改密码</a>。</p>
+<p>{$oj_name}</p>
+EOD;
+
+	$mailer = UOJMail::noreply();
+	$mailer->addAddress($email, $username);
+	$mailer->Subject = $oj_name_short . " 新用户注册";
+	$mailer->msgHTML($mail_content);
+	if (!$mailer->send()) {
+		error_log($mailer->ErrorInfo);
+		return '邮件发送失败，请重试或联系管理员';
+	}
+
+	$password_hash = hash_hmac('md5', $original_password, UOJConfig::$data['security']['user']['client_salt']);
+	$password = getPasswordToStore($password_hash, $username);
 
 	$esc_email = DB::escape($email);
 
@@ -40,7 +60,7 @@ function handleRegisterPost()
 	else
 		DB::query("insert into user_info (username, email, password, svn_password, register_time, usergroup) values ('$username', '$esc_email', '$password', '$svn_pw', now(), 'B')");
 
-	return "欢迎你！" . $username . "，你已成功注册。";
+	return "欢迎你，" . $username . "！请在邮箱中查看密码并联系管理员通过注册申请。";
 }
 
 if (isset($_POST['register'])) {
@@ -75,14 +95,6 @@ $REQUIRE_LIB['dialog'] = '';
 		<div class="col-sm-3">
 			<input type="text" class="form-control" id="input-username" name="username" placeholder="<?= UOJLocale::get('enter your username') ?>" maxlength="20" />
 			<span class="help-block" id="help-username"></span>
-		</div>
-	</div>
-	<div id="div-password" class="form-group">
-		<label for="input-password" class="col-sm-2 control-label"><?= UOJLocale::get('password') ?></label>
-		<div class="col-sm-3">
-			<input type="password" class="form-control" id="input-password" name="password" placeholder="<?= UOJLocale::get('enter your password') ?>" maxlength="20" />
-			<input type="password" class="form-control top-buffer-sm" id="input-confirm_password" placeholder="<?= UOJLocale::get('re-enter your password') ?>" maxlength="20" />
-			<span class="help-block" id="help-password"></span>
 		</div>
 	</div>
 	<div class="form-group">
@@ -127,7 +139,6 @@ $REQUIRE_LIB['dialog'] = '';
 				return '该用户名已被人使用了。';
 			return '';
 		})
-		ok &= getFormErrorAndShowHelp('password', validateSettingPassword);
 		return ok;
 	}
 
@@ -141,9 +152,8 @@ $REQUIRE_LIB['dialog'] = '';
 			register: '',
 			username: $('#input-username').val(),
 			email: $('#input-email').val(),
-			password: md5($('#input-password').val(), "<?= getPasswordClientSalt() ?>")
 		}, function(msg) {
-			if (/^欢迎你！/.test(msg)) {
+			if (/^欢迎你/.test(msg)) {
 				BootstrapDialog.show({
 					title: '注册成功',
 					message: msg,
