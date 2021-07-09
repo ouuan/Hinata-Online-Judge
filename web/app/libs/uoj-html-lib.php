@@ -51,7 +51,7 @@ function redirectToLogin() {
 	if (UOJContext::isAjax()) {
 		die('please <a href="'.HTML::url('/login').'">login</a>');
 	} else {
-		header('Location: '.HTML::url('/login'));
+		header('Location: '.HTML::url('/login?prev=').$_SERVER['REQUEST_URI']);
 		die();
 	}
 }
