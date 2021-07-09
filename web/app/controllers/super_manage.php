@@ -28,13 +28,13 @@ $options = array(
 	'normaluser' => '设为普通用户',
 	'superuser' => '设为超级用户'
 );
-$user_form->addSelect('op-type', $options, '操作类型', '');
+$user_form->addSelect('optype', $options, '操作类型', 'normaluser');
 $user_form->handle = function () {
 	$username = $_POST['username'];
 	$user = queryUser($username);
 	if ($user === null) becomeMsgPage("用户名不存在");
 	$group = $user['usergroup'];
-	switch ($_POST['op-type']) {
+	switch ($_POST['optype']) {
 		case 'banneduser':
 			$newgroup = 'B';
 			$msg = '<p>您的帐号已被封禁，请联系管理员了解详情。</p>';
@@ -58,7 +58,46 @@ $user_form->handle = function () {
 		}
 	}
 };
+$user_form->submit_button_config['confirm_text'] = '你真的要修改该用户的权限吗？';
 $user_form->runAtServer();
+
+$realname_form = new UOJForm('realname');
+$realname_form->addInput(
+	'realname_username',
+	'text',
+	'用户名',
+	'',
+	function ($username) {
+		if (!validateUsername($username)) {
+			return '用户名不合法';
+		}
+		if (!queryUser($username)) {
+			return '用户不存在';
+		}
+		return '';
+	},
+	null
+);
+$realname_form->addInput(
+	'realname',
+	'text',
+	'真实姓名',
+	'',
+	function ($realname) {
+		if (validateRealname($realname)) return '';
+		return '真实姓名不合法';
+	},
+	null
+);
+$realname_form->submit_button_config['confirm_text'] = '你真的要修改该用户的真实姓名吗？';
+$realname_form->handle = function () {
+	$username = $_POST['realname_username'];
+	$realname = $_POST['realname'];
+	if (!queryUser($username)) becomeMsgPage('用户不存在');
+	if (!validateRealname($realname)) becomeMsgPage('真实姓名不合法');
+	DB::update("update user_info set realname = '{$realname}' where username = '{$username}'");
+};
+$realname_form->runAtServer();
 
 $blog_link_contests = new UOJForm('blog_link_contests');
 $blog_link_contests->addInput(
@@ -99,7 +138,7 @@ $options = array(
 	'add' => '添加',
 	'del' => '删除'
 );
-$blog_link_contests->addSelect('op-type', $options, '操作类型', '');
+$blog_link_contests->addSelect('optype', $options, '操作类型', '');
 $blog_link_contests->handle = function () {
 	$blog_id = $_POST['blog_id'];
 	$contest_id = $_POST['contest_id'];
@@ -109,13 +148,13 @@ $blog_link_contests->handle = function () {
 
 	$n = count($config);
 
-	if ($_POST['op-type'] == 'add') {
+	if ($_POST['optype'] == 'add') {
 		$row = array();
 		$row[0] = $_POST['title'];
 		$row[1] = $blog_id;
 		$config[$n] = $row;
 	}
-	if ($_POST['op-type'] == 'del') {
+	if ($_POST['optype'] == 'del') {
 		for ($i = 0; $i < $n; $i++)
 			if ($config[$i][1] == $blog_id) {
 				$config[$i] = $config[$n - 1];
@@ -160,18 +199,18 @@ $options = array(
 	'add' => '添加',
 	'del' => '删除'
 );
-$blog_link_index->addSelect('op-type2', $options, '操作类型', '');
+$blog_link_index->addSelect('optype2', $options, '操作类型', '');
 $blog_link_index->handle = function () {
 	$blog_id = $_POST['blog_id2'];
 	$blog_level = $_POST['blog_level'];
-	if ($_POST['op-type2'] == 'add') {
+	if ($_POST['optype2'] == 'add') {
 		if (DB::selectFirst("select * from important_blogs where blog_id = {$blog_id}")) {
 			DB::update("update important_blogs set level = {$blog_level} where blog_id = {$blog_id}");
 		} else {
 			DB::insert("insert into important_blogs (blog_id, level) values ({$blog_id}, {$blog_level})");
 		}
 	}
-	if ($_POST['op-type2'] == 'del') {
+	if ($_POST['optype2'] == 'del') {
 		DB::delete("delete from important_blogs where blog_id = {$blog_id}");
 	}
 };
@@ -440,7 +479,10 @@ requireLib('morris');
 
 	<div class="col-sm-9">
 		<?php if ($cur_tab === 'users') : ?>
+			<h3>修改用户权限</h3>
 			<?php $user_form->printHTML(); ?>
+			<h3>修改真实姓名</h3>
+			<?php $realname_form->printHTML(); ?>
 			<h3>封禁名单</h3>
 			<?php echoLongTable($banlist_cols, 'user_info', "usergroup='B'", 'order by register_time desc', $banlist_header_row, $banlist_print_row, $banlist_config) ?>
 			<h3>管理员名单</h3>

@@ -579,7 +579,7 @@ EOD;
 		}
 		if (isset($this->submit_button_config['confirm_text'])) {
 			echo <<<EOD
-		if (!confirm('{$this->submit_button_config['confirm_text']}')) {
+		if (ok && !confirm('{$this->submit_button_config['confirm_text']}')) {
 			ok = false;
 		}
 
