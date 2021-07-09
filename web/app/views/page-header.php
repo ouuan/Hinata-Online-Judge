@@ -1,5 +1,5 @@
 <?php
-	if (!in_array($_SERVER['REQUEST_URI'], ["/login", "/register", "/faq", "/"]) && !Auth::check()) {
+	if (!in_array(parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH), ["/login", "/register", "/faq", "/", "/forgot-password", "/reset-password"]) && !Auth::check()) {
 		redirectToLogin();
 	}
 	$new_user_msg_num = DB::selectCount("select count(*) from user_msg where receiver = '".Auth::id()."' and read_time is null");
