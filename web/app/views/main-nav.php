@@ -13,23 +13,24 @@
 			<li class="nav-item"><a class="nav-link" href="<?= HTML::url('/faq') ?>"><span class="glyphicon glyphicon-info-sign"></span> <?= UOJLocale::get('help') ?></a></li>
 		</ul>
 		<form id="form-search-problem" class="form-inline my-2 my-lg-0" method="get">
-			 <div class="input-group">
-				<input type="text" class="form-control" name="search" id="input-search" placeholder="<?= UOJLocale::get('search')?>" />  
+			<div class="input-group">
+				<input type="text" class="form-control" name="search" id="input-search" placeholder="<?= UOJLocale::get('search') ?>" />
 				<div class="input-group-append">
 					<button type="submit" class="btn btn-search btn-outline-primary" id="submit-search"><span class="glyphicon glyphicon-search"></span></button>
 				</div>
 			</div>
 		</form>
-	</div><!--/.nav-collapse -->
+	</div>
+	<!--/.nav-collapse -->
 </div>
 <script type="text/javascript">
 	var zan_link = '';
 	$('#form-search-problem').submit(function(e) {
 		e.preventDefault();
-		
+
 		url = '<?= HTML::url('/problems') ?>';
 		qs = [];
-		$(['search']).each(function () {
+		$(['search']).each(function() {
 			if ($('#input-' + this).val()) {
 				qs.push(this + '=' + encodeURIComponent($('#input-' + this).val()));
 			}

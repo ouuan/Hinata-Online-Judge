@@ -1,23 +1,24 @@
 <?php
-	if ($myUser == null) {
-		redirectToLogin();
-	}
-	
-	$header_row = <<<EOD
+if ($myUser == null) {
+	redirectToLogin();
+}
+
+$header_row = <<<EOD
 <tr>
 	<th>消息</th>
 	<th style="width:15em">时间</th>
 </tr>
 EOD;
-	function echoSysMsg($msg) {
-		echo $msg['read_time'] == null ? '<tr class="warning">' : '<tr>';
-		echo '<td>';
-		echo '<h4>'.$msg['title'].'</h4>';
-		echo $msg['content'];
-		echo '</td>';
-		echo '<td>'.$msg['send_time'].'</td>';
-		echo '</tr>';
-	}
+function echoSysMsg($msg)
+{
+	echo $msg['read_time'] == null ? '<tr class="warning">' : '<tr>';
+	echo '<td>';
+	echo '<h4>' . $msg['title'] . '</h4>';
+	echo $msg['content'];
+	echo '</td>';
+	echo '<td>' . $msg['send_time'] . '</td>';
+	echo '</tr>';
+}
 ?>
 <?php echoUOJPageHeader('系统消息') ?>
 <h2>系统消息</h2>

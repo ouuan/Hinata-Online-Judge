@@ -7,12 +7,12 @@
 			</tr>
 		</thead>
 		<tbody>
-			<?php for ($i = 0; $i < count($contest_problems); $i++): ?>
+			<?php for ($i = 0; $i < count($contest_problems); $i++) : ?>
 				<tr>
 					<?php
-						echo $contest_problems[$i]['submission_id'] ? '<td class="success">' : '<td>';
-						echo chr(ord('A') + $i);
-						echo '</td>';
+					echo $contest_problems[$i]['submission_id'] ? '<td class="success">' : '<td>';
+					echo chr(ord('A') + $i);
+					echo '</td>';
 					?>
 					<td><?= getContestProblemLink($contest_problems[$i]['problem'], $contest['id']) ?></td>
 				</tr>
@@ -32,21 +32,24 @@
 			</tr>
 		</thead>
 		<tbody>
-			<?php if (empty($contest_notice)): ?>
-				<tr><td colspan="233"><?= UOJLocale::get('none') ?></td></tr>
-			<?php else: foreach ($contest_notice as $notice): ?>
+			<?php if (empty($contest_notice)) : ?>
 				<tr>
-					<td><?= HTML::escape($notice['title']) ?></td>
-					<td style="white-space:pre-wrap; text-align: left"><?= $notice['content'] ?></td>
-					<td><?= $notice['time'] ?></td>
+					<td colspan="233"><?= UOJLocale::get('none') ?></td>
 				</tr>
-			<?php endforeach; endif ?>
+				<?php else : foreach ($contest_notice as $notice) : ?>
+					<tr>
+						<td><?= HTML::escape($notice['title']) ?></td>
+						<td style="white-space:pre-wrap; text-align: left"><?= $notice['content'] ?></td>
+						<td><?= $notice['time'] ?></td>
+					</tr>
+			<?php endforeach;
+			endif ?>
 		</tbody>
 	</table>
 </div>
 
 
-<?php if ($post_notice): ?>
+<?php if ($post_notice) : ?>
 	<div class="text-center">
 		<button id="button-display-post-notice" type="button" class="btn btn-danger btn-xs">发布比赛公告</button>
 	</div>
@@ -54,33 +57,33 @@
 		<?php $post_notice->printHTML() ?>
 	</div>
 	<script type="text/javascript">
-	$(document).ready(function() {
-		$('#button-display-post-notice').click(function() {
-			$('#div-form-post-notice').toggle('fast');
+		$(document).ready(function() {
+			$('#button-display-post-notice').click(function() {
+				$('#div-form-post-notice').toggle('fast');
+			});
 		});
-	});
 	</script>
 <?php endif ?>
 
 <h3>提问</h3>
-<?php if ($my_questions_pag != null): ?>
+<?php if ($my_questions_pag != null) : ?>
 	<div>
-		<?php if ($post_question): ?>
+		<?php if ($post_question) : ?>
 			<div class="float-right">
 				<button id="button-display-post-question" type="button" class="btn btn-primary btn-xs">提问题</button>
 			</div>
 		<?php endif ?>
 		<h4>我的提问</h4>
-		<?php if ($post_question): ?>
+		<?php if ($post_question) : ?>
 			<div id="div-form-post-question" style="display:none" class="bot-buffer-md">
 				<?php $post_question->printHTML() ?>
 			</div>
 			<script type="text/javascript">
-			$(document).ready(function() {
-				$('#button-display-post-question').click(function() {
-					$('#div-form-post-question').toggle('fast');
+				$(document).ready(function() {
+					$('#button-display-post-question').click(function() {
+						$('#div-form-post-question').toggle('fast');
+					});
 				});
-			});
 			</script>
 		<?php endif ?>
 		<?php uojIncludeView('contest-question-table', ['pag' => $my_questions_pag]) ?>
@@ -88,9 +91,9 @@
 <?php endif ?>
 
 <div>
-	<?php if ($my_questions_pag != null): ?>
+	<?php if ($my_questions_pag != null) : ?>
 		<h4>其他人的提问</h4>
-	<?php else: ?>
+	<?php else : ?>
 		<h4>所有人的提问</h4>
 	<?php endif ?>
 	<?php uojIncludeView('contest-question-table', ['pag' => $others_questions_pag]) ?>

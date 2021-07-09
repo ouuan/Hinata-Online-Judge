@@ -3,21 +3,22 @@ define("CONTEST_NOT_STARTED", 0);
 define("CONTEST_IN_PROGRESS", 1);
 define("CONTEST_PENDING_FINAL_TEST", 2);
 define("CONTEST_TESTING", 10);
-define("CONTEST_FINISHED", 20);	
+define("CONTEST_FINISHED", 20);
 
-function calcRating($standings, $K = 400) {
+function calcRating($standings, $K = 400)
+{
 	$DELTA = 500;
 
 	$n = count($standings);
-	
+
 	$rating = array();
 	for ($i = 0; $i < $n; ++$i) {
 		$rating[$i] = $standings[$i][2][1];
 	}
-	
+
 	$rank = array();
 	$foot = array();
-	for ($i = 0; $i < $n; ) {
+	for ($i = 0; $i < $n;) {
 		$j = $i;
 		while ($j + 1 < $n && $standings[$j + 1][3] == $standings[$j][3]) {
 			++$j;
@@ -29,7 +30,7 @@ function calcRating($standings, $K = 400) {
 			$i++;
 		}
 	}
-	
+
 	$weight = array();
 	for ($i = 0; $i < $n; ++$i) {
 		$weight[$i] = pow(7, $rating[$i] / $DELTA);
@@ -40,13 +41,13 @@ function calcRating($standings, $K = 400) {
 			if ($j != $i) {
 				$exp[$i] += $weight[$i] / ($weight[$i] + $weight[$j]);
 			}
-	
+
 	$new_rating = array();
 	for ($i = 0; $i < $n; $i++) {
 		$new_rating[$i] = $rating[$i];
 		$new_rating[$i] += ceil($K * ($foot[$i] - $exp[$i]) / ($n - 1));
 	}
-	
+
 	for ($i = $n - 1; $i >= 0; $i--) {
 		if ($i + 1 < $n && $standings[$i][3] != $standings[$i + 1][3]) {
 			break;
@@ -55,17 +56,18 @@ function calcRating($standings, $K = 400) {
 			$new_rating[$i] = $rating[$i];
 		}
 	}
-	
+
 	for ($i = 0; $i < $n; $i++) {
 		if ($new_rating[$i] < 0) {
 			$new_rating[$i] = 0;
 		}
 	}
-	
+
 	return $new_rating;
 }
 
-function calcRatingSelfTest() {
+function calcRatingSelfTest()
+{
 	$tests = [
 		[[1500, 1], [1500, 1]],
 		[[1500, 1], [1600, 1]],
@@ -81,14 +83,14 @@ function calcRatingSelfTest() {
 	];
 	foreach ($tests as $test_num => $test) {
 		print "test #{$test_num}\n";
-		
+
 		$standings = array();
 		$n = count($test);
 		for ($i = 0; $i < $n; $i++) {
 			$standings[] = [0, 0, [(string)$i, $test[$i][0]], $test[$i][1]];
 		}
 		$new_rating = calcRating($standings);
-		
+
 		for ($i = 0; $i < $n; $i++) {
 			printf("%3d: %4d -> %4d delta: %+4d\n", $test[$i][1], $test[$i][0], $new_rating[$i], $new_rating[$i] - $test[$i][0]);
 		}
@@ -96,12 +98,13 @@ function calcRatingSelfTest() {
 	}
 }
 
-function genMoreContestInfo(&$contest) {
+function genMoreContestInfo(&$contest)
+{
 	$contest['start_time_str'] = $contest['start_time'];
 	$contest['start_time'] = new DateTime($contest['start_time']);
 	$contest['end_time'] = clone $contest['start_time'];
 	$contest['end_time']->add(new DateInterval("PT${contest['last_min']}M"));
-	
+
 	if ($contest['status'] == 'unfinished') {
 		if (UOJTime::$time_now < $contest['start_time']) {
 			$contest['cur_progress'] = CONTEST_NOT_STARTED;
@@ -116,24 +119,26 @@ function genMoreContestInfo(&$contest) {
 		$contest['cur_progress'] = CONTEST_FINISHED;
 	}
 	$contest['extra_config'] = json_decode($contest['extra_config'], true);
-	
+
 	if (!isset($contest['extra_config']['standings_version'])) {
 		$contest['extra_config']['standings_version'] = 2;
 	}
 }
 
-function updateContestPlayerNum($contest) {
+function updateContestPlayerNum($contest)
+{
 	DB::update("update contests set player_num = (select count(*) from contests_registrants where contest_id = {$contest['id']}) where id = {$contest['id']}");
 }
 
 // problems: pos => id
 // data    : id, submit_time, submitter, problem_pos, score
 // people  : username, user_rating
-function queryContestData($contest, $config = array()) {
+function queryContestData($contest, $config = array())
+{
 	mergeConfig($config, [
 		'pre_final' => false
 	]);
-	
+
 	$problems = [];
 	$prob_pos = [];
 	$n_problems = 0;
@@ -145,7 +150,7 @@ function queryContestData($contest, $config = array()) {
 	$data = [];
 	if ($config['pre_final']) {
 		$result = DB::query("select id, submit_time, submitter, problem_id, result from submissions"
-				." where contest_id = {$contest['id']} and score is not null order by id");
+			. " where contest_id = {$contest['id']} and score is not null order by id");
 		while ($row = DB::fetch($result, MYSQLI_NUM)) {
 			$r = json_decode($row[4], true);
 			if (!isset($r['final_result'])) {
@@ -159,10 +164,10 @@ function queryContestData($contest, $config = array()) {
 	} else {
 		if ($contest['cur_progress'] < CONTEST_FINISHED) {
 			$result = DB::query("select id, submit_time, submitter, problem_id, score from submissions"
-				." where contest_id = {$contest['id']} and score is not null order by id");
+				. " where contest_id = {$contest['id']} and score is not null order by id");
 		} else {
 			$result = DB::query("select submission_id, date_add('{$contest['start_time_str']}', interval penalty second),"
-				." submitter, problem_id, score from contests_submissions where contest_id = {$contest['id']}");
+				. " submitter, problem_id, score from contests_submissions where contest_id = {$contest['id']}");
 		}
 		while ($row = DB::fetch($result, MYSQLI_NUM)) {
 			$row[0] = (int)$row[0];
@@ -182,7 +187,8 @@ function queryContestData($contest, $config = array()) {
 	return ['problems' => $problems, 'data' => $data, 'people' => $people];
 }
 
-function calcStandings($contest, $contest_data, &$score, &$standings, $update_contests_submissions = false) {
+function calcStandings($contest, $contest_data, &$score, &$standings, $update_contests_submissions = false)
+{
 	// score: username, problem_pos => score, penalty, id
 	$score = array();
 	$n_people = count($contest_data['people']);
@@ -190,7 +196,7 @@ function calcStandings($contest, $contest_data, &$score, &$standings, $update_co
 	foreach ($contest_data['people'] as $person) {
 		$score[$person[0]] = array();
 	}
-	foreach ($contest_data['data'] as $submission) {		
+	foreach ($contest_data['data'] as $submission) {
 		$penalty = (new DateTime($submission[1]))->getTimestamp() - $contest['start_time']->getTimestamp();
 		if ($contest['extra_config']['standings_version'] >= 2) {
 			if ($submission[4] == 0) {
@@ -217,7 +223,7 @@ function calcStandings($contest, $contest_data, &$score, &$standings, $update_co
 		$standings[] = $cur;
 	}
 
-	usort($standings, function($lhs, $rhs) {
+	usort($standings, function ($lhs, $rhs) {
 		if ($lhs[0] != $rhs[0]) {
 			return $rhs[0] - $lhs[0];
 		} else if ($lhs[1] != $rhs[1]) {
@@ -227,7 +233,7 @@ function calcStandings($contest, $contest_data, &$score, &$standings, $update_co
 		}
 	});
 
-	$is_same_rank = function($lhs, $rhs) {
+	$is_same_rank = function ($lhs, $rhs) {
 		return $lhs[0] == $rhs[0] && $lhs[1] == $rhs[1];
 	};
 

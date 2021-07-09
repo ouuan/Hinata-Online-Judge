@@ -1,9 +1,11 @@
 <?php
 
-class UOJContext {
+class UOJContext
+{
 	public static $data = array();
-	
-	public static function pageConfig() {
+
+	public static function pageConfig()
+	{
 		if (!isset(self::$data['type'])) {
 			return array(
 				'PageNav' => 'main-nav'
@@ -16,31 +18,38 @@ class UOJContext {
 			);
 		}
 	}
-	
-	public static function isAjax() {
+
+	public static function isAjax()
+	{
 		return isset($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQUESTED_WITH']) == 'xmlhttprequest';
 	}
-	
-	public static function contentLength() {
+
+	public static function contentLength()
+	{
 		if (!isset($_SERVER['CONTENT_LENGTH'])) {
 			return null;
 		}
 		return (int)$_SERVER['CONTENT_LENGTH'];
 	}
-	
-	public static function documentRoot() {
+
+	public static function documentRoot()
+	{
 		return $_SERVER['DOCUMENT_ROOT'];
 	}
-	public static function storagePath() {
-		return $_SERVER['DOCUMENT_ROOT'].'/app/storage';
+	public static function storagePath()
+	{
+		return $_SERVER['DOCUMENT_ROOT'] . '/app/storage';
 	}
-	public static function remoteAddr() {
+	public static function remoteAddr()
+	{
 		return $_SERVER['REMOTE_ADDR'];
 	}
-	public static function requestURI() {
+	public static function requestURI()
+	{
 		return $_SERVER['REQUEST_URI'];
 	}
-	public static function requestPath() {
+	public static function requestPath()
+	{
 		$uri = $_SERVER['REQUEST_URI'];
 		$p = strpos($uri, '?');
 		if ($p === false) {
@@ -49,19 +58,22 @@ class UOJContext {
 			return substr($uri, 0, $p);
 		}
 	}
-	public static function requestMethod() {
+	public static function requestMethod()
+	{
 		return $_SERVER['REQUEST_METHOD'];
 	}
-	public static function httpHost() {
+	public static function httpHost()
+	{
 		if (isset($_SERVER['HTTP_X_FORWARDED_HOST'])) {
 			return $_SERVER['HTTP_X_FORWARDED_HOST'];
 		} else if (isset($_SERVER['HTTP_HOST'])) {
 			return $_SERVER['HTTP_HOST'];
 		} else {
-			return $_SERVER['SERVER_NAME'].($_SERVER['SERVER_PORT'] == '80' ? '' : ':'.$_SERVER['SERVER_PORT']);
+			return $_SERVER['SERVER_NAME'] . ($_SERVER['SERVER_PORT'] == '80' ? '' : ':' . $_SERVER['SERVER_PORT']);
 		}
 	}
-	public static function cookieDomain() {
+	public static function cookieDomain()
+	{
 		$domain = UOJConfig::$data['web']['domain'];
 		if ($domain === null) {
 			$domain = UOJConfig::$data['web']['main']['host'];
@@ -70,12 +82,13 @@ class UOJContext {
 		if (validateIP($domain) || $domain === 'localhost') {
 			$domain = '';
 		} else {
-			$domain = '.'.$domain;
+			$domain = '.' . $domain;
 		}
 		return $domain;
 	}
-	
-	public static function setupBlog() {
+
+	public static function setupBlog()
+	{
 		$username = blog_name_decode($_GET['blog_username']);
 		if (!validateUsername($username) || !(self::$data['user'] = queryUser($username))) {
 			become404Page();
@@ -85,8 +98,9 @@ class UOJContext {
 		}
 		self::$data['type'] = 'blog';
 	}
-	
-	public static function __callStatic($name, array $args) {
+
+	public static function __callStatic($name, array $args)
+	{
 		switch (self::$data['type']) {
 			case 'blog':
 				switch ($name) {

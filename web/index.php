@@ -8,7 +8,7 @@ require UOJContext::documentRoot().'/app/controllers/subdomain/blog/route.php';
 include UOJContext::documentRoot().'/app/controllers'.call_user_func(function() {
 	$route = Route::dispatch();
 	$q_pos = strpos($route['action'], '?');
-	
+
 	if ($q_pos === false) {
 		$path = $route['action'];
 	} else {
@@ -16,10 +16,10 @@ include UOJContext::documentRoot().'/app/controllers'.call_user_func(function() 
 		$_GET += $vars;
 		$path = substr($route['action'], 0, $q_pos);
 	}
-	
+
 	if (isset($route['onload'])) {
 		call_user_func($route['onload']);
 	}
-	
+
 	return $path;
 });

@@ -1,7 +1,8 @@
 <?php
 
-function mergeConfig(&$config, $default_config) {
-	foreach($default_config as $key => $val) {
+function mergeConfig(&$config, $default_config)
+{
+	foreach ($default_config as $key => $val) {
 		if (!isset($config[$key])) {
 			$config[$key] = $val;
 		} elseif (is_array($config[$key])) {
@@ -10,15 +11,18 @@ function mergeConfig(&$config, $default_config) {
 	}
 }
 
-function strStartWith($str, $pre) {
+function strStartWith($str, $pre)
+{
 	return substr($str, 0, strlen($pre)) === $pre;
 }
 
-function strEndWith($str, $suf) {
+function strEndWith($str, $suf)
+{
 	return substr($str, -strlen($suf)) === $suf;
 }
 
-function strOmit($str, $len) {
+function strOmit($str, $len)
+{
 	if (strlen($str) <= $len + 3) {
 		return $str;
 	} else {
@@ -26,12 +30,13 @@ function strOmit($str, $len) {
 	}
 }
 
-function uojTextEncode($str, $config = array()) {
+function uojTextEncode($str, $config = array())
+{
 	mergeConfig($config, [
 		'allow_CR' => false,
 		'html_escape' => false
 	]);
-	
+
 	$allow = array();
 	for ($c = 32; $c <= 126; $c++) {
 		$allow[chr($c)] = true;
@@ -39,11 +44,11 @@ function uojTextEncode($str, $config = array()) {
 	$allow["\n"] = true;
 	$allow[" "] = true;
 	$allow["\t"] = true;
-	
+
 	if ($config['allow_CR']) {
 		$allow["\r"] = true;
 	}
-	
+
 	$len = strlen($str);
 	$ok = true;
 	for ($i = 0; $i < $len; $i++) {
@@ -108,14 +113,17 @@ function uojTextEncode($str, $config = array()) {
 	}
 }
 
-function base64url_encode($data) { 
-	return rtrim(strtr(base64_encode($data), '+/', '-_'), '='); 
+function base64url_encode($data)
+{
+	return rtrim(strtr(base64_encode($data), '+/', '-_'), '=');
 }
-function base64url_decode($data) { 
-	return base64_decode(str_pad(strtr($data, '-_', '+/'), strlen($data) % 4, '=', STR_PAD_RIGHT)); 
+function base64url_decode($data)
+{
+	return base64_decode(str_pad(strtr($data, '-_', '+/'), strlen($data) % 4, '=', STR_PAD_RIGHT));
 }
 
-function blog_name_encode($name) {
+function blog_name_encode($name)
+{
 	$name = str_replace('-', '_', $name);
 	if (!strStartWith($name, '_') && !strEndWith($name, '_')) {
 		$name = str_replace('_', '-', $name);
@@ -123,32 +131,37 @@ function blog_name_encode($name) {
 	$name = strtolower($name);
 	return $name;
 }
-function blog_name_decode($name) {
+function blog_name_decode($name)
+{
 	$name = str_replace('-', '_', $name);
 	$name = strtolower($name);
 	return $name;
 }
 
-function isSuperUser($user) {
+function isSuperUser($user)
+{
 	return $user != null && $user['usergroup'] == 'S';
 }
-function getProblemExtraConfig($problem) {
+function getProblemExtraConfig($problem)
+{
 	$extra_config = json_decode($problem['extra_config'], true);
-	
+
 	$default_extra_config = array(
 		'view_content_type' => 'ALL',
 		'view_all_details_type' => 'ALL',
 		'view_details_type' => 'ALL'
 	);
-	
+
 	mergeConfig($extra_config, $default_extra_config);
-	
+
 	return $extra_config;
 }
-function getProblemSubmissionRequirement($problem) {
+function getProblemSubmissionRequirement($problem)
+{
 	return json_decode($problem['submission_requirement'], true);
 }
-function getProblemCustomTestRequirement($problem) {
+function getProblemCustomTestRequirement($problem)
+{
 	$extra_config = json_decode($problem['extra_config'], true);
 	if (isset($extra_config['custom_test_requirement'])) {
 		return $extra_config['custom_test_requirement'];
@@ -174,7 +187,8 @@ function getProblemCustomTestRequirement($problem) {
 	}
 }
 
-function sendSystemMsg($username, $title, $content) {
+function sendSystemMsg($username, $title, $content)
+{
 	$content = DB::escape($content);
 	$title = DB::escape($title);
 	DB::insert("insert into user_system_msg (receiver, title, content, send_time) values ('$username', '$title', '$content', now())");

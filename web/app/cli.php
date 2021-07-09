@@ -11,7 +11,7 @@ $handlers = [
 		if (func_num_args() != 1) {
 			die("php cli.php upgrade:up <name>\n");
 		}
-		Upgrader::transaction(function() use($name)  {
+		Upgrader::transaction(function () use ($name) {
 			Upgrader::up($name);
 		});
 		die("finished!\n");
@@ -20,7 +20,7 @@ $handlers = [
 		if (func_num_args() != 1) {
 			die("php cli.php upgrade:down <name>\n");
 		}
-		Upgrader::transaction(function() use($name)  {
+		Upgrader::transaction(function () use ($name) {
 			Upgrader::down($name);
 		});
 		die("finished!\n");
@@ -29,7 +29,7 @@ $handlers = [
 		if (func_num_args() != 1) {
 			die("php cli.php upgrade:refresh <name>\n");
 		}
-		Upgrader::transaction(function() use($name)  {
+		Upgrader::transaction(function () use ($name) {
 			Upgrader::refresh($name);
 		});
 		die("finished!\n");
@@ -38,7 +38,7 @@ $handlers = [
 		if (func_num_args() != 1) {
 			die("php cli.php upgrade:remove <name>\n");
 		}
-		Upgrader::transaction(function() use($name) {
+		Upgrader::transaction(function () use ($name) {
 			Upgrader::remove($name);
 		});
 		die("finished!\n");
@@ -47,7 +47,7 @@ $handlers = [
 		if (func_num_args() != 0) {
 			die("php cli.php upgrade:latest\n");
 		}
-		Upgrader::transaction(function() {
+		Upgrader::transaction(function () {
 			Upgrader::upgradeToLatest();
 		});
 		die("finished!\n");
@@ -56,7 +56,7 @@ $handlers = [
 		if (func_num_args() != 0) {
 			die("php cli.php upgrade:remove-all\n");
 		}
-		Upgrader::transaction(function() {
+		Upgrader::transaction(function () {
 			Upgrader::removeAll();
 		});
 		die("finished!\n");
@@ -64,7 +64,8 @@ $handlers = [
 	'help' => 'showHelp'
 ];
 
-function showHelp() {
+function showHelp()
+{
 	global $handlers;
 	echo "UOJ Command-Line Interface\n";
 	echo "php cli.php <task-name> params1 params2 ...\n";

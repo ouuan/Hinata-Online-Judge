@@ -1,39 +1,40 @@
 <?php
-	requirePHPLib('form');
-	
-	if (!validateUInt($_GET['id']) || !($problem = queryProblemBrief($_GET['id']))) {
-		become404Page();
-	}
-	if (!hasProblemPermission($myUser, $problem)) {
-		become403Page();
-	}
-	
-	$managers_form = newAddDelCmdForm('managers',
-		function($username) {
-			if (!validateUsername($username) || !queryUser($username)) {
-				return "不存在名为{$username}的用户";
-			}
-			return '';
-		},
-		function($type, $username) {
-			global $problem;
-			if ($type == '+') {
-				DB::query("insert into problems_permissions (problem_id, username) values (${problem['id']}, '$username')");
-			} else if ($type == '-') {
-				DB::query("delete from problems_permissions where problem_id = ${problem['id']} and username = '$username'");
-			}
+requirePHPLib('form');
+
+if (!validateUInt($_GET['id']) || !($problem = queryProblemBrief($_GET['id']))) {
+	become404Page();
+}
+if (!hasProblemPermission($myUser, $problem)) {
+	become403Page();
+}
+
+$managers_form = newAddDelCmdForm(
+	'managers',
+	function ($username) {
+		if (!validateUsername($username) || !queryUser($username)) {
+			return "不存在名为{$username}的用户";
 		}
-	);
-	
-	$managers_form->runAtServer();
+		return '';
+	},
+	function ($type, $username) {
+		global $problem;
+		if ($type == '+') {
+			DB::query("insert into problems_permissions (problem_id, username) values (${problem['id']}, '$username')");
+		} else if ($type == '-') {
+			DB::query("delete from problems_permissions where problem_id = ${problem['id']} and username = '$username'");
+		}
+	}
+);
+
+$managers_form->runAtServer();
 ?>
 <?php echoUOJPageHeader(HTML::stripTags($problem['title']) . ' - 管理者 - 题目管理') ?>
-<h1 class="page-header" align="center">#<?=$problem['id']?> : <?=$problem['title']?> 管理</h1>
+<h1 class="page-header" align="center">#<?= $problem['id'] ?> : <?= $problem['title'] ?> 管理</h1>
 <ul class="nav nav-tabs" role="tablist">
 	<li class="nav-item"><a class="nav-link" href="/problem/<?= $problem['id'] ?>/manage/statement" role="tab">编辑</a></li>
 	<li class="nav-item"><a class="nav-link active" href="/problem/<?= $problem['id'] ?>/manage/managers" role="tab">管理者</a></li>
 	<li class="nav-item"><a class="nav-link" href="/problem/<?= $problem['id'] ?>/manage/data" role="tab">数据</a></li>
-	<li class="nav-item"><a class="nav-link" href="/problem/<?=$problem['id']?>" role="tab">返回</a></li>
+	<li class="nav-item"><a class="nav-link" href="/problem/<?= $problem['id'] ?>" role="tab">返回</a></li>
 </ul>
 
 <table class="table table-hover">
@@ -44,14 +45,14 @@
 		</tr>
 	</thead>
 	<tbody>
-<?php
-	$row_id = 0;
-	$result = DB::query("select username from problems_permissions where problem_id = ${problem['id']}");
-	while ($row = DB::fetch($result, MYSQLI_ASSOC)) {
-		$row_id++;
-		echo '<tr>', '<td>', $row_id, '</td>', '<td>', getUserLink($row['username']), '</td>', '</tr>';
-	}
-?>
+		<?php
+		$row_id = 0;
+		$result = DB::query("select username from problems_permissions where problem_id = ${problem['id']}");
+		while ($row = DB::fetch($result, MYSQLI_ASSOC)) {
+			$row_id++;
+			echo '<tr>', '<td>', $row_id, '</td>', '<td>', getUserLink($row['username']), '</td>', '</tr>';
+		}
+		?>
 	</tbody>
 </table>
 <p class="text-center">命令格式：命令一行一个，+mike 表示把 mike 加入管理者，-mike 表示把 mike 从管理者中移除</p>

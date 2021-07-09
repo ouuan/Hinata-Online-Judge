@@ -5,10 +5,10 @@
 </div>
 
 <script type="text/javascript">
-standings_version=<?=$contest['extra_config']['standings_version']?>;
-contest_id=<?=$contest['id']?>;
-standings=<?=json_encode($standings)?>;
-score=<?=json_encode($score)?>;
-problems=<?=json_encode($contest_data['problems'])?>;
-$(document).ready(showStandings());
+	standings_version = <?= $contest['extra_config']['standings_version'] ?>;
+	contest_id = <?= $contest['id'] ?>;
+	standings = <?= json_encode($standings) ?>;
+	score = <?= json_encode($score) ?>;
+	problems = <?= json_encode($contest_data['problems']) ?>;
+	$(document).ready(showStandings());
 </script>

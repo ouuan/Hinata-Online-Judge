@@ -1,6 +1,7 @@
 <?php
 
-function hasProblemPermission($user, $problem) {
+function hasProblemPermission($user, $problem)
+{
 	if ($user == null) {
 		return false;
 	}
@@ -9,17 +10,19 @@ function hasProblemPermission($user, $problem) {
 	}
 	return DB::selectFirst("select * from problems_permissions where username = '{$user['username']}' and problem_id = {$problem['id']}") != null;
 }
-function hasViewPermission($str,$user,$problem,$submission) {
-	if($str=='ALL')
+function hasViewPermission($str, $user, $problem, $submission)
+{
+	if ($str == 'ALL')
 		return true;
-	if($str=='ALL_AFTER_AC')
-		return hasAC($user,$problem);
-	if($str=='SELF')
-		return $submission['submitter']==$user['username'];
+	if ($str == 'ALL_AFTER_AC')
+		return hasAC($user, $problem);
+	if ($str == 'SELF')
+		return $submission['submitter'] == $user['username'];
 	return false;
 }
 
-function hasContestPermission($user, $contest) {
+function hasContestPermission($user, $contest)
+{
 	if ($user == null) {
 		return false;
 	}
@@ -29,27 +32,33 @@ function hasContestPermission($user, $contest) {
 	return DB::selectFirst("select * from contests_permissions where username = '{$user['username']}' and contest_id = {$contest['id']}") != null;
 }
 
-function hasRegistered($user, $contest) {
+function hasRegistered($user, $contest)
+{
 	return DB::selectFirst("select * from contests_registrants where username = '${user['username']}' and contest_id = ${contest['id']}") != null;
-	}
-function hasAC($user, $problem) {
+}
+function hasAC($user, $problem)
+{
 	return DB::selectFirst("select * from best_ac_submissions where submitter = '${user['username']}' and problem_id = ${problem['id']}") != null;
 }
 
-function queryUser($username) {
+function queryUser($username)
+{
 	if (!validateUsername($username)) {
 		return null;
 	}
 	return DB::selectFirst("select * from user_info where username='$username'", MYSQLI_ASSOC);
 }
-function queryProblemContent($id) {
+function queryProblemContent($id)
+{
 	return DB::selectFirst("select * from problems_contents where id = $id", MYSQLI_ASSOC);
 }
-function queryProblemBrief($id) {
+function queryProblemBrief($id)
+{
 	return DB::selectFirst("select * from problems where id = $id", MYSQLI_ASSOC);
 }
 
-function queryProblemTags($id) {
+function queryProblemTags($id)
+{
 	$tags = array();
 	$result = DB::query("select tag from problems_tags where problem_id = $id order by id");
 	while ($row = DB::fetch($result, MYSQLI_NUM)) {
@@ -57,26 +66,32 @@ function queryProblemTags($id) {
 	}
 	return $tags;
 }
-function queryContestProblemRank($contest, $problem) {
+function queryContestProblemRank($contest, $problem)
+{
 	if (!DB::selectFirst("select * from contests_problems where contest_id = {$contest['id']} and problem_id = {$problem['id']}")) {
 		return null;
 	}
 	return DB::selectCount("select count(*) from contests_problems where contest_id = {$contest['id']} and problem_id <= {$problem['id']}");
 }
-function querySubmission($id) {
+function querySubmission($id)
+{
 	return DB::selectFirst("select * from submissions where id = $id", MYSQLI_ASSOC);
 }
-function queryHack($id) {
+function queryHack($id)
+{
 	return DB::selectFirst("select * from hacks where id = $id", MYSQLI_ASSOC);
 }
-function queryContest($id) {
+function queryContest($id)
+{
 	return DB::selectFirst("select * from contests where id = $id", MYSQLI_ASSOC);
 }
-function queryContestProblem($id) {
+function queryContestProblem($id)
+{
 	return DB::selectFirst("select * from contest_problems where contest_id = $id", MYSQLI_ASSOC);
 }
 
-function queryZanVal($id, $type, $user) {
+function queryZanVal($id, $type, $user)
+{
 	if ($user == null) {
 		return 0;
 	}
@@ -88,10 +103,12 @@ function queryZanVal($id, $type, $user) {
 	return $row['val'];
 }
 
-function queryBlog($id) {
+function queryBlog($id)
+{
 	return DB::selectFirst("select * from blogs where id='$id'", MYSQLI_ASSOC);
 }
-function queryBlogTags($id) {
+function queryBlogTags($id)
+{
 	$tags = array();
 	$result = DB::select("select tag from blogs_tags where blog_id = $id order by id");
 	while ($row = DB::fetch($result, MYSQLI_NUM)) {
@@ -99,14 +116,17 @@ function queryBlogTags($id) {
 	}
 	return $tags;
 }
-function queryBlogComment($id) {
+function queryBlogComment($id)
+{
 	return DB::selectFirst("select * from blogs_comments where id='$id'", MYSQLI_ASSOC);
 }
 
-function isProblemVisibleToUser($problem, $user) {
+function isProblemVisibleToUser($problem, $user)
+{
 	return !$problem['is_hidden'] || hasProblemPermission($user, $problem);
 }
-function isContestProblemVisibleToUser($problem, $contest, $user) {
+function isContestProblemVisibleToUser($problem, $contest, $user)
+{
 	if (isProblemVisibleToUser($problem, $user)) {
 		return true;
 	}
@@ -119,7 +139,8 @@ function isContestProblemVisibleToUser($problem, $contest, $user) {
 	return hasRegistered($user, $contest);
 }
 
-function isProblemOrContestProblemVisibleToUser($problem, $user) {
+function isProblemOrContestProblemVisibleToUser($problem, $user)
+{
 	if (isProblemVisibleToUser($problem, $user)) return true;
 	$rows = DB::selectAll("select distinct p.contest_id from contests_problems p join contests_registrants r where p.contest_id = r.contest_id and p.problem_id = '{$problem['id']}' and r.username = '{$user['username']}'");
 	foreach ($rows as $row) {
@@ -132,7 +153,8 @@ function isProblemOrContestProblemVisibleToUser($problem, $user) {
 	return false;
 }
 
-function isSubmissionVisibleToUser($submission, $problem, $user) {
+function isSubmissionVisibleToUser($submission, $problem, $user)
+{
 	if (isSuperUser($user)) {
 		return true;
 	} else if (!$submission['is_hidden']) {
@@ -141,7 +163,8 @@ function isSubmissionVisibleToUser($submission, $problem, $user) {
 		return hasProblemPermission($user, $problem);
 	}
 }
-function isHackVisibleToUser($hack, $problem, $user) {
+function isHackVisibleToUser($hack, $problem, $user)
+{
 	if (isSuperUser($user)) {
 		return true;
 	} elseif (!$hack['is_hidden']) {
@@ -151,7 +174,8 @@ function isHackVisibleToUser($hack, $problem, $user) {
 	}
 }
 
-function isSubmissionFullVisibleToUser($submission, $contest, $problem, $user) {
+function isSubmissionFullVisibleToUser($submission, $contest, $problem, $user)
+{
 	if (isSuperUser($user)) {
 		return true;
 	} elseif (!$contest) {
@@ -164,7 +188,8 @@ function isSubmissionFullVisibleToUser($submission, $contest, $problem, $user) {
 		return hasProblemPermission($user, $problem);
 	}
 }
-function isHackFullVisibleToUser($hack, $contest, $problem, $user) {
+function isHackFullVisibleToUser($hack, $contest, $problem, $user)
+{
 	if (isSuperUser($user)) {
 		return true;
 	} elseif (!$contest) {
@@ -178,7 +203,8 @@ function isHackFullVisibleToUser($hack, $contest, $problem, $user) {
 	}
 }
 
-function deleteBlog($id) {
+function deleteBlog($id)
+{
 	if (!validateUInt($id)) {
 		return;
 	}
@@ -190,12 +216,14 @@ function deleteBlog($id) {
 	DB::delete("delete from blogs_tags where blog_id = $id");
 }
 
-function AVGACRating($id) {
+function AVGACRating($id)
+{
 	$rating = DB::selectFirst("select avg(t.rating) as avgrating from (select distinct a.submitter, b.rating from submissions a join user_info b on a.submitter = b.username and a.problem_id = {$id} and score = 100 and a.submitter != 'std') as t")['avgrating'];
 	if ($rating === null) return -1;
 	return round($rating, 0);
 }
 
-function queryDistinctAC($id) {
+function queryDistinctAC($id)
+{
 	return DB::selectCount("select count(distinct submitter) from submissions where problem_id = {$id} and score=100 and submitter != 'std'");
 }

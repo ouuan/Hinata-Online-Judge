@@ -1,19 +1,24 @@
 <?php
 
-class Auth {
-	public static function check() {
+class Auth
+{
+	public static function check()
+	{
 		global $myUser;
 		return $myUser != null;
 	}
-	public static function id() {
+	public static function id()
+	{
 		global $myUser;
 		return $myUser['username'];
 	}
-	public static function user() {
+	public static function user()
+	{
 		global $myUser;
 		return $myUser;
 	}
-	public static function login($username, $remember = true) {
+	public static function login($username, $remember = true)
+	{
 		if (!validateUsername($username)) {
 			return;
 		}
@@ -30,21 +35,23 @@ class Auth {
 			Cookie::safeSet('uoj_remember_token', $remember_token, $expire, '/', array('httponly' => true));
 		}
 	}
-	public static function logout() {
+	public static function logout()
+	{
 		unset($_SESSION['username']);
 		unset($_SESSION['last_visited']);
 		Cookie::safeUnset('uoj_username', '/');
 		Cookie::safeUnset('uoj_remember_token', '/');
-		DB::update("update user_info set remember_token = '' where username = '".Auth::id()."'");
+		DB::update("update user_info set remember_token = '' where username = '" . Auth::id() . "'");
 	}
 
-	private static function initMyUser() {
+	private static function initMyUser()
+	{
 		global $myUser;
 		$myUser = null;
-		
+
 		Cookie::safeCheck('uoj_username', '/');
 		Cookie::safeCheck('uoj_remember_token', '/');
-		
+
 		if (isset($_SESSION['username'])) {
 			if (!validateUsername($_SESSION['username'])) {
 				return;
@@ -66,9 +73,10 @@ class Auth {
 			return;
 		}
 	}
-	public static function init() {
+	public static function init()
+	{
 		global $myUser;
-		
+
 		Auth::initMyUser();
 		if ($myUser) {
 			if ($myUser['usergroup'] == 'B') {
@@ -76,7 +84,7 @@ class Auth {
 			}
 		}
 		if ($myUser) {
-			DB::update("update user_info set remote_addr = '".DB::escape($_SERVER['REMOTE_ADDR'])."', http_x_forwarded_for = '".DB::escape($_SERVER['HTTP_X_FORWARDED_FOR'])."' where username = '".DB::escape($myUser['username'])."'");
+			DB::update("update user_info set remote_addr = '" . DB::escape($_SERVER['REMOTE_ADDR']) . "', http_x_forwarded_for = '" . DB::escape($_SERVER['HTTP_X_FORWARDED_FOR']) . "' where username = '" . DB::escape($myUser['username']) . "'");
 			$_SESSION['last_visited'] = time();
 		}
 	}
