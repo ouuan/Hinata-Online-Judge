@@ -26,26 +26,18 @@ function handleRegisterPost()
 
 	$original_password = uojRandString(12);
 
-	$oj_name = UOJConfig::$data['profile']['oj-name'];
-	$oj_name_short = UOJConfig::$data['profile']['oj-name-short'];
 	$login_url = HTML::url("/login");
 	$modify_url = HTML::url("/user/modify-profile");
 	$admin_mail = UOJConfig::$data['profile']['admin-email'];
+	$oj_name = UOJConfig::$data['profile']['oj-name'];
 	$mail_content = <<<EOD
-<p>{$username} 您好，</p>
 <p>欢迎来到 {$oj_name}！</p>
 <p>您的初始密码是: {$original_password}</p>
 <p>本 OJ 的注册需要经过管理员同意，请在机房联系管理员或者教练，或者通过邮件联系 <a href="mailto:{$admin_mail}">{$admin_mail}</a>。<p>
 <p>成功 <a href="{$login_url}">登录</a> 后请立即 <a href="${modify_url}">修改密码</a>。</p>
-<p>{$oj_name}</p>
 EOD;
 
-	$mailer = UOJMail::noreply();
-	$mailer->addAddress($email, $username);
-	$mailer->Subject = $oj_name_short . " 新用户注册";
-	$mailer->msgHTML($mail_content);
-	if (!$mailer->send()) {
-		error_log($mailer->ErrorInfo);
+	if (!UOJMail::send($username, $email, "新用户注册", $mail_content)) {
 		return '邮件发送失败，请重试或联系管理员';
 	}
 

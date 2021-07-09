@@ -30,19 +30,32 @@ $options = array(
 );
 $user_form->addSelect('op-type', $options, '操作类型', '');
 $user_form->handle = function () {
-	global $user_form;
-
 	$username = $_POST['username'];
+	$user = queryUser($username);
+	if ($user === null) becomeMsgPage("用户名不存在");
+	$group = $user['usergroup'];
 	switch ($_POST['op-type']) {
 		case 'banneduser':
-			DB::update("update user_info set usergroup = 'B' where username = '{$username}'");
+			$newgroup = 'B';
+			$msg = '<p>您的帐号已被封禁，请联系管理员了解详情。</p>';
 			break;
 		case 'normaluser':
-			DB::update("update user_info set usergroup = 'U' where username = '{$username}'");
+			$newgroup = 'U';
+			if ($group === 'B') $msg = '<p>您的帐号已解除封禁。如果您刚刚注册，那么恭喜通过审核！可以 <a href="' . HTML::url('/login') . '">来 OJ 玩</a>了～</p>';
+			else if ($group === 'S') $msg = '<p>您的帐号已被移除管理权限，请联系管理员了解详情。</p>';
 			break;
 		case 'superuser':
-			DB::update("update user_info set usergroup = 'S' where username = '{$username}'");
+			$newgroup = 'S';
+			$msg = '<p>您的帐号已被授予管理权限～</p>';
 			break;
+		default:
+			return;
+	}
+	if ($group !== $newgroup) {
+		DB::update("update user_info set usergroup = '{$newgroup}' where username = '{$username}'");
+		for ($i = 0; $i < 3; ++$i) {
+			if (UOJMail::send($username, $user['email'], '帐号权限变更', $msg)) break;
+		}
 	}
 };
 $user_form->runAtServer();
@@ -77,7 +90,7 @@ $blog_link_contests->addInput(
 	'text',
 	'标题',
 	'',
-	function ($x) {
+	function () {
 		return '';
 	},
 	null

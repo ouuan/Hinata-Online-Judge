@@ -19,4 +19,26 @@ class UOJMail
 		$mailer->Encoding = "base64";
 		return $mailer;
 	}
+
+	public static function send($username, $email, $subject, $content)
+	{
+		$oj_name = UOJConfig::$data['profile']['oj-name'];
+		$oj_name_short = UOJConfig::$data['profile']['oj-name-short'];
+		$url = HTML::url('/');
+
+		$mailer = UOJMail::noreply();
+		$mailer->addAddress($email, $username);
+		$mailer->Subject = $oj_name_short . ' ' . $subject;
+
+		$html = <<<EOD
+<p>{$oj_name_short} 用户 {$username}:</p>
+<p>您好！</p>
+{$content}
+<p><a href="{$url}">{$oj_name}</a></p>
+EOD;
+
+		$mailer->msgHTML($html);
+
+		return $mailer->send();
+	}
 }
