@@ -13,6 +13,7 @@ function handleRegisterPost()
 
 	$username = $_POST['username'];
 	$email = $_POST['email'];
+	$realname = $_POST['realname'];
 
 	if (!validateUsername($username)) {
 		return "失败：无效用户名。";
@@ -22,6 +23,9 @@ function handleRegisterPost()
 	}
 	if (!validateEmail($email)) {
 		return "失败：无效电子邮箱。";
+	}
+	if (!validateRealname($realname)) {
+		return "失败：无效真实姓名。";
 	}
 
 	$original_password = uojRandString(12);
@@ -47,10 +51,12 @@ EOD;
 	$esc_email = DB::escape($email);
 
 	$svn_pw = uojRandString(10);
-	if (!DB::selectCount("SELECT COUNT(*) FROM user_info"))
-		DB::query("insert into user_info (username, email, password, svn_password, register_time, usergroup) values ('$username', '$esc_email', '$password', '$svn_pw', now(), 'S')");
-	else
-		DB::query("insert into user_info (username, email, password, svn_password, register_time, usergroup) values ('$username', '$esc_email', '$password', '$svn_pw', now(), 'B')");
+
+	if (!DB::selectCount("SELECT COUNT(*) FROM user_info")) $group = 'S';
+	else $group = 'B';
+
+	DB::ensure_realname_exists();
+	DB::query("insert into user_info (username, email, password, svn_password, register_time, usergroup, realname) values ('$username', '$esc_email', '$password', '$svn_pw', now(), '{$group}', '{$realname}')");
 
 	return "欢迎你，" . $username . "！请在邮箱中查看密码并联系管理员通过注册申请。";
 }
@@ -87,6 +93,13 @@ $REQUIRE_LIB['dialog'] = '';
 		<div class="col-sm-3">
 			<input type="text" class="form-control" id="input-username" name="username" placeholder="<?= UOJLocale::get('enter your username') ?>" maxlength="20" />
 			<span class="help-block" id="help-username"></span>
+		</div>
+	</div>
+	<div id="div-realname" class="form-group">
+		<label for="input-realname" class="col-sm-2 control-label">真实姓名</label>
+		<div class="col-sm-3">
+			<input type="text" class="form-control" id="input-realname" name="realname" placeholder="输入真实姓名" maxlength="10" />
+			<span class="help-block" id="help-realname"></span>
 		</div>
 	</div>
 	<div class="form-group">
@@ -130,7 +143,8 @@ $REQUIRE_LIB['dialog'] = '';
 			if (!checkUsernameNotInUse())
 				return '该用户名已被人使用了。';
 			return '';
-		})
+		});
+		ok &= getFormErrorAndShowHelp('realname', validateRealname);
 		return ok;
 	}
 
@@ -143,6 +157,7 @@ $REQUIRE_LIB['dialog'] = '';
 			_token: "<?= crsf_token() ?>",
 			register: '',
 			username: $('#input-username').val(),
+			realname: $('#input-realname').val(),
 			email: $('#input-email').val(),
 		}, function(msg) {
 			if (/^欢迎你/.test(msg)) {

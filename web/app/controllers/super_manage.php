@@ -331,11 +331,13 @@ $judgerlist_print_row = function ($row) {
 EOD;
 };
 
-$banlist_cols = array('username', 'usergroup');
+DB::ensure_realname_exists();
+$banlist_cols = array('username', 'realname', 'usergroup');
 $banlist_config = array();
 $banlist_header_row = <<<EOD
 	<tr>
 		<th>用户名</th>
+		<th>真实姓名</th>
 	</tr>
 EOD;
 $banlist_print_row = function ($row) {
@@ -343,6 +345,7 @@ $banlist_print_row = function ($row) {
 	echo <<<EOD
 			<tr>
 				<td>${hislink}</td>
+				<td>${row['realname']}</td>
 			</tr>
 EOD;
 };

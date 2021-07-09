@@ -48,6 +48,12 @@ function handlePost()
 		DB::update("update user_info set motto = '$esc_motto' where username = '{$myUser['username']}'");
 	}
 
+	$realname = $_POST['realname'];
+	if (validateRealname($realname)) {
+		DB::ensure_realname_exists();
+		DB::update("update user_info set realname = '{$realname}' where username = '{$myUser['username']}'");
+	}
+
 	return "ok";
 }
 if (isset($_POST['change'])) {
@@ -109,6 +115,13 @@ $REQUIRE_LIB['md5'] = '';
 			<span class="help-block" id="help-motto"></span>
 		</div>
 	</div>
+	<div id="div-realname" class="form-group">
+		<label for="input-realname" class="col-sm-2 control-label">真实姓名</label>
+		<div class="col-sm-3">
+			<input type="text" class="form-control" name="realname" id="input-realname" value="<?= $myUser['realname'] ?>" placeholder="输入真实姓名" maxlength="10" />
+			<span class="help-block" id="help-realname"></span>
+		</div>
+	</div>
 	<div class="form-group">
 		<div class="col-sm-offset-2 col-sm-3">
 			<p class="form-control-static"><strong><?= UOJLocale::get('change avatar help') ?></strong></p>
@@ -132,6 +145,7 @@ $REQUIRE_LIB['md5'] = '';
 		if ($('#input-qq').val().length > 0)
 			ok &= getFormErrorAndShowHelp('qq', validateQQ);
 		ok &= getFormErrorAndShowHelp('motto', validateMotto);
+		ok &= getFormErrorAndShowHelp('realname', validateRealname);
 		return ok;
 	}
 
@@ -148,7 +162,8 @@ $REQUIRE_LIB['md5'] = '';
 			old_password: md5($('#input-old_password').val(), "<?= getPasswordClientSalt() ?>"),
 			qq: $('#input-qq').val(),
 			sex: $('#input-sex').val(),
-			motto: $('#input-motto').val()
+			motto: $('#input-motto').val(),
+			realname: $('#input-realname').val(),
 		}, function(msg) {
 			if (msg == 'ok') {
 				BootstrapDialog.show({

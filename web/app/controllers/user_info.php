@@ -48,6 +48,10 @@ requireLib('flot');
 							<h4 class="list-group-item-heading"><?= UOJLocale::get('motto') ?></h4>
 							<p class="list-group-item-text"><?= $esc_motto ?></p>
 						</div>
+						<div class="list-group-item">
+							<h4 class="list-group-item-heading">真实姓名</h4>
+							<p class="list-group-item-text"><?= $user['realname'] ?></p>
+						</div>
 						<?php if (isSuperUser($myUser)) : ?>
 							<div class="list-group-item">
 								<h4 class="list-group-item-heading">register time</h4>

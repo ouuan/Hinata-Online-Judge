@@ -291,6 +291,10 @@ function validateMotto(str) {
 		return '';
 	}
 }
+function validateRealname(str) {
+	if (/^[\u{4e00}-\u{9fa5}]{0,10}$/u.test(str)) return '';
+	return '真实姓名应为长度不超过 10 的汉字';
+}
 
 // tags
 $.fn.uoj_problem_tag = function() {

@@ -25,6 +25,11 @@ function validateMotto($motto)
 	return is_string($motto) && ($len = mb_strlen($motto, 'UTF-8')) !== false && $len <= 50;
 }
 
+function validateRealname($realname)
+{
+	return is_string($realname) && preg_match('/^[\x{4e00}-\x{9fa5}]{0,10}$/u', $realname);
+}
+
 function validateUInt($x)
 { // [0, 1000000000)
 	if (!is_string($x)) {

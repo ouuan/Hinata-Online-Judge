@@ -91,4 +91,11 @@ class DB
 		global $uojMySQL;
 		return mysqli_affected_rows($uojMySQL);
 	}
+
+	public static function ensure_realname_exists()
+	{
+		if (!DB::selectFirst("select realname from user_info")) {
+			DB::update("alter table user_info add realname tinytext");
+		}
+	}
 }
