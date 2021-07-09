@@ -1,63 +1,64 @@
 <?php
-	function handleRegisterPost() {
-		if (!crsf_check()) {
-			return '页面已过期';
-		}
-		if (!isset($_POST['username'])) {
-			return "无效表单";
-		}
-		if (!isset($_POST['password'])) {
-			return "无效表单";
-		}
-		if (!isset($_POST['email'])) {
-			return "无效表单";
-		}
+function handleRegisterPost()
+{
+	if (!crsf_check()) {
+		return '页面已过期';
+	}
+	if (!isset($_POST['username'])) {
+		return "无效表单";
+	}
+	if (!isset($_POST['password'])) {
+		return "无效表单";
+	}
+	if (!isset($_POST['email'])) {
+		return "无效表单";
+	}
 
-		$username = $_POST['username'];
-		$password = $_POST['password'];
-		$email = $_POST['email'];
-		if (!validateUsername($username)) {
-			return "失败：无效用户名。";
-		}
-		if (queryUser($username)) {
-			return "失败：用户名已存在。";
-		}
-		if (!validatePassword($password)) {
-			return "失败：无效密码。";
-		}
-		if (!validateEmail($email)) {
-			return "失败：无效电子邮箱。";
-		}
-		
-		$password = getPasswordToStore($password, $username);
-		
-		$esc_email = DB::escape($email);
-		
-		$svn_pw = uojRandString(10);
-		if (!DB::selectCount("SELECT COUNT(*) FROM user_info"))
-			DB::query("insert into user_info (username, email, password, svn_password, register_time, usergroup) values ('$username', '$esc_email', '$password', '$svn_pw', now(), 'S')");
-		else
-			DB::query("insert into user_info (username, email, password, svn_password, register_time, usergroup) values ('$username', '$esc_email', '$password', '$svn_pw', now(), 'B')");
-		
-		return "欢迎你！" . $username . "，你已成功注册。";
+	$username = $_POST['username'];
+	$password = $_POST['password'];
+	$email = $_POST['email'];
+	if (!validateUsername($username)) {
+		return "失败：无效用户名。";
 	}
-	
-	if (isset($_POST['register'])) {
-		echo handleRegisterPost();
-		die();
-	} elseif (isset($_POST['check_username'])) {
-		$username = $_POST['username'];
-		if (validateUsername($username) && !queryUser($username)) {
-			echo '{"ok" : true}';
-		} else {
-			echo '{"ok" : false}';
-		}
-		die();
+	if (queryUser($username)) {
+		return "失败：用户名已存在。";
 	}
+	if (!validatePassword($password)) {
+		return "失败：无效密码。";
+	}
+	if (!validateEmail($email)) {
+		return "失败：无效电子邮箱。";
+	}
+
+	$password = getPasswordToStore($password, $username);
+
+	$esc_email = DB::escape($email);
+
+	$svn_pw = uojRandString(10);
+	if (!DB::selectCount("SELECT COUNT(*) FROM user_info"))
+		DB::query("insert into user_info (username, email, password, svn_password, register_time, usergroup) values ('$username', '$esc_email', '$password', '$svn_pw', now(), 'S')");
+	else
+		DB::query("insert into user_info (username, email, password, svn_password, register_time, usergroup) values ('$username', '$esc_email', '$password', '$svn_pw', now(), 'B')");
+
+	return "欢迎你！" . $username . "，你已成功注册。";
+}
+
+if (isset($_POST['register'])) {
+	echo handleRegisterPost();
+	die();
+} elseif (isset($_POST['check_username'])) {
+	$username = $_POST['username'];
+	if (validateUsername($username) && !queryUser($username)) {
+		echo '{"ok" : true}';
+	} else {
+		echo '{"ok" : false}';
+	}
+	die();
+}
 ?>
 <?php
-	$REQUIRE_LIB['md5'] = '';
-	$REQUIRE_LIB['dialog'] = '';
+$REQUIRE_LIB['md5'] = '';
+$REQUIRE_LIB['dialog'] = '';
 ?>
 <?php echoUOJPageHeader(UOJLocale::get('register')) ?>
 <h2 class="page-header"><?= UOJLocale::get('register') ?></h2>
@@ -92,94 +93,95 @@
 </form>
 
 <script type="text/javascript">
-function checkUsernameNotInUse() {
-	var ok = false;
-	$.ajax({
-		url : '/register',
-		type : 'POST',
-		dataType : 'json',
-		async : false,
-		
-		data : {
-			check_username : '',
-			username : $('#input-username').val()
-		},
-		success : function(data) {
-			ok = data.ok;
-		},
-		error :	function(XMLHttpRequest, textStatus, errorThrown) {
-			alert(XMLHttpRequest.responseText);
-			ok = false;
-		}
-	});
-	return ok;
-}
-function validateRegisterPost() {
-	var ok = true;
-	ok &= getFormErrorAndShowHelp('email', validateEmail);
-	ok &= getFormErrorAndShowHelp('username', function(str) {
-		var err = validateUsername(str);
-		if (err)
-			return err;
-		if (!checkUsernameNotInUse())
-			return '该用户名已被人使用了。';
-		return '';
-	})
-	ok &= getFormErrorAndShowHelp('password', validateSettingPassword);
-	return ok;
-}
+	function checkUsernameNotInUse() {
+		var ok = false;
+		$.ajax({
+			url: '/register',
+			type: 'POST',
+			dataType: 'json',
+			async: false,
 
-function submitRegisterPost() {
-	if (!validateRegisterPost()) {
-		return;
+			data: {
+				check_username: '',
+				username: $('#input-username').val()
+			},
+			success: function(data) {
+				ok = data.ok;
+			},
+			error: function(XMLHttpRequest, textStatus, errorThrown) {
+				alert(XMLHttpRequest.responseText);
+				ok = false;
+			}
+		});
+		return ok;
 	}
-	
-	$.post('/register', {
-		_token : "<?= crsf_token() ?>",
-		register : '',
-		username : $('#input-username').val(),
-		email		: $('#input-email').val(),
-		password : md5($('#input-password').val(), "<?= getPasswordClientSalt() ?>")
-	}, function(msg) {
-		if (/^欢迎你！/.test(msg)) {
-			BootstrapDialog.show({
-				title	 : '注册成功',
-				message : msg,
-				type		: BootstrapDialog.TYPE_SUCCESS,
-				buttons: [{
-					label: '好的',
-					action: function(dialog) {
-						dialog.close();
-					}
-				}],
-				onhidden : function(dialog) {
-					var prevUrl = document.referrer;
-					if (!prevUrl) {
-						prevUrl = '/';
-					};
-					window.location.href = prevUrl;
-				}
-			});
-		} else {
-			BootstrapDialog.show({
-				title	 : '注册失败',
-				message : msg,
-				type		: BootstrapDialog.TYPE_DANGER,
-				buttons: [{
-					label: '好的',
-					action: function(dialog) {
-						dialog.close();
-					}
-				}],
-			});
+
+	function validateRegisterPost() {
+		var ok = true;
+		ok &= getFormErrorAndShowHelp('email', validateEmail);
+		ok &= getFormErrorAndShowHelp('username', function(str) {
+			var err = validateUsername(str);
+			if (err)
+				return err;
+			if (!checkUsernameNotInUse())
+				return '该用户名已被人使用了。';
+			return '';
+		})
+		ok &= getFormErrorAndShowHelp('password', validateSettingPassword);
+		return ok;
+	}
+
+	function submitRegisterPost() {
+		if (!validateRegisterPost()) {
+			return;
 		}
+
+		$.post('/register', {
+			_token: "<?= crsf_token() ?>",
+			register: '',
+			username: $('#input-username').val(),
+			email: $('#input-email').val(),
+			password: md5($('#input-password').val(), "<?= getPasswordClientSalt() ?>")
+		}, function(msg) {
+			if (/^欢迎你！/.test(msg)) {
+				BootstrapDialog.show({
+					title: '注册成功',
+					message: msg,
+					type: BootstrapDialog.TYPE_SUCCESS,
+					buttons: [{
+						label: '好的',
+						action: function(dialog) {
+							dialog.close();
+						}
+					}],
+					onhidden: function(dialog) {
+						var prevUrl = document.referrer;
+						if (!prevUrl) {
+							prevUrl = '/';
+						};
+						window.location.href = prevUrl;
+					}
+				});
+			} else {
+				BootstrapDialog.show({
+					title: '注册失败',
+					message: msg,
+					type: BootstrapDialog.TYPE_DANGER,
+					buttons: [{
+						label: '好的',
+						action: function(dialog) {
+							dialog.close();
+						}
+					}],
+				});
+			}
+		});
+	}
+	$(document).ready(function() {
+		$('#form-register').submit(function(e) {
+			submitRegisterPost();
+			return false;
+		});
 	});
-}
-$(document).ready(function() {
-	$('#form-register').submit(function(e) {
-		submitRegisterPost();
-		return false;
-	});
-});
 </script>
 <?php echoUOJPageFooter() ?>
