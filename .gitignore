@@ -2,6 +2,7 @@
 !*.*
 !*/
 web/app/storage
+web/app/.config.php
 judger/.conf.json
 judger/log/judge.log
 judger/uoj_judger/work/
