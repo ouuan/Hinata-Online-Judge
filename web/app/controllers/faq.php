@@ -1,13 +1,14 @@
 <?php
-	requireLib('shjs');
-	requireLib('mathjax');
-	echoUOJPageHeader(UOJLocale::get('help'));
-	$meminfo_file = file_get_contents('/proc/meminfo');
-	preg_match_all('/(\w+):\s+(\d+)\s/', $meminfo_file, $matches);
-	$meminfo_array = array_combine($matches[1], $matches[2]);
-	$cpuinfo_file = file_get_contents('/proc/cpuinfo');
-	preg_match_all('/(\S+(?: \S+)*)\s*:\s*(\S+(?: \S+)*)\s/', $cpuinfo_file, $matches);
-	$cpuinfo_array = array_combine($matches[1], $matches[2]);
+requireLib('shjs');
+requireLib('mathjax');
+echoUOJPageHeader(UOJLocale::get('help'));
+$model = file_get_contents('/sys/devices/virtual/dmi/id/product_name') . file_get_contents('/sys/devices/virtual/dmi/id/product_version');
+$meminfo_file = file_get_contents('/proc/meminfo');
+preg_match_all('/(\w+):\s+(\d+)\s/', $meminfo_file, $matches);
+$meminfo_array = array_combine($matches[1], $matches[2]);
+$cpuinfo_file = file_get_contents('/proc/cpuinfo');
+preg_match_all('/(\S+(?: \S+)*)\s*:\s*(\S+(?: \S+)*)\s/', $cpuinfo_file, $matches);
+$cpuinfo_array = array_combine($matches[1], $matches[2]);
 ?>
 <article>
 	<header>
@@ -53,7 +54,7 @@
 			</div>
 			<div id="collapseThree" class="collapse">
 				<div class="card-body">
-					<p>操作系统是 Ubuntu Linux 18.04 LTS x64。</p>
+					<p>操作系统是 Ubuntu Linux 18.04 LTS x64，运行在 <?= $model ?> 上。</p>
 					<p>CPU 型号是 <?= $cpuinfo_array['model name'] ?>，有 <?= $cpuinfo_array['cpu cores'] ?> 核 <?= $cpuinfo_array['siblings'] ?> 线程。</p>
 					<p>内存大小为 <?= humanFilesize($meminfo_array['MemTotal'] * 1024) ?>，Swap 大小为 <?= humanFilesize($meminfo_array['SwapTotal'] * 1024) ?>。</p>
 					<p>C 的编译器是 gcc 7.4.0，编译命令：<code>gcc code.c -o code -lm -O2 -DONLINE_JUDGE</code>。</p>
@@ -125,15 +126,24 @@
 					<p>我就只介绍最基本的功能好了。其它的自己探索吧～比如<a href="http://wow.kuapp.com/markdown/">这里</a>。</p>
 					<!-- readmore -->
 					<p><code>**强调**</code> = <strong>强调</strong></p>
-					<hr /><p><code>*强调*</code> = <em>强调</em></p>
-					<hr /><p><code>[<?= UOJConfig::$data['profile']['oj-name-short'] ?>](<?= HTML::url('/') ?>)</code> = <a href="<?= HTML::url('/') ?>"><?= UOJConfig::$data['profile']['oj-name-short'] ?></a></p>
-					<hr /><p><code><?= HTML::url('/') ?></code> = <a href="http://<?= UOJConfig::$data['web']['main']['host'] ?>"><?= HTML::url('/') ?></a></p>
-					<hr /><p><code>![这个文字在图挂了的时候会显示](<?= HTML::url('/images/favicon.ico') ?>)</code> =
-					<img src="<?= HTML::url('/images/favicon.ico') ?>" alt="这个文字在图挂了的时候会显示" /></p>
-					<hr /><p><code>`rm orz`</code> = <code>rm orz</code></p>
-					<hr /><p><code>数学公式萌萌哒 $(a + b)^2$ 萌萌哒</code> = 数学公式萌萌哒 $(a + b)^2$ 萌萌哒</p>
-					<hr /><p><code>&lt;!-- readmore --&gt;</code> = 在外面看这篇博客时会到此为止然后显示一个“阅读更多”字样</p>
-					<hr /><p>来个更大的例子：</p>
+					<hr />
+					<p><code>*强调*</code> = <em>强调</em></p>
+					<hr />
+					<p><code>[<?= UOJConfig::$data['profile']['oj-name-short'] ?>](<?= HTML::url('/') ?>)</code> = <a href="<?= HTML::url('/') ?>"><?= UOJConfig::$data['profile']['oj-name-short'] ?></a></p>
+					<hr />
+					<p><code><?= HTML::url('/') ?></code> = <a href="http://<?= UOJConfig::$data['web']['main']['host'] ?>"><?= HTML::url('/') ?></a></p>
+					<hr />
+					<p><code>![这个文字在图挂了的时候会显示](<?= HTML::url('/images/favicon.ico') ?>)</code> =
+						<img src="<?= HTML::url('/images/favicon.ico') ?>" alt="这个文字在图挂了的时候会显示" />
+					</p>
+					<hr />
+					<p><code>`rm orz`</code> = <code>rm orz</code></p>
+					<hr />
+					<p><code>数学公式萌萌哒 $(a + b)^2$ 萌萌哒</code> = 数学公式萌萌哒 $(a + b)^2$ 萌萌哒</p>
+					<hr />
+					<p><code>&lt;!-- readmore --&gt;</code> = 在外面看这篇博客时会到此为止然后显示一个“阅读更多”字样</p>
+					<hr />
+					<p>来个更大的例子：</p>
 					<pre>
 					```c++
 					#include &lt;iostream&gt;
@@ -166,13 +176,14 @@
 					<pre><code class="sh_pascal">begin</code></pre>
 					<pre><code class="sh_python">print '<?= UOJConfig::$data['profile']['oj-name-short'] ?>'</code></pre>
 					<p>\begin{equation}
-					\frac{-b + \sqrt{b^2 - 4ac}}{2a}
-					\end{equation}</p>
+						\frac{-b + \sqrt{b^2 - 4ac}}{2a}
+						\end{equation}</p>
 					<h1>一级标题</h1>
 					<h2>二级标题</h2>
 					<h3>三级标题</h3>
 					<h4>四级标题</h4>
-					<hr /><p>还有一个很重要的事情，就是你很容易以为 <?= UOJConfig::$data['profile']['oj-name-short'] ?> 在吃换行……</p>
+					<hr />
+					<p>还有一个很重要的事情，就是你很容易以为 <?= UOJConfig::$data['profile']['oj-name-short'] ?> 在吃换行……</p>
 					<p>那是因为跟 LaTeX 一样，你需要一个空行来分段。你可以粗略地认为两个换行会被替换成一换行。（当然不完全是这样，空行是用来分段的，段落还有间距啊行首空两格啊之类的属性，真正的换行而不分段是在行末加上两个空格。）</p>
 					<p>唔……就介绍到这里吧。想要更详细的介绍上网搜搜吧～</p>
 					<p>（评论区是不可以用任何 HTML 滴～但是数学公式还是没问题滴）</p>
