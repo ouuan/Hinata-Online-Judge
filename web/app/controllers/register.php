@@ -50,13 +50,11 @@ EOD;
 
 	$esc_email = DB::escape($email);
 
-	$svn_pw = uojRandString(10);
-
 	if (!DB::selectCount("SELECT COUNT(*) FROM user_info")) $group = 'S';
 	else $group = 'B';
 
 	DB::ensure_realname_exists();
-	DB::query("insert into user_info (username, email, password, svn_password, register_time, usergroup, realname) values ('$username', '$esc_email', '$password', '$svn_pw', now(), '{$group}', '{$realname}')");
+	DB::query("insert into user_info (username, email, password, register_time, usergroup, realname) values ('$username', '$esc_email', '$password', now(), '{$group}', '{$realname}')");
 
 	return "欢迎你，" . $username . "！请在邮箱中查看密码并联系管理员通过注册申请。";
 }
