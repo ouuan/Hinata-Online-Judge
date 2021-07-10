@@ -147,9 +147,12 @@ EOD;
 <p class="indent2">您在 <a href="/contest/{$contest['id']}">{$contest['name']}</a> 这场比赛后 Rating 没有变化。当前 Rating 为 <strong style="color:red">{$ratings[$i]}</strong>。</p>
 EOD;
 				}
-				sendSystemMsg($user['username'], 'Rating 变化通知', $content);
 				DB::query("update user_info set rating = {$ratings[$i]} where username = '{$standings[$i][2][0]}'");
 				DB::query("update contests_registrants set rank = {$standings[$i][3]} where contest_id = {$contest['id']} and username = '{$standings[$i][2][0]}'");
+				sendSystemMsg($user['username'], 'Rating 变化通知', $content);
+				if (getUserOption($user['username'], 'rating_change_mail', false)) {
+					UOJMail::trySend($user['username'], $user['email'], 'Rating 变化通知', $content, true);
+				}
 			}
 			DB::query("update contests set status = 'finished' where id = {$contest['id']}");
 		};

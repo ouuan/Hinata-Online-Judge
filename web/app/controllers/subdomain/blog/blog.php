@@ -47,11 +47,18 @@ $comment_form->handle = function () {
 	foreach ($referrers as $referrer) {
 		$content = '<p>有人在博客 ' . $blog['title'] . ' 的评论里提到你：<a href="' . $url . '">点击此处查看</a></p>';
 		sendSystemMsg($referrer, '有人提到你', $content);
+		if (getUserOption($referrer, 'new_mention_mail', false)) {
+			UOJMail::trySend($referrer, queryUser($referrer)['email'], '有人提到你', $content, true);
+		}
 	}
 
-	if ($blog['poster'] !== $myUser['username']) {
+	$poster = $blog['poster'];
+	if ($poster !== $myUser['username']) {
 		$content = '<p>有人回复了您的博客 ' . $blog['title'] . ' ：<a href="' . $url . '">点击此处查看</a></p>';
 		sendSystemMsg($blog['poster'], '博客新回复通知', $content);
+		if (getUserOption($poster, "new_comment_mail", false)) {
+			UOJMail::trySend($poster, queryUser($poster)['email'], '博客新回复', $content, true);
+		}
 	}
 
 	$comment_form->succ_href = getLongTablePageRawUri($page);
@@ -112,24 +119,33 @@ $reply_form->handle = function (&$vdata) {
 	$rank = DB::selectCount("select count(*) from blogs_comments where blog_id = {$blog['id']} and reply_id = 0 and id < {$reply_id}");
 	$page = floor($rank / 20) + 1;
 
-	$uri = getLongTablePageUri($page) . '#' . "comment-{$reply_id}";
+	$url = HTML::url(getLongTablePageUri($page)) . "#comment-{$reply_id}";
 
 	foreach ($referrers as $referrer) {
-		$content = '有人在博客 ' . $blog['title'] . ' 的评论里提到你：<a href="' . $uri . '">点击此处查看</a>';
+		$content = '有人在博客 ' . $blog['title'] . ' 的评论里提到你：<a href="' . $url . '">点击此处查看</a>';
 		sendSystemMsg($referrer, '有人提到你', $content);
+		if (getUserOption($referrer, 'new_mention_mail', false)) {
+			UOJMail::trySend($referrer, queryUser($referrer)['email'], '有人提到你', $content, true);
+		}
 	}
 
 	$parent = $vdata['parent'];
 	$notified = array();
 	if ($parent['poster'] !== $myUser['username']) {
 		$notified[] = $parent['poster'];
-		$content = '有人回复了您在博客 ' . $blog['title'] . ' 下的评论 ：<a href="' . $uri . '">点击此处查看</a>';
+		$content = '有人回复了您在博客 ' . $blog['title'] . ' 下的评论 ：<a href="' . $url . '">点击此处查看</a>';
 		sendSystemMsg($parent['poster'], '评论新回复通知', $content);
+		if (getUserOption($parent['poster'], 'new_comment_mail', false)) {
+			UOJMail::trySend($parent['poster'], queryUser($parent['poster'])['email'], '评论新回复', $content, true);
+		}
 	}
 	if ($blog['poster'] !== $myUser['username'] && !in_array($blog['poster'], $notified)) {
 		$notified[] = $blog['poster'];
-		$content = '有人回复了您的博客 ' . $blog['title'] . ' ：<a href="' . $uri . '">点击此处查看</a>';
+		$content = '有人回复了您的博客 ' . $blog['title'] . ' ：<a href="' . $url . '">点击此处查看</a>';
 		sendSystemMsg($blog['poster'], '博客新回复通知', $content);
+		if (getUserOption($blog['poster'], 'new_comment_mail', false)) {
+			UOJMail::trySend($blog['poster'], queryUser($blog['poster'])['email'], '博客新回复', $content, true);
+		}
 	}
 
 	$reply_form->succ_href = getLongTablePageRawUri($page);

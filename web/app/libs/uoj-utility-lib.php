@@ -192,16 +192,6 @@ function sendSystemMsg($username, $title, $content)
 	$esc_content = DB::escape($content);
 	$esc_title = DB::escape($title);
 	DB::insert("insert into user_system_msg (receiver, title, content, send_time) values ('$username', '$esc_title', '$esc_content', now())");
-
-	if (getUserOption($username, 'sys_msg_mail', false)) {
-		UOJMail::trySend(
-			$username,
-			queryUser($username)['email'],
-			$title,
-			$content,
-			true
-		);
-	}
 }
 
 function significantFigure($value, $digits)
