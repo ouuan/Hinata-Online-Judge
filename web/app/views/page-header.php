@@ -272,6 +272,7 @@ if (!isset($ShowPageHeader)) {
 							</a>
 							<ul class="dropdown-menu" role="menu">
 								<li role="presentation"><a class="dropdown-item" href="<?= HTML::url('/user/profile/' . Auth::id()) ?>"><?= UOJLocale::get('my profile') ?></a></li>
+								<li role="presentation"><a class="dropdown-item" href="<?= HTML::url('/user/options') ?>">设置</a></li>
 								<li role="presentation"><a class="dropdown-item" href="<?= HTML::url('/user/msg') ?>"><?= UOJLocale::get('private message') ?>&nbsp;&nbsp;<?= $new_user_msg_num_html ?></a></li>
 								<li role="presentation"><a class="dropdown-item" href="<?= HTML::url('/user/system-msg') ?>"><?= UOJLocale::get('system message') ?>&nbsp;&nbsp;<?= $new_system_msg_num_html ?></a></li>
 								<li role="presentation"><a class="dropdown-item" href="<?= HTML::url('/file-upload') ?>">文件上传</a></li>

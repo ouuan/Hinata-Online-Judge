@@ -22,6 +22,7 @@ requirePHPLib('utility');
 requirePHPLib('security');
 requirePHPLib('contest');
 requirePHPLib('html');
+requirePHPLib('options');
 
 Session::init();
 UOJTime::init();

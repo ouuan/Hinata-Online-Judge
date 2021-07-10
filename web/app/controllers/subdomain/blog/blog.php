@@ -39,15 +39,15 @@
 		$rank = DB::selectCount("select count(*) from blogs_comments where blog_id = {$blog['id']} and reply_id = 0 and id < {$comment_id}");
 		$page = floor($rank / 20) + 1;
 		
-		$uri = getLongTablePageUri($page) . '#' . "comment-{$comment_id}";
-		
+		$url = HTML::url(getLongTablePageUri($page)) . "#comment-{$comment_id}";
+
 		foreach ($referrers as $referrer) {
-			$content = '有人在博客 ' . $blog['title'] . ' 的评论里提到你：<a href="' . $uri . '">点击此处查看</a>';
+			$content = '<p>有人在博客 ' . $blog['title'] . ' 的评论里提到你：<a href="' . $url . '">点击此处查看</a></p>';
 			sendSystemMsg($referrer, '有人提到你', $content);
 		}
 		
 		if ($blog['poster'] !== $myUser['username']) {
-			$content = '有人回复了您的博客 ' . $blog['title'] . ' ：<a href="' . $uri . '">点击此处查看</a>';
+			$content = '<p>有人回复了您的博客 ' . $blog['title'] . ' ：<a href="' . $url . '">点击此处查看</a></p>';
 			sendSystemMsg($blog['poster'], '博客新回复通知', $content);
 		}
 		

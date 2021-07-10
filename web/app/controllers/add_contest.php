@@ -50,6 +50,39 @@ $time_form->handle = function (&$vdata) {
 	$esc_name = DB::escape($esc_name);
 
 	DB::query("insert into contests (name, start_time, last_min, status) values ('$esc_name', '$start_time_str', ${_POST['last_min']}, 'unfinished')");
+
+	$notification_users = DB::selectAll("select username,email from user_info where opt_new_contest_mail = true");
+
+	if (count($notification_users)) {
+		$oj_name = UOJConfig::$data['profile']['oj-name'];
+		$oj_name_short = UOJConfig::$data['profile']['oj-name-short'];
+		$url = HTML::url('/');
+		$contests_url = HTML::url('/contests');
+
+		$mailer = UOJMail::noreply();
+		$mailer->addAddress(UOJConfig::$data['mail']['noreply']['username'], UOJConfig::$data['profile']['oj-name-short'] . " new contest subscribers");
+		foreach ($notification_users as $user) {
+			$mailer->addBCC($user['email'], $user['username']);
+		}
+		$mailer->Subject = $oj_name_short . ' 新比赛通知: ' . $_POST['name'];
+		$unsubText = UOJMail::unsubscribeText();
+
+		$mailer->msgHTML(
+			<<<EOD
+			<p>{$oj_name_short} 用户:</p>
+			<p>您好！</p>
+			<p>{$_POST['name']} 将在 {$start_time_str} 举办。您可以查看 <a href="{$contests_url}">比赛列表</a> 并注册。</p>
+			{$unsubText}
+			<p><a href="{$url}">{$oj_name}</a></p>
+EOD
+		);
+
+		for ($i = 0; $i < 3; ++$i) {
+			if ($mailer->send()) return;
+		}
+
+		becomeMsgPage("发送新比赛通知失败: " . $mailer->ErrorInfo);
+	}
 };
 $time_form->succ_href = "/contests";
 $time_form->runAtServer();

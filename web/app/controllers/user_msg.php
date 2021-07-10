@@ -24,6 +24,25 @@ function handleMsgPost()
 	}
 
 	DB::query("insert into user_msg (sender, receiver, message, send_time) values ('$sender', '$receiver', '$esc_message', now())");
+
+	if (getUserOption($receiver, 'user_msg_mail', false)) {
+		$msg_url = HTML::url('/user/msg?enter=' . $sender);
+		$msg_content = nl2br(htmlspecialchars($_POST['message']));
+		$mail_content = <<<EOD
+<p>您收到了一条来自 {$sender} 的私信，可以 <a href="{$msg_url}">在 OJ 上查看及回复</a>。私信内容如下：</p>
+<hr/>
+<p>{$msg_content}</p>
+<hr/>
+EOD;
+		UOJMail::trySend(
+			$receiver,
+			queryUser($receiver)['email'],
+			'来自 ' . $sender . ' 的私信',
+			$mail_content,
+			true
+		);
+	}
+
 	return "ok";
 }
 

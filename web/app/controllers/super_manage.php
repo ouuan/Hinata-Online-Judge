@@ -53,9 +53,7 @@ $user_form->handle = function () {
 	}
 	if ($group !== $newgroup) {
 		DB::update("update user_info set usergroup = '{$newgroup}' where username = '{$username}'");
-		for ($i = 0; $i < 3; ++$i) {
-			if (UOJMail::send($username, $user['email'], '帐号权限变更', $msg)) break;
-		}
+		UOJMail::trySend($username, $user['email'], '帐号权限变更', $msg);
 	}
 };
 $user_form->submit_button_config['confirm_text'] = '你真的要修改该用户的权限吗？';

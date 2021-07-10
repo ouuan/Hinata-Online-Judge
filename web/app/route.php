@@ -65,6 +65,7 @@ Route::group(
 		Route::any('/reset-password', '/reset_pw.php');
 		Route::any('/user/profile/{username}', '/user_info.php');
 		Route::any('/user/modify-profile', '/change_user_info.php');
+		Route::any('/user/options', '/user_options.php');
 		Route::any('/user/msg', '/user_msg.php');
 		Route::any('/user/system-msg', '/user_system_msg.php');
 		Route::any('/super-manage(?:/{tab})?', '/super_manage.php');

@@ -74,6 +74,7 @@ requireLib('flot');
 					<a type="button" class="btn btn-info btn-sm" href="/user/msg?enter=<?= $user['username'] ?>"><span class="glyphicon glyphicon-envelope"></span> <?= UOJLocale::get('send private message') ?></a>
 				<?php else : ?>
 					<a type="button" class="btn btn-info btn-sm" href="/user/modify-profile"><span class="glyphicon glyphicon-pencil"></span> <?= UOJLocale::get('modify my profile') ?></a>
+					<a type="button" class="btn btn-info btn-sm" href="/user/options"><span class="glyphicon glyphicon-cog"></span> 更改设置</a>
 				<?php endif ?>
 			<?php endif ?>
 
