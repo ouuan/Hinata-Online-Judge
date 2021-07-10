@@ -20,7 +20,7 @@ return [
 	'run' => 'Run',
 	'source code' => 'Source code',
 	'text file' => 'Text file',
-	'zip file upload introduction' => function($str) {
+	'zip file upload introduction' => function ($str) {
 		return "Upload a .zip file containing $str:";
 	},
 	'or upload files one by one' => 'or upload files one by one:',

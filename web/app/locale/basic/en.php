@@ -35,8 +35,8 @@ return [
 	'browse' => 'Browse',
 	'score range' => 'Score range',
 	'details' => 'Details',
-	'hours' => function($h) {
-		return "$h ".($h <= 1 ? 'hour' : 'hours');
+	'hours' => function ($h) {
+		return "$h " . ($h <= 1 ? 'hour' : 'hours');
 	},
 	'title' => 'Title',
 	'content' => 'Content',
@@ -45,13 +45,13 @@ return [
 	'user profile' => 'User profile',
 	'send private message' => 'Send private message',
 	'modify my profile' => 'Modify my profile',
-	'visit his blog' => function($name) {
+	'visit his blog' => function ($name) {
 		return "Visit $name's blog";
 	},
 	'rating changes' => 'Rating changes',
 	'accepted problems' => 'Accepted problems',
-	'n problems in total' => function($n) {
-		return "$n ".($n <= 1 ? 'problem' : 'problems');
+	'n problems in total' => function ($n) {
+		return "$n " . ($n <= 1 ? 'problem' : 'problems');
 	},
 	'please enter your password for authorization' => 'Please enter your password for authorization',
 	'please enter your new profile' => 'Please enter your new profile',
