@@ -12,7 +12,9 @@ function addOption($name, $title, bool $default)
 	$options[] = $name;
 }
 
-addOption('sys_msg_mail', '收到系统通知时通过邮件提醒', false);
+addOption('new_comment_mail', '收到评论/回复时通过邮件提醒', false);
+addOption('new_mention_mail', '收到 @ 时通过邮件提醒', false);
+addOption('rating_change_mail', 'rating 变化时通过邮件提醒', false);
 addOption('user_msg_mail', '收到私信时通过邮件提醒', false);
 addOption('new_contest_mail', '有新比赛时通过邮件提醒', false);
 
